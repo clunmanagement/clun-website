@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 450" width="400" height="450">
+  <defs>
+
+    <!-- Cloud body: radial gradient simulating 3D lighting from upper-left -->
+    <radialGradient id="cG" cx="36%" cy="28%" r="65%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#545e5e"/>
+      <stop offset="40%"  stop-color="#30393a"/>
+      <stop offset="100%" stop-color="#1c2424"/>
+    </radialGradient>
+
+    <!-- Cloud specular highlight (bright oval at upper-left) -->
+    <radialGradient id="cHL" cx="34%" cy="22%" r="42%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.16)"/>
+      <stop offset="60%"  stop-color="rgba(255,255,255,0.04)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+
+    <!-- Cloud bottom: inner shadow to add depth -->
+    <radialGradient id="cBS" cx="50%" cy="88%" r="52%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="rgba(0,0,0,0.32)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
+    <!-- Bronze/gold metallic for legs (horizontal, simulates cylindrical sheen) -->
+    <linearGradient id="bG" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="330" y2="0">
+      <stop offset="0%"   stop-color="#4e3610"/>
+      <stop offset="28%"  stop-color="#c8a03c"/>
+      <stop offset="50%"  stop-color="#e0bc58"/>
+      <stop offset="72%"  stop-color="#b08830"/>
+      <stop offset="100%" stop-color="#5a4015"/>
+    </linearGradient>
+
+    <!-- Cream/warm ivory for boots -->
+    <radialGradient id="boG" cx="38%" cy="30%" r="65%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#e4d8bc"/>
+      <stop offset="55%"  stop-color="#c8b28a"/>
+      <stop offset="100%" stop-color="#a89060"/>
+    </radialGradient>
+
+    <!-- Boot sole: near-black -->
+    <linearGradient id="sG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#231a18"/>
+      <stop offset="100%" stop-color="#0e0b0a"/>
+    </linearGradient>
+
+    <!-- Cloud silhouette: union of 4 bumps + wide body ellipse -->
+    <clipPath id="cc">
+      <circle cx="100" cy="148" r="68"/>
+      <circle cx="168" cy="108" r="83"/>
+      <circle cx="244" cy="112" r="78"/>
+      <circle cx="307" cy="144" r="66"/>
+      <ellipse cx="202" cy="192" rx="144" ry="58"/>
+    </clipPath>
+
+    <!-- Soft ambient glow filter for the cloud -->
+    <filter id="cloudGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+  </defs>
+
+  <!-- ─── Ground shadow ──────────────────────────── -->
+  <ellipse cx="205" cy="441" rx="108" ry="9"
+           fill="rgba(0,0,0,0.22)"/>
+
+  <!-- ─── LEGS  (drawn before cloud so cloud overlaps the tops) ─── -->
+
+  <!-- Right leg — curves down-right (planted / trailing) -->
+  <!-- Shadow pass -->
+  <path d="M 250 255 Q 278 302 296 350"
+        stroke="#180e04" stroke-width="32" stroke-linecap="round" fill="none" opacity="0.55"/>
+  <!-- Bronze pass -->
+  <path d="M 247 252 Q 274 300 292 347"
+        stroke="url(#bG)" stroke-width="24" stroke-linecap="round" fill="none"/>
+  <!-- Highlight streak -->
+  <path d="M 244 252 Q 270 300 288 347"
+        stroke="rgba(255,230,130,0.22)" stroke-width="9" stroke-linecap="round" fill="none"/>
+
+  <!-- Left leg — curves down-left (stepping / leading) -->
+  <!-- Shadow pass -->
+  <path d="M 170 255 Q 144 302 118 346"
+        stroke="#180e04" stroke-width="32" stroke-linecap="round" fill="none" opacity="0.55"/>
+  <!-- Bronze pass -->
+  <path d="M 173 252 Q 147 300 122 343"
+        stroke="url(#bG)" stroke-width="24" stroke-linecap="round" fill="none"/>
+  <!-- Highlight streak -->
+  <path d="M 176 252 Q 150 300 126 343"
+        stroke="rgba(255,230,130,0.22)" stroke-width="9" stroke-linecap="round" fill="none"/>
+
+  <!-- ─── CLOUD BODY (on top of leg tops) ────────── -->
+  <g clip-path="url(#cc)">
+    <!-- Base charcoal fill -->
+    <rect x="22" y="22" width="360" height="238" fill="url(#cG)"/>
+    <!-- Specular highlight blob -->
+    <ellipse cx="152" cy="122" rx="142" ry="100" fill="url(#cHL)"/>
+    <!-- Bottom inner shadow -->
+    <ellipse cx="202" cy="232" rx="144" ry="64" fill="url(#cBS)"/>
+  </g>
+
+  <!-- Subtle rim: slightly lighter strip at very top of each bump
+       draws attention to the 3D form against the dark page -->
+  <g clip-path="url(#cc)" opacity="0.14">
+    <rect x="22" y="22" width="360" height="55" fill="#90aaaa"/>
+  </g>
+
+  <!-- ─── BOOTS (drawn last, in front of legs) ─── -->
+
+  <!-- Right ankle connector -->
+  <ellipse cx="292" cy="350" rx="16" ry="9"
+           fill="#1c1010" transform="rotate(-14,292,350)"/>
+  <!-- Right boot -->
+  <g transform="rotate(12,300,370)">
+    <ellipse cx="300" cy="366" rx="57" ry="31" fill="url(#boG)"/>
+    <!-- Toe highlight -->
+    <ellipse cx="344" cy="354" rx="18" ry="12"
+             fill="rgba(255,255,255,0.26)" transform="rotate(8,344,354)"/>
+    <!-- Sole -->
+    <ellipse cx="300" cy="390" rx="55" ry="11" fill="url(#sG)"/>
+  </g>
+
+  <!-- Left ankle connector -->
+  <ellipse cx="122" cy="346" rx="16" ry="9"
+           fill="#1c1010" transform="rotate(14,122,346)"/>
+  <!-- Left boot -->
+  <g transform="rotate(-12,108,366)">
+    <ellipse cx="108" cy="362" rx="57" ry="31" fill="url(#boG)"/>
+    <!-- Toe highlight -->
+    <ellipse cx="64" cy="350" rx="18" ry="12"
+             fill="rgba(255,255,255,0.26)" transform="rotate(-8,64,350)"/>
+    <!-- Sole -->
+    <ellipse cx="108" cy="386" rx="55" ry="11" fill="url(#sG)"/>
+  </g>
+
+</svg>
