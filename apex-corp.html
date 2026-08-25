@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Apex Corp · Energía Renovable en Puerto Rico</title>
+<meta name="description" content="Sistemas solares con baterías de respaldo en Puerto Rico. Tu casa sigue encendida cuando el barrio se apaga. Evaluación de techo gratis." />
+
+<!--
+  ════════════════════════════════════════════════════════════════
+  APEX CORP — sitio one-page. Reemplazar antes de publicar:
+
+  1. TELÉFONO      buscar  787-000-0000
+  2. WHATSAPP      buscar  17870000000
+  3. EMAIL         buscar  info@apexcorppr.com
+  4. CAL.COM       buscar  apex-corp        (calLink real del cliente)
+  5. PUEBLO/ZONA   buscar  DIRECCIÓN
+  6. TESTIMONIOS   buscar  TESTIMONIO       (son de ejemplo)
+  7. PROYECTOS     buscar  unsplash.com     (fotos reales de instalaciones)
+  8. MÉTRICAS      buscar  MÉTRICA          (confirmar cifras con el cliente)
+  ════════════════════════════════════════════════════════════════
+-->
+
+<link rel="icon" href="images/apex-corp-logo.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --negro:#050505;
+  --carbon:#101012;
+  --carbon-2:#17171b;
+  --oro:#FFC01E;
+  --oro-hondo:#F59300;
+  --cromo:#D8DCE2;
+  --cromo-6:rgba(216,220,226,.62);
+  --cromo-4:rgba(216,220,226,.42);
+  --cromo-2:rgba(216,220,226,.14);
+  --linea:rgba(216,220,226,.10);
+  --disp:'Chakra Petch',system-ui,sans-serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --wrap:1160px;
+  --nav-h:74px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);background:var(--negro);color:var(--cromo);
+  line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--oro);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:32px}
+
+/* Lettering metálico del logo */
+.cromado{
+  background:linear-gradient(180deg,#fff 0%,#E4E8EE 34%,#959CA6 51%,#F4F6F9 64%,#AEB5BE 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+}
+@supports not (background-clip:text){.cromado{color:var(--cromo);-webkit-text-fill-color:var(--cromo)}}
+
+.eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--oro);
+  display:flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:'';width:26px;height:1px;background:var(--oro);flex:none}
+
+.h2{
+  font-family:var(--disp);font-weight:700;
+  font-size:clamp(30px,4.2vw,52px);line-height:1.04;letter-spacing:-.015em;
+}
+.lead{font-size:16.5px;font-weight:300;color:var(--cromo-6);max-width:56ch}
+
+.btn-oro{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--disp);font-size:14px;font-weight:600;letter-spacing:.05em;
+  background:linear-gradient(160deg,var(--oro),var(--oro-hondo));
+  color:#120C00;padding:15px 32px;border-radius:2px;
+  transition:transform .16s ease,box-shadow .22s ease;
+}
+.btn-oro:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(255,192,30,.28)}
+.btn-linea{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:14px;font-weight:400;color:var(--cromo);
+  border:1px solid var(--cromo-2);padding:15px 28px;border-radius:2px;
+  transition:border-color .2s,background .2s;
+}
+.btn-linea:hover{border-color:var(--cromo-4);background:rgba(216,220,226,.04)}
+
+/* ─────────── NAV ─────────── */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:400;height:var(--nav-h);
+  display:flex;align-items:center;
+  border-bottom:1px solid transparent;transition:background .35s,border-color .35s,backdrop-filter .35s;
+}
+.nav.is-stuck{background:rgba(5,5,5,.88);backdrop-filter:blur(18px);border-bottom-color:var(--linea)}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%}
+.nav__brand{display:flex;align-items:center;gap:11px}
+.nav__brand img{width:38px;height:38px;object-fit:cover;border-radius:3px}
+.nav__name{font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:.06em;line-height:1}
+.nav__tag{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--oro);display:block;margin-top:3px}
+.nav__links{display:flex;gap:30px;list-style:none}
+.nav__links a{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cromo-4);transition:color .2s}
+.nav__links a:hover{color:var(--cromo)}
+.nav__cta{
+  font-family:var(--disp);font-size:12.5px;font-weight:600;letter-spacing:.06em;
+  background:var(--oro);color:#120C00;padding:11px 22px;border-radius:2px;
+  transition:transform .15s,box-shadow .2s;
+}
+.nav__cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(255,192,30,.3)}
+
+/* ─────────── HERO ─────────── */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:calc(var(--nav-h) + 56px) 0 56px;overflow:hidden}
+.hero__glow{
+  position:absolute;top:-18%;right:-12%;width:min(680px,80vw);aspect-ratio:1;
+  background:radial-gradient(circle,rgba(255,192,30,.16),transparent 62%);
+  pointer-events:none;transition:opacity .9s ease;
+}
+.hero__grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+/* los hijos de grid traen min-width:auto, y el SVG del barrio mide 460px
+   intrínsecos: sin esto la columna estira el layout y desborda en móvil */
+.hero__grid>*,.calc>*{min-width:0}
+.hero__title{
+  font-family:var(--disp);font-weight:700;
+  font-size:clamp(42px,6.6vw,86px);line-height:.97;letter-spacing:-.025em;
+  margin:22px 0 20px;
+}
+.hero__title em{font-style:normal;color:var(--oro);display:block}
+.hero__sub{font-size:17px;font-weight:300;color:var(--cromo-6);max-width:44ch;margin-bottom:32px}
+.hero__acts{display:flex;gap:12px;flex-wrap:wrap}
+
+.trust{display:flex;gap:38px;margin-top:52px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--linea)}
+.trust b{font-family:var(--mono);font-size:27px;font-weight:600;color:var(--cromo);display:block;line-height:1}
+.trust b em{font-style:normal;color:var(--oro)}
+.trust span{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--cromo-4);display:block;margin-top:7px}
+
+/* ── Firma: el apagón ── */
+.barrio{position:relative}
+.barrio__cap{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cromo-4);margin-bottom:16px;display:block;
+}
+.barrio svg{width:100%;height:auto;display:block}
+.casa-luz{fill:var(--oro);transition:fill .5s ease,opacity .5s ease}
+.casa-cuerpo{fill:#0C0C0F;stroke:rgba(216,220,226,.16);stroke-width:1.4}
+.apex-halo{opacity:0;transition:opacity .7s ease .55s}
+
+.sw{display:flex;align-items:center;gap:14px;margin-top:24px}
+.sw__btn{
+  position:relative;width:60px;height:31px;border-radius:100px;flex:none;
+  background:rgba(216,220,226,.12);border:1px solid var(--cromo-2);
+  transition:background .3s,border-color .3s;
+}
+.sw__btn::after{
+  content:'';position:absolute;top:3px;left:3px;width:23px;height:23px;border-radius:50%;
+  background:var(--cromo);transition:transform .3s cubic-bezier(.4,1.3,.5,1),background .3s;
+}
+.sw__label{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cromo-4);text-align:left;transition:color .3s}
+.sw__msg{
+  font-family:var(--disp);font-size:15px;font-weight:600;color:var(--oro);
+  margin-top:14px;opacity:0;transform:translateY(6px);
+  transition:opacity .5s ease .5s,transform .5s ease .5s;
+}
+
+/* estado apagón */
+body.apagon{background:#000}
+body.apagon .hero__glow{opacity:.18}
+body.apagon .casa-luz{fill:#131318}
+body.apagon .casa-luz[data-apex]{fill:var(--oro)}
+body.apagon .apex-halo{opacity:1}
+body.apagon .sw__btn{background:rgba(255,192,30,.22);border-color:rgba(255,192,30,.5)}
+body.apagon .sw__btn::after{transform:translateX(29px);background:var(--oro)}
+body.apagon .sw__label{color:var(--oro)}
+body.apagon .sw__msg{opacity:1;transform:none}
+/* cascada: cada ventana se apaga con su propio retraso */
+.casa-luz[data-d="1"]{transition-delay:.05s}
+.casa-luz[data-d="2"]{transition-delay:.16s}
+.casa-luz[data-d="3"]{transition-delay:.24s}
+.casa-luz[data-d="4"]{transition-delay:.38s}
+.casa-luz[data-d="5"]{transition-delay:.46s}
+.casa-luz[data-d="6"]{transition-delay:.6s}
+
+/* ─────────── SECCIONES ─────────── */
+.sec{padding:112px 0;border-top:1px solid var(--linea)}
+.sec__head{margin-bottom:52px}
+.sec__head .h2{margin:16px 0 14px}
+
+/* Factura / calculadora */
+.calc{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:start}
+.calc__box{background:var(--carbon);border:1px solid var(--linea);border-radius:3px;padding:32px}
+.calc__lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cromo-4);display:block;margin-bottom:12px}
+.calc__field{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--cromo-2);padding-bottom:10px}
+.calc__field span{font-family:var(--mono);font-size:28px;color:var(--cromo-4)}
+.calc__field input{
+  font-family:var(--mono);font-size:30px;font-weight:600;color:var(--cromo);
+  background:none;border:none;width:100%;padding:0;
+}
+.calc__field input:focus{outline:none}
+.calc__hint{font-size:12.5px;color:var(--cromo-4);margin-top:14px}
+.calc__slider{width:100%;margin-top:22px;accent-color:var(--oro)}
+
+.out{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);border-radius:3px;overflow:hidden}
+.out__row{background:var(--carbon);padding:22px 26px;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.out__row dt{font-size:14px;color:var(--cromo-6);font-weight:300}
+.out__row dd{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--cromo)}
+.out__row--alza{background:var(--carbon-2)}
+.out__row--alza dd{color:var(--oro);font-size:30px}
+.out__nota{font-size:12px;color:var(--cromo-4);margin-top:16px;line-height:1.6}
+
+/* Servicios */
+.serv{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--linea);border:1px solid var(--linea)}
+.serv__it{background:var(--negro);padding:36px 30px;transition:background .3s}
+.serv__it:hover{background:var(--carbon)}
+.serv__n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--oro);display:block;margin-bottom:18px}
+.serv__t{font-family:var(--disp);font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:.01em}
+.serv__d{font-size:14.5px;font-weight:300;color:var(--cromo-6);line-height:1.65}
+
+/* El ascenso: pasos que suben como el pico del logo */
+.asc{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--linea);border:1px solid var(--linea);margin-top:8px}
+.asc__it{background:var(--negro);padding:30px 22px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.asc__it:nth-child(1){padding-bottom:30px}
+.asc__it:nth-child(2){padding-bottom:52px}
+.asc__it:nth-child(3){padding-bottom:74px}
+.asc__it:nth-child(4){padding-bottom:96px}
+.asc__it:nth-child(5){padding-bottom:118px;background:linear-gradient(180deg,var(--negro) 40%,rgba(255,192,30,.07))}
+.asc__n{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--oro);display:block;margin-bottom:14px}
+.asc__t{font-family:var(--disp);font-size:17px;font-weight:600;margin-bottom:8px}
+.asc__d{font-size:13.5px;font-weight:300;color:var(--cromo-6);line-height:1.6}
+.asc__it::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--oro));opacity:.28}
+.asc__it:nth-child(5)::after{opacity:1}
+
+/* Proyectos */
+.proy{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.proy__it{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--linea);border-radius:3px}
+.proy__it img{width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(.85);transition:filter .4s,transform .6s}
+.proy__it:hover img{filter:brightness(.82) saturate(1);transform:scale(1.04)}
+.proy__cap{position:absolute;left:0;right:0;bottom:0;padding:20px;background:linear-gradient(0deg,rgba(5,5,5,.94),transparent)}
+.proy__cap b{font-family:var(--disp);font-size:15px;font-weight:600;display:block}
+.proy__cap span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oro)}
+
+/* Testimonios */
+.test{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.test__it{background:var(--carbon);border:1px solid var(--linea);border-radius:3px;padding:30px}
+.test__q{font-size:15.5px;font-weight:300;color:var(--cromo);line-height:1.7;margin-bottom:20px}
+.test__a{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cromo-4)}
+
+/* Agendar */
+.agenda{background:var(--carbon);border:1px solid var(--linea);border-radius:3px;padding:10px;min-height:560px}
+#cal-apex{width:100%;height:100%;min-height:540px;overflow:auto}
+
+/* FAQ */
+.faq{border-top:1px solid var(--linea)}
+.faq__it{border-bottom:1px solid var(--linea)}
+.faq__q{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font-family:var(--disp);font-size:17px;font-weight:600;transition:color .2s}
+.faq__q:hover{color:var(--oro)}
+.faq__q i{font-style:normal;font-family:var(--mono);color:var(--oro);flex:none;transition:transform .3s}
+.faq__it.abierto .faq__q i{transform:rotate(45deg)}
+.faq__a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq__a p{font-size:14.5px;font-weight:300;color:var(--cromo-6);padding-bottom:24px;max-width:70ch}
+
+/* Cierre + footer */
+.cierre{padding:108px 0;text-align:center;background:radial-gradient(ellipse at 50% 120%,rgba(255,192,30,.12),transparent 62%)}
+.cierre .h2{margin:16px auto 18px;max-width:18ch}
+.cierre .eyebrow{justify-content:center}
+.cierre .lead{margin:0 auto 32px;text-align:center}
+
+.pie{border-top:1px solid var(--linea);padding:52px 0 40px}
+.pie__in{display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap}
+.pie__brand{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.pie__brand img{width:34px;height:34px;object-fit:cover;border-radius:3px}
+.pie__col h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cromo-4);margin-bottom:14px;font-weight:500}
+.pie__col a,.pie__col p{display:block;font-size:14px;color:var(--cromo-6);margin-bottom:8px;font-weight:300}
+.pie__col a:hover{color:var(--oro)}
+.pie__legal{margin-top:44px;padding-top:24px;border-top:1px solid var(--linea);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--cromo-4)}
+.pie__legal a:hover{color:var(--oro)}
+
+/* WhatsApp flotante */
+.wa{position:fixed;right:22px;bottom:22px;z-index:350;width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(160deg,var(--oro),var(--oro-hondo));display:grid;place-items:center;
+  box-shadow:0 10px 30px rgba(255,192,30,.3);transition:transform .18s}
+.wa:hover{transform:scale(1.07)}
+.wa svg{width:27px;height:27px;fill:#120C00}
+
+/* Reveal */
+.rev{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.rev.visto{opacity:1;transform:none}
+
+/* ─────────── Responsive ─────────── */
+@media (max-width:1000px){
+  .hero__grid{grid-template-columns:1fr;gap:44px}
+  .calc{grid-template-columns:1fr;gap:32px}
+  .serv{grid-template-columns:repeat(2,1fr)}
+  .asc{grid-template-columns:repeat(2,1fr)}
+  .asc__it{padding-bottom:30px!important}
+  .asc__it:nth-child(5){background:var(--negro)}
+}
+@media (max-width:760px){
+  .wrap{padding-inline:22px}
+  .nav__links{display:none}
+  .nav__cta{padding:10px 15px;font-size:11.5px}
+  .nav__name{font-size:17px}
+  .hero__acts .btn-oro,.hero__acts .btn-linea{flex:1 1 100%;justify-content:center}
+  .sec{padding:76px 0}
+  .serv{grid-template-columns:1fr}
+  .hero{padding-top:calc(var(--nav-h) + 34px)}
+  .trust{gap:26px;margin-top:38px}
+  .asc{grid-template-columns:1fr}
+  .pie__in{flex-direction:column;gap:30px}
+}
+@media (max-width:430px){
+  .nav__tag{display:none}
+  .nav__cta{font-size:11px;padding:10px 13px;white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .rev{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a href="#top" class="nav__brand">
+      <img src="images/apex-corp-logo.jpg" alt="Apex Corp" />
+      <span>
+        <span class="nav__name cromado">APEX CORP</span>
+        <span class="nav__tag">Energía Renovable</span>
+      </span>
+    </a>
+    <nav>
+      <ul class="nav__links">
+        <li><a href="#ahorro">Tu factura</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#preguntas">Preguntas</a></li>
+      </ul>
+    </nav>
+    <a href="#agendar" class="nav__cta">Agendar evaluación</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<main id="top">
+<section class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="wrap hero__grid">
+
+    <div>
+      <span class="eyebrow">Energía solar · Puerto Rico</span>
+      <h1 class="hero__title"><span class="cromado">Cuando el barrio</span><em>se apaga,</em><span class="cromado">tu casa no.</span></h1>
+      <p class="hero__sub">Instalamos paneles con baterías de respaldo. Tu nevera, tus abanicos y tu internet siguen andando — y tu factura de LUMA baja desde el primer ciclo.</p>
+      <div class="hero__acts">
+        <a href="#agendar" class="btn-oro">Agenda tu evaluación gratis</a>
+        <a href="#ahorro" class="btn-linea">Calcula tu ahorro</a>
+      </div>
+
+      <div class="trust">
+        <div><b><em>+</em>450</b><span>Techos instalados<!-- MÉTRICA --></span></div>
+        <div><b>25 <em>años</em></b><span>Garantía de paneles</span></div>
+        <div><b><em>0</em></b><span>Apagones desde entonces</span></div>
+      </div>
+    </div>
+
+    <!-- FIRMA: simulador de apagón -->
+    <div class="barrio">
+      <span class="barrio__cap">Tu cuadra, esta noche</span>
+      <svg viewBox="0 0 460 210" role="img" aria-label="Ilustración de una cuadra: al simular un apagón todas las casas quedan a oscuras menos la que tiene Apex.">
+        <defs>
+          <radialGradient id="halo">
+            <stop offset="0%" stop-color="#FFC01E" stop-opacity=".42"/>
+            <stop offset="100%" stop-color="#FFC01E" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- halo de la casa Apex -->
+        <circle class="apex-halo" cx="230" cy="130" r="96" fill="url(#halo)"/>
+
+        <!-- casa 1 -->
+        <path class="casa-cuerpo" d="M14 120 L54 92 L94 120 L94 186 L14 186 Z"/>
+        <rect class="casa-luz" data-d="2" x="33" y="134" width="17" height="17" rx="1.5"/>
+        <rect class="casa-luz" data-d="5" x="60" y="134" width="17" height="17" rx="1.5"/>
+
+        <!-- casa 2 -->
+        <path class="casa-cuerpo" d="M104 132 L138 108 L172 132 L172 186 L104 186 Z"/>
+        <rect class="casa-luz" data-d="1" x="120" y="145" width="15" height="15" rx="1.5"/>
+        <rect class="casa-luz" data-d="4" x="143" y="145" width="15" height="15" rx="1.5"/>
+
+        <!-- CASA APEX (con paneles) -->
+        <path class="casa-cuerpo" d="M186 112 L230 78 L274 112 L274 186 L186 186 Z" stroke="rgba(255,192,30,.5)"/>
+        <path d="M196 110 L230 84 L264 110 L252 110 L230 93 L208 110 Z" fill="#1B1B20" stroke="rgba(255,192,30,.55)" stroke-width="1.2"/>
+        <line x1="213" y1="97" x2="205" y2="110" stroke="rgba(255,192,30,.35)" stroke-width="1"/>
+        <line x1="230" y1="88" x2="230" y2="110" stroke="rgba(255,192,30,.35)" stroke-width="1"/>
+        <line x1="247" y1="97" x2="255" y2="110" stroke="rgba(255,192,30,.35)" stroke-width="1"/>
+        <rect class="casa-luz" data-apex x="203" y="130" width="19" height="19" rx="1.5"/>
+        <rect class="casa-luz" data-apex x="238" y="130" width="19" height="19" rx="1.5"/>
+        <rect class="casa-luz" data-apex x="220" y="160" width="20" height="26" rx="1.5"/>
+
+        <!-- casa 4 -->
+        <path class="casa-cuerpo" d="M288 130 L322 106 L356 130 L356 186 L288 186 Z"/>
+        <rect class="casa-luz" data-d="3" x="304" y="143" width="15" height="15" rx="1.5"/>
+        <rect class="casa-luz" data-d="6" x="327" y="143" width="15" height="15" rx="1.5"/>
+
+        <!-- casa 5 -->
+        <path class="casa-cuerpo" d="M366 122 L404 96 L442 122 L442 186 L366 186 Z"/>
+        <rect class="casa-luz" data-d="2" x="384" y="136" width="16" height="16" rx="1.5"/>
+        <rect class="casa-luz" data-d="5" x="409" y="136" width="16" height="16" rx="1.5"/>
+
+        <!-- acera -->
+        <line x1="0" y1="186.5" x2="460" y2="186.5" stroke="rgba(216,220,226,.16)" stroke-width="1"/>
+      </svg>
+
+      <div class="sw">
+        <button class="sw__btn" id="swApagon" role="switch" aria-checked="false" aria-label="Simular un apagón en la cuadra"></button>
+        <span class="sw__label" id="swLabel">Simula un apagón</span>
+      </div>
+      <p class="sw__msg" id="swMsg">Tu vecindario se fue. Tu casa no.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CALCULADORA -->
+<section class="sec" id="ahorro">
+  <div class="wrap">
+    <div class="sec__head rev">
+      <span class="eyebrow">Tu factura</span>
+      <h2 class="h2 cromado">Lo que pagas hoy,<br>y lo que dejarías de pagar.</h2>
+      <p class="lead">Mueve tu factura promedio de LUMA. El cálculo asume que un sistema bien dimensionado cubre cerca del 90 % de tu consumo.</p>
+    </div>
+
+    <div class="calc rev">
+      <div class="calc__box">
+        <label class="calc__lab" for="factura">Tu factura mensual promedio</label>
+        <div class="calc__field">
+          <span>$</span>
+          <input type="number" id="factura" value="245" min="40" max="1200" step="5" inputmode="numeric" />
+        </div>
+        <input type="range" class="calc__slider" id="rango" value="245" min="40" max="1200" step="5" aria-label="Ajustar factura mensual" />
+        <p class="calc__hint">La factura promedio residencial en Puerto Rico ronda los $180–$280 mensuales.</p>
+      </div>
+
+      <div>
+        <dl class="out">
+          <div class="out__row"><dt>Ahorro estimado al mes</dt><dd id="oMes">$221</dd></div>
+          <div class="out__row"><dt>Ahorro al año</dt><dd id="oAno">$2,646</dd></div>
+          <div class="out__row out__row--alza"><dt>En 25 años, la vida útil del sistema</dt><dd id="oVida">$66,150</dd></div>
+        </dl>
+        <p class="out__nota">Estimado, no cotización. La cifra real depende de tu consumo en kWh, la orientación y sombra de tu techo, y el equipo que se instale. No incluye el aumento anual de tarifa, que empujaría el ahorro hacia arriba, ni el crédito contributivo federal. En la evaluación te damos el número exacto de tu techo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="sec" id="servicios">
+  <div class="wrap">
+    <div class="sec__head rev">
+      <span class="eyebrow">Qué instalamos</span>
+      <h2 class="h2 cromado">Un sistema, no una<br>caja de paneles.</h2>
+      <p class="lead">Dimensionamos según tu consumo real, no según lo que sobra en almacén.</p>
+    </div>
+
+    <div class="serv rev">
+      <div class="serv__it">
+        <span class="serv__n">01</span>
+        <h3 class="serv__t">Paneles residenciales</h3>
+        <p class="serv__d">Sistemas para casa dimensionados a tu consumo en kWh, con garantía de producción a 25 años.</p>
+      </div>
+      <div class="serv__it">
+        <span class="serv__n">02</span>
+        <h3 class="serv__t">Baterías de respaldo</h3>
+        <p class="serv__d">Almacenamiento que sostiene lo esencial durante un apagón: nevera, abanicos, internet, luces y equipo médico.</p>
+      </div>
+      <div class="serv__it">
+        <span class="serv__n">03</span>
+        <h3 class="serv__t">Comercial e industrial</h3>
+        <p class="serv__d">Techos de negocio, almacén y nave. Reduce el renglón de luz, que en Puerto Rico suele ser el segundo gasto más alto.</p>
+      </div>
+      <div class="serv__it">
+        <span class="serv__n">04</span>
+        <h3 class="serv__t">Mantenimiento</h3>
+        <p class="serv__d">Limpieza, revisión de inversores y monitoreo de producción. Un panel sucio produce menos y nadie te avisa.</p>
+      </div>
+      <div class="serv__it">
+        <span class="serv__n">05</span>
+        <h3 class="serv__t">Financiamiento</h3>
+        <p class="serv__d">Opciones sin pronto, con pago mensual comparable a lo que ya pagas de luz. Te explicamos los números sin letra chiquita.</p>
+      </div>
+      <div class="serv__it">
+        <span class="serv__n">06</span>
+        <h3 class="serv__t">Permisos y medición neta</h3>
+        <p class="serv__d">Tramitamos con LUMA y el municipio. Tú no haces filas ni persigues documentos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="sec" id="proceso">
+  <div class="wrap">
+    <div class="sec__head rev">
+      <span class="eyebrow">El proceso</span>
+      <h2 class="h2 cromado">De la primera visita<br>a la primera factura en cero.</h2>
+      <p class="lead">Cinco pasos. Tú solo estás presente en el primero y el último.</p>
+    </div>
+
+    <ol class="asc rev">
+      <li class="asc__it">
+        <span class="asc__n">01</span>
+        <h3 class="asc__t">Evaluación</h3>
+        <p class="asc__d">Subimos a tu techo y leemos tus últimas facturas. Gratis y sin compromiso.</p>
+      </li>
+      <li class="asc__it">
+        <span class="asc__n">02</span>
+        <h3 class="asc__t">Diseño</h3>
+        <p class="asc__d">Te entregamos la propuesta con producción estimada y el número de paneles.</p>
+      </li>
+      <li class="asc__it">
+        <span class="asc__n">03</span>
+        <h3 class="asc__t">Permisos</h3>
+        <p class="asc__d">Radicamos con LUMA y el municipio y damos seguimiento hasta la aprobación.</p>
+      </li>
+      <li class="asc__it">
+        <span class="asc__n">04</span>
+        <h3 class="asc__t">Instalación</h3>
+        <p class="asc__d">Entre uno y tres días en tu techo, con nuestra propia brigada.</p>
+      </li>
+      <li class="asc__it">
+        <span class="asc__n">05</span>
+        <h3 class="asc__t">Energización</h3>
+        <p class="asc__d">Se activa la medición neta y empieza a correr el ahorro.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section class="sec" id="proyectos">
+  <div class="wrap">
+    <div class="sec__head rev">
+      <span class="eyebrow">Instalaciones</span>
+      <h2 class="h2 cromado">Techos que ya<br>no dependen de la red.</h2>
+    </div>
+    <!-- Sustituir por fotos reales de instalaciones de Apex -->
+    <div class="proy rev">
+      <figure class="proy__it">
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900&q=80&fit=crop" alt="Arreglo de paneles solares bajo cielo despejado" loading="lazy" />
+        <figcaption class="proy__cap"><span>Residencial</span><b>Sistema con respaldo de batería</b></figcaption>
+      </figure>
+      <figure class="proy__it">
+        <img src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=900&q=80&fit=crop" alt="Instalación solar en techo de nave comercial" loading="lazy" />
+        <figcaption class="proy__cap"><span>Comercial</span><b>Techo de nave industrial</b></figcaption>
+      </figure>
+      <figure class="proy__it">
+        <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=900&q=80&fit=crop" alt="Vista aérea de un arreglo de paneles solares" loading="lazy" />
+        <figcaption class="proy__cap"><span>Producción</span><b>Arreglo dimensionado a consumo</b></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec__head rev">
+      <span class="eyebrow">Clientes</span>
+      <h2 class="h2 cromado">Lo que dicen<br>después del primer apagón.</h2>
+    </div>
+    <!-- TESTIMONIO: sustituir por reseñas reales con permiso del cliente -->
+    <div class="test rev">
+      <div class="test__it">
+        <p class="test__q">"Se fue la luz en toda la calle y nosotros ni cuenta nos dimos. Mi mamá usa máquina de oxígeno, así que para nosotros eso no tiene precio."</p>
+        <p class="test__a">— Nombre Apellido · Pueblo</p>
+      </div>
+      <div class="test__it">
+        <p class="test__q">"Pasé de pagar sobre $300 a pagar el cargo mínimo. La instalación fue en dos días y ellos hicieron todo el papeleo con LUMA."</p>
+        <p class="test__a">— Nombre Apellido · Pueblo</p>
+      </div>
+      <div class="test__it">
+        <p class="test__q">"Pedí tres cotizaciones. Apex fue la única que me explicó de dónde salía cada número en vez de darme un precio y ya."</p>
+        <p class="test__a">— Nombre Apellido · Pueblo</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDAR -->
+<section class="sec" id="agendar">
+  <div class="wrap">
+    <div class="sec__head rev">
+      <span class="eyebrow">Agenda</span>
+      <h2 class="h2 cromado">Escoge tu día.<br>Nosotros subimos al techo.</h2>
+      <p class="lead">La evaluación es gratis y toma cerca de 45 minutos. Salimos con un número real, no con un estimado de teléfono.</p>
+    </div>
+    <div class="agenda rev">
+      <div id="cal-apex"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PREGUNTAS -->
+<section class="sec" id="preguntas">
+  <div class="wrap">
+    <div class="sec__head rev">
+      <span class="eyebrow">Preguntas</span>
+      <h2 class="h2 cromado">Lo que todo el mundo<br>pregunta primero.</h2>
+    </div>
+    <div class="faq rev">
+      <div class="faq__it">
+        <button class="faq__q">¿Sirve mi techo? <i>+</i></button>
+        <div class="faq__a"><p>La mayoría de los techos de cemento en Puerto Rico sirven. Lo que decide es la orientación, la sombra de árboles o edificios cercanos y el espacio disponible. Eso se confirma en la evaluación, subiendo al techo — no por teléfono.</p></div>
+      </div>
+      <div class="faq__it">
+        <button class="faq__q">¿Qué pasa si hay un apagón? <i>+</i></button>
+        <div class="faq__a"><p>Depende de si tienes batería. Un sistema solo de paneles se apaga junto con la red, por seguridad de los técnicos de línea. Con batería de respaldo, la casa cambia sola a la batería y sigue andando. Por eso en Puerto Rico recomendamos batería casi siempre.</p></div>
+      </div>
+      <div class="faq__it">
+        <button class="faq__q">¿Cuánto cuesta y hay que dar pronto? <i>+</i></button>
+        <div class="faq__a"><p>El precio depende del tamaño del sistema, que depende de tu consumo. Hay opciones de financiamiento sin pronto donde el pago mensual queda parecido a lo que ya pagas de luz. En la propuesta te damos el desglose completo, sin cargos escondidos.</p></div>
+      </div>
+      <div class="faq__it">
+        <button class="faq__q">¿Qué es la medición neta? <i>+</i></button>
+        <div class="faq__a"><p>Es el acuerdo que permite que la energía que produces de más se acredite a tu cuenta. Cuando tu sistema produce más de lo que consumes, ese excedente entra a la red y se descuenta de tu factura. Nosotros radicamos ese trámite con LUMA por ti.</p></div>
+      </div>
+      <div class="faq__it">
+        <button class="faq__q">¿Cuánto tarda todo el proceso? <i>+</i></button>
+        <div class="faq__a"><p>La instalación en sí toma de uno a tres días. Lo que manda el calendario son los permisos y la energización, que dependen de LUMA y del municipio. Te damos una fecha estimada al firmar y te mantenemos al tanto en cada etapa.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section class="cierre">
+  <div class="wrap">
+    <span class="eyebrow">Evaluación gratis</span>
+    <h2 class="h2 cromado">El próximo apagón<br>ya viene de camino.</h2>
+    <p class="lead">Toma 45 minutos averiguar cuánto costaría que no te afecte.</p>
+    <a href="#agendar" class="btn-oro">Agenda tu evaluación</a>
+  </div>
+</section>
+</main>
+
+<!-- PIE -->
+<footer class="pie">
+  <div class="wrap">
+    <div class="pie__in">
+      <div class="pie__col">
+        <div class="pie__brand">
+          <img src="images/apex-corp-logo.jpg" alt="" />
+          <span>
+            <span class="nav__name cromado">APEX CORP</span>
+            <span class="nav__tag">Energía Renovable</span>
+          </span>
+        </div>
+        <p style="max-width:34ch">Sistemas solares con respaldo de batería en Puerto Rico.</p>
+      </div>
+
+      <div class="pie__col">
+        <h4>Contacto</h4>
+        <a href="tel:+17870000000">787-000-0000</a>
+        <a href="https://wa.me/17870000000">WhatsApp</a>
+        <a href="mailto:info@apexcorppr.com">info@apexcorppr.com</a>
+      </div>
+
+      <div class="pie__col">
+        <h4>Servicio</h4>
+        <p>DIRECCIÓN — pueblo</p>
+        <p>Lun a Sáb · 8:00 am – 6:00 pm</p>
+      </div>
+
+      <div class="pie__col">
+        <h4>Secciones</h4>
+        <a href="#ahorro">Tu factura</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#agendar">Agendar</a>
+      </div>
+    </div>
+
+    <div class="pie__legal">
+      <span>© <span id="ano">2026</span> Apex Corp · Energía Renovable</span>
+      <span>Sitio por <a href="index.html">CLUN Management</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/17870000000" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16c-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2"/></svg>
+</a>
+
+<script>
+/* Nav sticky */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 24);
+onScroll(); addEventListener('scroll', onScroll, {passive:true});
+
+/* Firma: apagón */
+const sw = document.getElementById('swApagon');
+const swLabel = document.getElementById('swLabel');
+sw.addEventListener('click', () => {
+  const on = document.body.classList.toggle('apagon');
+  sw.setAttribute('aria-checked', String(on));
+  swLabel.textContent = on ? 'Se fue la luz' : 'Simula un apagón';
+});
+
+/* Calculadora */
+const factura = document.getElementById('factura');
+const rango   = document.getElementById('rango');
+const oMes = document.getElementById('oMes'),
+      oAno = document.getElementById('oAno'),
+      oVida= document.getElementById('oVida');
+const money = n => '$' + Math.round(n).toLocaleString('en-US');
+const COBERTURA = 0.90;
+
+function calcular(v){
+  const bill = Math.min(1200, Math.max(40, Number(v) || 0));
+  const mes = bill * COBERTURA;
+  oMes.textContent  = money(mes);
+  oAno.textContent  = money(mes * 12);
+  oVida.textContent = money(mes * 12 * 25);
+}
+factura.addEventListener('input', e => { rango.value = e.target.value; calcular(e.target.value); });
+rango.addEventListener('input',   e => { factura.value = e.target.value; calcular(e.target.value); });
+calcular(factura.value);
+
+/* FAQ */
+document.querySelectorAll('.faq__q').forEach(q => {
+  const item = q.parentElement, panel = q.nextElementSibling;
+  q.addEventListener('click', () => {
+    const abierto = item.classList.toggle('abierto');
+    panel.style.maxHeight = abierto ? panel.scrollHeight + 'px' : 0;
+  });
+});
+
+/* Reveal al hacer scroll */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visto'); io.unobserve(e.target); } });
+}, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+/* Año en el pie */
+document.getElementById('ano').textContent = new Date().getFullYear();
+
+/* Cal.com — sustituir "apex-corp" por el calLink real del cliente */
+(function (C, A, L) {
+  let p = function (a, ar) { a.q.push(ar); };
+  let d = C.document;
+  C.Cal = C.Cal || function () {
+    let cal = C.Cal, ar = arguments;
+    if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+    if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1];
+      api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; }
+    p(cal, ar);
+  };
+})(window, "https://app.cal.com/embed/embed.js", "init");
+
+Cal("init", { origin: "https://cal.com" });
+Cal("inline", {
+  elementOrSelector: "#cal-apex",
+  calLink: "apex-corp",
+  layout: "month_view"
+});
+Cal("ui", {
+  theme: "dark",
+  styles: { branding: { brandColor: "#FFC01E" } },
+  hideEventTypeDetails: false
+});
+</script>
+
+</body>
+</html>
