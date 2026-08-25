@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HELIOS · Energía Solar para Puerto Rico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --night:  #080b14;
+      --dark:   #0f1422;
+      --card:   #151c2e;
+      --solar:  #FFB627;
+      --solar-d:#F59E0B;
+      --sky:    #38BDF8;
+      --cream:  #EAF0FA;
+      --muted:  rgba(234,240,250,0.46);
+      --border: rgba(234,240,250,0.08);
+      --disp:   'Space Grotesk', system-ui, sans-serif;
+      --sans:   'Sora', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--night); color: var(--cream); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 300; height: 76px; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; transition: background .4s, backdrop-filter .4s, border-color .4s; border-bottom: 1px solid transparent; }
+    .nav.scrolled { background: rgba(8,11,20,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav__logo { font-family: var(--disp); font-size: 22px; font-weight: 700; letter-spacing: 0.04em; display: flex; align-items: center; gap: 9px; }
+    .nav__logo i { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, var(--solar), var(--solar-d)); box-shadow: 0 0 18px rgba(255,182,39,0.5); display: inline-block; }
+    .nav__logo span { display: block; font-family: var(--sans); font-size: 8px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--solar); margin-top: 2px; }
+    .nav__links { display: flex; gap: 34px; list-style: none; }
+    .nav__links a { font-size: 12px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+    .nav__links a:hover { color: var(--cream); }
+    .nav__cta { background: var(--solar); color: var(--night); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 26px; border-radius: 100px; transition: transform .15s, box-shadow .2s; }
+    .nav__cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,182,39,0.3); }
+
+    /* HERO */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding: 120px 56px 80px; }
+    .hero__bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80&fit=crop'); background-size: cover; background-position: center; filter: brightness(0.32) saturate(0.85); }
+    .hero__overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(8,11,20,0.94) 0%, rgba(8,11,20,0.6) 55%, rgba(8,11,20,0.3) 100%); }
+    .hero__glow { position: absolute; top: -10%; right: -5%; width: 540px; height: 540px; background: radial-gradient(circle, rgba(255,182,39,0.22), transparent 65%); pointer-events: none; }
+    .hero__content { position: relative; z-index: 2; max-width: 720px; }
+    .hero__label { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--solar); margin-bottom: 24px; display: flex; align-items: center; gap: 14px; }
+    .hero__label::before { content: ''; width: 30px; height: 1px; background: var(--solar); }
+    .hero__title { font-family: var(--disp); font-size: clamp(44px, 6.4vw, 84px); font-weight: 700; line-height: 0.98; letter-spacing: -0.02em; margin-bottom: 26px; }
+    .hero__title em { font-style: normal; color: var(--solar); }
+    .hero__sub { font-size: 17px; font-weight: 300; color: rgba(234,240,250,0.72); line-height: 1.7; max-width: 500px; margin-bottom: 40px; }
+    .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .btn-solar { background: var(--solar); color: var(--night); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; padding: 17px 40px; border-radius: 100px; display: inline-block; transition: transform .15s, box-shadow .2s; border: none; cursor: pointer; font-family: var(--sans); }
+    .btn-solar:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,182,39,0.35); }
+    .btn-ghost { border: 1px solid rgba(234,240,250,0.22); color: var(--cream); font-size: 13px; font-weight: 400; padding: 17px 32px; border-radius: 100px; display: inline-flex; align-items: center; gap: 9px; transition: border-color .2s, background .2s; }
+    .btn-ghost:hover { border-color: rgba(234,240,250,0.5); background: rgba(234,240,250,0.04); }
+    .hero__trust { display: flex; gap: 34px; margin-top: 54px; flex-wrap: wrap; }
+    .hero__trust div { }
+    .hero__trust b { font-family: var(--disp); font-size: 30px; font-weight: 700; color: var(--cream); display: block; line-height: 1; }
+    .hero__trust b em { color: var(--solar); font-style: normal; }
+    .hero__trust small { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; display: block; }
+
+    /* MARQUEE STRIP */
+    .strip { background: var(--solar); color: var(--night); padding: 18px 0; overflow: hidden; white-space: nowrap; font-family: var(--disp); font-weight: 600; font-size: 14px; letter-spacing: 0.04em; }
+    .strip span { display: inline-block; padding: 0 26px; }
+    .strip i { font-style: normal; opacity: 0.55; }
+
+    /* SECTION COMMON */
+    .s-label { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--solar); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+    .s-label::before { content: ''; width: 20px; height: 1px; background: var(--solar); }
+    .s-title { font-family: var(--disp); font-size: clamp(32px, 4.4vw, 56px); font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; }
+    .s-sub { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 480px; margin-top: 14px; }
+
+    /* WHY / BENEFITS */
+    .why { padding: 110px 56px; }
+    .why__header { margin-bottom: 56px; max-width: 560px; }
+    .why__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .benefit { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 38px 32px; transition: transform .25s, border-color .25s; }
+    .benefit:hover { transform: translateY(-4px); border-color: rgba(255,182,39,0.3); }
+    .benefit__icon { width: 46px; height: 46px; border-radius: 12px; background: rgba(255,182,39,0.12); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 22px; }
+    .benefit__name { font-family: var(--disp); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    .benefit__desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    /* PROCESS */
+    .process { padding: 110px 56px; background: var(--dark); }
+    .process__header { margin-bottom: 56px; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .step { background: var(--card); padding: 36px 28px; }
+    .step__num { font-family: var(--disp); font-size: 13px; font-weight: 700; color: var(--night); background: var(--solar); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+    .step__name { font-family: var(--disp); font-size: 18px; font-weight: 600; margin-bottom: 9px; }
+    .step__desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+    /* ABOUT */
+    .about { display: grid; grid-template-columns: 1.1fr 1fr; }
+    .about__content { background: var(--card); padding: 90px 60px; display: flex; flex-direction: column; justify-content: center; }
+    .about__quote { font-family: var(--disp); font-size: clamp(24px, 2.7vw, 34px); font-weight: 600; line-height: 1.25; margin: 22px 0 20px; }
+    .about__quote em { color: var(--solar); font-style: normal; }
+    .about__body { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.85; margin-bottom: 38px; }
+    .about__img { background-image: url('https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=900&q=80&fit=crop'); background-size: cover; background-position: center; min-height: 560px; }
+    .stat-row { display: flex; gap: 40px; }
+    .stat__num { font-family: var(--disp); font-size: 38px; font-weight: 700; color: var(--solar); line-height: 1; }
+    .stat__label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+    /* QUOTE / LEAD CAPTURE */
+    .quote-sec { padding: 110px 56px; position: relative; overflow: hidden; }
+    .quote-sec__glow { position: absolute; bottom: -30%; left: 10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(56,189,248,0.1), transparent 65%); pointer-events: none; }
+    .quote-wrap { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; max-width: 1100px; margin: 0 auto; }
+    .quote-copy h2 { font-family: var(--disp); font-size: clamp(30px, 3.6vw, 48px); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+    .quote-copy h2 em { color: var(--solar); font-style: normal; }
+    .quote-copy p { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.75; margin-bottom: 28px; }
+    .quote-copy ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .quote-copy li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: rgba(234,240,250,0.8); }
+    .quote-copy li::before { content: '✓'; color: var(--night); background: var(--solar); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .lead-card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 8px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+
+    /* CHAT ASSISTANT (the product demo) */
+    .chat { border-radius: 16px; overflow: hidden; }
+    .chat__head { background: linear-gradient(100deg, var(--solar), var(--solar-d)); padding: 18px 22px; display: flex; align-items: center; gap: 12px; }
+    .chat__avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--night); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .chat__head h4 { font-family: var(--disp); font-size: 15px; font-weight: 700; color: var(--night); }
+    .chat__head p { font-size: 11px; color: rgba(8,11,20,0.7); display: flex; align-items: center; gap: 6px; margin-top: 1px; }
+    .chat__dot { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 0 0 rgba(22,163,74,0.6); animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22,163,74,0.5);} 70%{ box-shadow: 0 0 0 7px rgba(22,163,74,0);} 100%{box-shadow:0 0 0 0 rgba(22,163,74,0);} }
+    .chat__body { background: var(--dark); padding: 22px; height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .msg { max-width: 82%; padding: 11px 15px; font-size: 13.5px; line-height: 1.5; border-radius: 14px; animation: rise .35s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px);} to { opacity:1; transform: none;} }
+    .msg--bot { background: var(--card); color: var(--cream); border-bottom-left-radius: 4px; align-self: flex-start; }
+    .msg--user { background: var(--solar); color: var(--night); font-weight: 500; border-bottom-right-radius: 4px; align-self: flex-end; }
+    .chat__quick { display: flex; flex-wrap: wrap; gap: 8px; align-self: flex-start; max-width: 90%; }
+    .quick-btn { background: transparent; border: 1px solid rgba(255,182,39,0.4); color: var(--solar); font-family: var(--sans); font-size: 12.5px; font-weight: 500; padding: 8px 14px; border-radius: 100px; cursor: pointer; transition: background .15s, color .15s; }
+    .quick-btn:hover { background: var(--solar); color: var(--night); }
+    .typing { display: flex; gap: 4px; padding: 14px 16px; background: var(--card); border-radius: 14px; border-bottom-left-radius: 4px; align-self: flex-start; }
+    .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite; }
+    .typing span:nth-child(2){ animation-delay:.2s;} .typing span:nth-child(3){ animation-delay:.4s;}
+    @keyframes blink { 0%,60%,100%{opacity:.3;} 30%{opacity:1;} }
+    .chat__input { display: flex; gap: 8px; padding: 14px; background: var(--card); border-top: 1px solid var(--border); }
+    .chat__input input { flex: 1; background: var(--dark); border: 1px solid var(--border); border-radius: 100px; padding: 12px 18px; color: var(--cream); font-family: var(--sans); font-size: 13.5px; outline: none; }
+    .chat__input input:focus { border-color: rgba(255,182,39,0.5); }
+    .chat__send { background: var(--solar); border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 17px; color: var(--night); flex-shrink: 0; transition: transform .15s; }
+    .chat__send:hover { transform: scale(1.08); }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: 110px 56px; background: var(--dark); }
+    .testimonials__header { margin-bottom: 50px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .testi-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 34px 28px; }
+    .testi-stars { color: var(--solar); font-size: 15px; letter-spacing: 3px; margin-bottom: 16px; }
+    .testi-text { font-size: 15px; font-weight: 300; line-height: 1.7; color: rgba(234,240,250,0.84); margin-bottom: 24px; }
+    .testi-author { font-family: var(--disp); font-size: 13px; font-weight: 600; color: var(--solar); }
+    .testi-detail { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    /* FINAL CTA */
+    .final { padding: 100px 56px; text-align: center; position: relative; overflow: hidden; }
+    .final__glow { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(255,182,39,0.12), transparent 60%); }
+    .final__inner { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; }
+    .final h2 { font-family: var(--disp); font-size: clamp(34px, 5vw, 60px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 20px; }
+    .final h2 em { color: var(--solar); font-style: normal; }
+    .final p { font-size: 16px; font-weight: 300; color: var(--muted); margin-bottom: 36px; line-height: 1.7; }
+
+    /* FOOTER */
+    footer { background: var(--night); border-top: 1px solid var(--border); padding: 54px 56px 36px; }
+    .footer__top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 38px; flex-wrap: wrap; gap: 24px; }
+    .footer__logo { font-family: var(--disp); font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 9px; }
+    .footer__logo i { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, var(--solar), var(--solar-d)); }
+    .footer__links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer__links a { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+    .footer__links a:hover { color: var(--solar); }
+    .footer__bottom { display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 10px; }
+    .footer__copy { font-size: 12px; color: rgba(234,240,250,0.22); }
+    .footer__clun { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--solar); }
+
+    @media (max-width: 920px) {
+      .nav { padding: 0 20px; } .nav__links { display: none; }
+      .hero { padding: 110px 22px 70px; }
+      .why, .process, .quote-sec, .testimonials, .final { padding: 70px 22px; }
+      .why__grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .about { grid-template-columns: 1fr; } .about__img { min-height: 320px; } .about__content { padding: 56px 26px; }
+      .quote-wrap { grid-template-columns: 1fr; gap: 36px; }
+      .testi-grid { grid-template-columns: 1fr; }
+      footer { padding: 44px 22px 28px; }
+    }
+    @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav__logo"><i></i>HELIOS<span>Energía Solar · PR</span></div>
+    <ul class="nav__links">
+      <li><a href="#why">Beneficios</a></li>
+      <li><a href="#process">Proceso</a></li>
+      <li><a href="#cotiza">Cotización</a></li>
+    </ul>
+    <a href="#cotiza" class="nav__cta">Cotiza Gratis</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__glow"></div>
+    <div class="hero__content">
+      <p class="hero__label">Energía solar en Puerto Rico</p>
+      <h1 class="hero__title">Olvídate de los<br /><em>apagones</em> y de la<br />factura de luz.</h1>
+      <p class="hero__sub">Genera tu propia energía, protege tu hogar cuando el sistema falla y deja de pagarle a la AEE cada mes. Sin pago inicial.</p>
+      <div class="hero__cta">
+        <a href="#cotiza" class="btn-solar">Calcula tu ahorro</a>
+        <a href="https://wa.me/17875994838?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paneles%20solares." target="_blank" class="btn-ghost">💬 Hablar por WhatsApp</a>
+      </div>
+      <div class="hero__trust">
+        <div><b>hasta <em>60%</em></b><small>Menos en tu factura</small></div>
+        <div><b><em>$0</em></b><small>Pago inicial</small></div>
+        <div><b><em>25</em> años</b><small>De garantía</small></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <span>Independencia energética <i>·</i></span><span>Respaldo en apagones <i>·</i></span><span>Aumenta el valor de tu casa <i>·</i></span><span>Financiamiento disponible <i>·</i></span><span>Instalación certificada <i>·</i></span><span>Independencia energética <i>·</i></span><span>Respaldo en apagones <i>·</i></span>
+  </div>
+
+  <section class="why" id="why">
+    <div class="why__header">
+      <p class="s-label">Por qué solar</p>
+      <h2 class="s-title">Tu casa, tu energía.</h2>
+      <p class="s-sub">En Puerto Rico la luz es cara e inestable. Solar te da control — sobre tu factura y sobre tu tranquilidad.</p>
+    </div>
+    <div class="why__grid">
+      <div class="benefit"><div class="benefit__icon">💡</div><div class="benefit__name">Ahorra desde el día uno</div><div class="benefit__desc">Tu pago mensual de financiamiento suele ser menor que tu factura actual de la AEE. Ahorras mientras pagas tu propio sistema.</div></div>
+      <div class="benefit"><div class="benefit__icon">🔋</div><div class="benefit__name">Respaldo en apagones</div><div class="benefit__desc">Con batería, tu hogar sigue encendido cuando el resto de la isla está a oscuras. Nevera, abanicos y equipo médico protegidos.</div></div>
+      <div class="benefit"><div class="benefit__icon">🏠</div><div class="benefit__name">Más valor de propiedad</div><div class="benefit__desc">Una casa con sistema solar instalado se vende más rápido y a mejor precio. Es una inversión, no un gasto.</div></div>
+      <div class="benefit"><div class="benefit__icon">📉</div><div class="benefit__name">Sin pago inicial</div><div class="benefit__desc">Comienza con $0 de entrada y financiamiento aprobado en minutos. Te ayudamos con todo el proceso de cualificación.</div></div>
+      <div class="benefit"><div class="benefit__icon">🛡️</div><div class="benefit__name">25 años de garantía</div><div class="benefit__desc">Paneles tier-1 con garantía de producción de 25 años. Instalación certificada y mantenimiento incluido.</div></div>
+      <div class="benefit"><div class="benefit__icon">☀️</div><div class="benefit__name">Energía limpia</div><div class="benefit__desc">Reduce tu huella de carbono y aprovecha el recurso que más tenemos en el Caribe: el sol, todo el año.</div></div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="process__header">
+      <p class="s-label">Cómo funciona</p>
+      <h2 class="s-title">De la cotización al sol en 4 pasos.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step__num">1</div><div class="step__name">Cotización gratis</div><div class="step__desc">Nos das tu factura promedio y diseñamos un sistema a tu medida. Sin compromiso.</div></div>
+      <div class="step"><div class="step__num">2</div><div class="step__name">Diseño y aprobación</div><div class="step__desc">Evaluamos tu techo, tu consumo y tu financiamiento. Te entregamos el plan exacto.</div></div>
+      <div class="step"><div class="step__num">3</div><div class="step__name">Instalación</div><div class="step__desc">Nuestro equipo certificado instala en 1–2 días, con todos los permisos en regla.</div></div>
+      <div class="step"><div class="step__num">4</div><div class="step__name">Activación</div><div class="step__desc">Encendemos tu sistema y empiezas a generar tu propia energía. Bienvenido a HELIOS.</div></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about__content">
+      <p class="s-label">Quiénes somos</p>
+      <blockquote class="about__quote">"No vendemos paneles. Vendemos <em>tranquilidad</em> que dura 25 años."</blockquote>
+      <p class="about__body">HELIOS nació en Puerto Rico, para Puerto Rico. Conocemos los apagones, las facturas que suben y la incertidumbre del sistema. Por eso cada instalación se diseña pensando en una sola cosa: que tu familia nunca dependa de algo que no controlas. Equipo local, certificado y disponible cuando lo necesitas.</p>
+      <div class="stat-row">
+        <div><div class="stat__num">600+</div><div class="stat__label">Hogares</div></div>
+        <div><div class="stat__num">9</div><div class="stat__label">Años en PR</div></div>
+        <div><div class="stat__num">4.9★</div><div class="stat__label">Google</div></div>
+      </div>
+    </div>
+    <div class="about__img"></div>
+  </section>
+
+  <section class="quote-sec" id="cotiza">
+    <div class="quote-sec__glow"></div>
+    <div class="quote-wrap">
+      <div class="quote-copy">
+        <p class="s-label">Cotización en 24 horas</p>
+        <h2>Habla con nuestro <em>asistente</em> y calcula tu ahorro ahora.</h2>
+        <p>Sin llamadas, sin esperas. Cuéntanos un poco sobre tu factura y te preparamos una cotización personalizada. Un asesor humano te confirma por WhatsApp.</p>
+        <ul>
+          <li>Respuesta inmediata, 24/7</li>
+          <li>Sin compromiso ni costo</li>
+          <li>Cotización a tu medida</li>
+        </ul>
+      </div>
+
+      <div class="lead-card">
+        <div class="chat">
+          <div class="chat__head">
+            <div class="chat__avatar">☀️</div>
+            <div>
+              <h4>Asistente HELIOS</h4>
+              <p><span class="chat__dot"></span> En línea · responde al instante</p>
+            </div>
+          </div>
+          <div class="chat__body" id="chatBody"></div>
+          <form class="chat__input" id="chatForm" autocomplete="off">
+            <input type="text" id="chatInput" placeholder="Escribe aquí..." />
+            <button type="submit" class="chat__send" aria-label="Enviar">➤</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="testimonials__header">
+      <p class="s-label">Clientes reales</p>
+      <h2 class="s-title">Lo que dicen las familias.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">Pasé de pagar $340 al mes a casi nada. Cuando hubo apagón de tres días en mi sector, fui la única casa con luz. Vale cada centavo.</p><div class="testi-author">Marisol C.</div><div class="testi-detail">Caguas, PR</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">El proceso fue clarísimo. Me cotizaron por WhatsApp el mismo día y en dos semanas ya estaba instalado. Equipo serio y local.</p><div class="testi-author">Héctor R.</div><div class="testi-detail">Bayamón, PR</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">Tengo a mi mamá con equipo médico en casa. Saber que nunca se va a quedar sin energía me cambió la vida. Gracias HELIOS.</p><div class="testi-author">Anaís T.</div><div class="testi-detail">Ponce, PR</div></div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="final__glow"></div>
+    <div class="final__inner">
+      <h2>El sol ya está pagado.<br /><em>Empieza a usarlo.</em></h2>
+      <p>Cotización gratis, sin pago inicial y respaldo cuando más lo necesitas.</p>
+      <a href="#cotiza" class="btn-solar">Calcula tu ahorro</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer__top">
+      <div class="footer__logo"><i></i>HELIOS</div>
+      <div class="footer__links">
+        <a href="#why">Beneficios</a>
+        <a href="#process">Proceso</a>
+        <a href="#cotiza">Cotización</a>
+        <a href="https://wa.me/17875994838" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 HELIOS Energía Solar. Puerto Rico. Demostración.</p>
+      <p class="footer__clun">Sitio por CLUN Management</p>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+
+    // ===== Interactive lead-capture assistant =====
+    // Pure front-end simulation of the AI follow-up product:
+    // captures name -> qualifies by bill -> captures phone -> hands off.
+    const body = document.getElementById('chatBody');
+    const form = document.getElementById('chatForm');
+    const input = document.getElementById('chatInput');
+    const lead = { nombre: '', factura: '', telefono: '' };
+    let step = 0;
+
+    function scrollDown() { body.scrollTop = body.scrollHeight; }
+    function addMsg(text, who) {
+      const m = document.createElement('div');
+      m.className = 'msg msg--' + who;
+      m.textContent = text;
+      body.appendChild(m); scrollDown();
+    }
+    function typing() {
+      const t = document.createElement('div');
+      t.className = 'typing'; t.id = 'typing';
+      t.innerHTML = '<span></span><span></span><span></span>';
+      body.appendChild(t); scrollDown();
+    }
+    function clearTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+    function botSay(text, after) {
+      typing();
+      setTimeout(() => { clearTyping(); addMsg(text, 'bot'); if (after) after(); }, 900);
+    }
+    function quickReplies(options) {
+      const wrap = document.createElement('div');
+      wrap.className = 'chat__quick';
+      options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'quick-btn'; b.type = 'button'; b.textContent = opt;
+        b.onclick = () => { wrap.remove(); addMsg(opt, 'user'); handleBill(opt); };
+        wrap.appendChild(b);
+      });
+      body.appendChild(wrap); scrollDown();
+    }
+
+    function handleBill(value) {
+      lead.factura = value;
+      const savings = value.includes('350') ? '$280' : value.includes('200') ? '$170' : '$95';
+      input.disabled = false;
+      botSay('Con una factura de ' + value + ', podrías ahorrar cerca de ' + savings + ' al mes. ☀️', () => {
+        botSay('¿A qué número de WhatsApp te enviamos tu cotización gratis?', () => { step = 2; input.placeholder = 'Tu número de WhatsApp...'; input.focus(); });
+      });
+    }
+
+    // Send the captured lead to CLUN's inbox (same backend as contact.html)
+    async function sendLead() {
+      const data = new FormData();
+      data.append('Nombre', lead.nombre);
+      data.append('Telefono', lead.telefono);
+      data.append('Factura mensual', lead.factura);
+      data.append('Fuente', 'HELIOS solar-demo (chat)');
+      data.append('_subject', 'Nuevo lead solar — HELIOS / CLUN');
+      data.append('_captcha', 'false');
+      try {
+        await fetch('https://formsubmit.co/ajax/clunmanagement@gmail.com', {
+          method: 'POST', headers: { 'Accept': 'application/json' }, body: data,
+        });
+      } catch (_) { /* confirm to the user regardless */ }
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = input.value.trim();
+      if (!val) return;
+      addMsg(val, 'user');
+      input.value = '';
+
+      if (step === 0) {                       // got name
+        lead.nombre = val.split(' ')[0];
+        step = 1; input.disabled = true;
+        botSay('¡Mucho gusto, ' + lead.nombre + '! 👋 ¿Cuánto pagas de luz al mes, más o menos?', () => {
+          quickReplies(['$100 – $200', '$200 – $350', 'Más de $350']);
+        });
+      } else if (step === 2) {                // got phone
+        lead.telefono = val;
+        step = 3;
+        sendLead();                           // fire the real lead to CLUN's inbox
+        botSay('¡Listo, ' + lead.nombre + '! 🙌 Recibimos tus datos. Un asesor de HELIOS te contactará por WhatsApp en minutos con tu cotización personalizada.', () => {
+          input.placeholder = 'Conversación finalizada';
+          input.disabled = true;
+        });
+      }
+    });
+
+    // Kickoff
+    botSay('¡Hola! Soy el asistente de HELIOS ☀️ Te ayudo a calcular cuánto puedes ahorrar con energía solar.', () => {
+      botSay('Para empezar, ¿cómo te llamas?', () => input.focus());
+    });
+  </script>
+</body>
+</html>

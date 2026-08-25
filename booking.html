@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book a discovery call with CLUN Management — We'll discuss your digital presence goals." />
+  <title>Book a Call — CLUN Management</title>
+  <style>
+    :root {
+      --blue:     #0066cc;
+      --blue-h:   #0071e3;
+      --ink:      #1d1d1f;
+      --muted:    #6e6e73;
+      --canvas:   #ffffff;
+      --alt:      #f5f5f7;
+      --hairline: #d2d2d7;
+      --dark:     #000000;
+      --sans: -apple-system, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--canvas);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      transition: background 0.3s, backdrop-filter 0.3s, height 0.3s, box-shadow 0.3s;
+    }
+    .nav.scrolled {
+      height: 72px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: 0 1px 0 var(--hairline);
+    }
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: gap 0.3s;
+    }
+    .nav__mascot {
+      height: 96px;
+      width: auto;
+      transition: height 0.3s;
+    }
+    .nav.scrolled .nav__mascot { height: 52px; }
+    .nav__wordmark {
+      font-size: 46px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      line-height: 1;
+      transition: font-size 0.3s;
+    }
+    .nav.scrolled .nav__wordmark { font-size: 28px; }
+
+    .nav__back {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.2s;
+    }
+    .nav__back:hover { opacity: 0.7; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 180px 24px 56px;
+    }
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .hero__eyebrow::before,
+    .hero__eyebrow::after {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--hairline);
+    }
+    .hero__title {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .hero__sub {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 400px;
+      margin-inline: auto;
+    }
+
+    /* ── Cal embed wrapper ── */
+    .cal-section {
+      max-width: 900px;
+      margin: 48px auto 0;
+      padding: 0 24px 100px;
+    }
+    #cal-inline {
+      width: 100%;
+      min-height: 650px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+    }
+
+    /* ── Trust row ── */
+    .trust {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 32px;
+      list-style: none;
+      padding: 32px 24px 0;
+      border-top: 1px solid var(--hairline);
+      max-width: 900px;
+      margin-inline: auto;
+    }
+    .trust li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .trust .pip {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--alt);
+      border-top: 1px solid var(--hairline);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .footer p { font-size: 13px; color: var(--muted); line-height: 2; }
+    .footer a { color: var(--blue); }
+    .footer .sep-dot { margin: 0 8px; color: var(--hairline); }
+
+    @media (max-width: 600px) {
+      .hero { padding-top: 150px; }
+      .nav__mascot { height: 72px; }
+      .nav__wordmark { font-size: 34px; }
+      .nav.scrolled .nav__mascot { height: 44px; }
+      .nav.scrolled .nav__wordmark { font-size: 22px; }
+      #cal-inline { min-height: 580px; border-radius: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="CLUN Management">
+      <img src="images/mascot.png" class="nav__mascot" alt="" aria-hidden="true" />
+      <span class="nav__wordmark">CLUN.</span>
+    </a>
+    <a href="index.html" class="nav__back">
+      ← Back
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero__eyebrow"><span>Discovery Call</span></p>
+    <h1 class="hero__title">Let's talk about<br />your business.</h1>
+    <p class="hero__sub">Pick a time that works for you. No commitment required.</p>
+  </section>
+
+  <!-- CAL.COM EMBED -->
+  <div class="cal-section">
+    <div id="cal-inline"></div>
+
+    <ul class="trust" style="margin-top: 40px;">
+      <li><span class="pip" aria-hidden="true"></span>Personal attention, always</li>
+      <li><span class="pip" aria-hidden="true"></span>No commitment required</li>
+      <li><span class="pip" aria-hidden="true"></span>Tailored to your business</li>
+      <li><span class="pip" aria-hidden="true"></span>Select clients only</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>
+      © 2026 CLUN Management
+      <span class="sep-dot">·</span>
+      <a href="mailto:clunmanagement@gmail.com">clunmanagement@gmail.com</a>
+    </p>
+  </footer>
+
+  <!-- Nav scroll -->
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  </script>
+
+  <!-- Cal.com Inline Embed -->
+  <script type="text/javascript">
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal; let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {}; cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          typeof namespace === "string"
+            ? (cal.ns[namespace] = api) && p(api, ar)
+            : p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", { origin: "https://cal.com" });
+
+    Cal("inline", {
+      elementOrSelector: "#cal-inline",
+      calLink: "clun-management-ecx9up",
+      layout: "month_view"
+    });
+
+    Cal("ui", {
+      styles: { branding: { brandColor: "#0066cc" } },
+      hideEventTypeDetails: false,
+      layout: "month_view"
+    });
+  </script>
+
+</body>
+</html>

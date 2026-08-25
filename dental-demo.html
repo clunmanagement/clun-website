@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SONRISA Dental — Tu sonrisa, nuestra especialidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:   #080f1e;
+      --dark:   #0d1628;
+      --card:   #111f38;
+      --teal:   #00C2A8;
+      --teal-l: #00dbbf;
+      --white:  #ffffff;
+      --off:    #f0f8ff;
+      --muted:  rgba(255,255,255,0.42);
+      --border: rgba(255,255,255,0.07);
+      --sans:   'DM Sans', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--navy); color: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 300; height: 76px; display: flex; align-items: center; justify-content: space-between; padding: 0 52px; transition: background 0.4s, backdrop-filter 0.4s; }
+    .nav.scrolled { background: rgba(8,15,30,0.94); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav__logo { display: flex; align-items: center; gap: 10px; }
+    .nav__logo-icon { width: 36px; height: 36px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .nav__logo-text { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+    .nav__logo-text span { display: block; font-size: 9px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-top: 1px; }
+    .nav__links { display: flex; gap: 32px; list-style: none; }
+    .nav__links a { font-size: 13px; font-weight: 500; letter-spacing: 0.04em; color: var(--muted); transition: color 0.2s; }
+    .nav__links a:hover { color: var(--white); }
+    .nav__cta { background: var(--teal); color: var(--navy); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; padding: 12px 28px; border-radius: 8px; transition: background 0.2s; }
+    .nav__cta:hover { background: var(--teal-l); }
+
+    /* HERO — SPLIT */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+    .hero__content { display: flex; flex-direction: column; justify-content: center; padding: 120px 72px 80px; background: var(--navy); }
+    .hero__badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,194,168,0.12); border: 1px solid rgba(0,194,168,0.3); border-radius: 999px; padding: 6px 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 28px; width: fit-content; }
+    .hero__title { font-size: clamp(44px, 5vw, 68px); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px; }
+    .hero__title .accent { color: var(--teal); }
+    .hero__sub { font-size: 17px; font-weight: 300; color: var(--muted); line-height: 1.65; max-width: 420px; margin-bottom: 44px; }
+    .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-teal { background: var(--teal); color: var(--navy); font-size: 14px; font-weight: 700; letter-spacing: 0.02em; padding: 17px 44px; border-radius: 8px; display: inline-block; transition: background 0.2s, transform 0.15s; }
+    .btn-teal:hover { background: var(--teal-l); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.18); color: var(--white); font-size: 14px; font-weight: 500; padding: 17px 36px; border-radius: 8px; display: inline-block; transition: border-color 0.2s; }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.4); }
+    .hero__img { background-image: url('https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=900&q=80&fit=crop'); background-size: cover; background-position: center; position: relative; }
+    .hero__img-overlay { position: absolute; inset: 0; background: linear-gradient(to right, var(--navy) 0%, transparent 30%); }
+
+    /* TRUST STRIP */
+    .trust-strip { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: grid; grid-template-columns: repeat(4, 1fr); }
+    .trust-item { padding: 28px 24px; display: flex; align-items: center; gap: 14px; border-right: 1px solid var(--border); }
+    .trust-item:last-child { border-right: none; }
+    .trust-item__icon { font-size: 24px; }
+    .trust-item__num { font-size: 26px; font-weight: 700; color: var(--teal); line-height: 1; }
+    .trust-item__label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+
+    /* SECTION LABELS */
+    .s-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .s-label::before { content: ''; display: block; width: 18px; height: 2px; background: var(--teal); border-radius: 2px; }
+    .s-title { font-size: clamp(32px, 4vw, 52px); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; }
+    .s-sub { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.65; max-width: 480px; margin-top: 14px; }
+
+    /* SERVICES */
+    .services { padding: 100px 72px; }
+    .services__header { margin-bottom: 52px; }
+    .services__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .service-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px 28px; transition: border-color 0.3s, background 0.3s; }
+    .service-item:hover { border-color: rgba(0,194,168,0.3); background: #132235; }
+    .service-item__icon { font-size: 28px; margin-bottom: 16px; }
+    .service-item__name { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .service-item__desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+    .service-item__price { font-size: 20px; font-weight: 700; color: var(--teal); }
+    .service-item__price span { font-size: 12px; font-weight: 300; color: var(--muted); }
+
+    /* TECHNOLOGY */
+    .tech { background: var(--dark); padding: 80px 72px; }
+    .tech__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .tech__img { aspect-ratio: 4/3; overflow: hidden; border-radius: 12px; }
+    .tech__img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) saturate(0.7); }
+    .tech__list { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+    .tech__item { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .tech__item:first-child { border-top: 1px solid var(--border); }
+    .tech__item-icon { width: 40px; height: 40px; background: rgba(0,194,168,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .tech__item-name { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+    .tech__item-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.5; }
+
+    /* TEAM */
+    .team { padding: 100px 72px; }
+    .team__header { margin-bottom: 52px; }
+    .team__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .doctor-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.3s; }
+    .doctor-card:hover { border-color: rgba(0,194,168,0.3); }
+    .doctor-card__img { width: 100%; aspect-ratio: 3/4; object-fit: cover; filter: grayscale(15%); transition: filter 0.4s; }
+    .doctor-card:hover .doctor-card__img { filter: grayscale(0%); }
+    .doctor-card__info { padding: 22px 22px 26px; }
+    .doctor-card__name { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
+    .doctor-card__title { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+    .doctor-card__bio { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: 100px 72px; background: var(--dark); }
+    .testimonials__header { margin-bottom: 48px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .testi-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px 26px; }
+    .testi-stars { color: var(--teal); font-size: 13px; letter-spacing: 2px; margin-bottom: 14px; }
+    .testi-text { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.78); line-height: 1.7; margin-bottom: 22px; }
+    .testi-author { font-size: 13px; font-weight: 700; }
+    .testi-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* BOOKING CTA */
+    .booking-cta { background: var(--teal); padding: 80px 72px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .booking-cta__title { font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -0.03em; color: var(--navy); max-width: 480px; line-height: 1.1; }
+    .btn-dark { background: var(--navy); color: var(--white); font-size: 14px; font-weight: 700; letter-spacing: 0.02em; padding: 18px 52px; border-radius: 8px; white-space: nowrap; transition: background 0.2s, transform 0.15s; display: inline-block; }
+    .btn-dark:hover { background: #0d1628; transform: translateY(-2px); }
+
+    /* INSURANCE */
+    .insurance { padding: 72px 72px; background: var(--navy); }
+    .insurance__grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+    .insurance-tag { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 20px; font-size: 13px; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .insurance-tag::before { content: '✓'; color: var(--teal); font-weight: 700; font-size: 12px; }
+
+    /* LOCATION */
+    .location { padding: 100px 72px; background: var(--dark); }
+    .location__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 52px; align-items: start; }
+    .location__map { aspect-ratio: 4/3; overflow: hidden; position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
+    .location__map img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) saturate(0.3); }
+    .location__map-pin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+    .info-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .info-row:first-of-type { border-top: 1px solid var(--border); }
+    .info-row__icon { color: var(--teal); flex-shrink: 0; font-size: 16px; margin-top: 2px; }
+    .info-row__label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .info-row__val { font-size: 14px; font-weight: 300; color: var(--white); line-height: 1.5; }
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    .hours-table td { padding: 11px 0; font-size: 14px; font-weight: 300; border-bottom: 1px solid var(--border); }
+    .hours-table td:first-child { color: var(--muted); }
+    .hours-table td:last-child { text-align: right; }
+    .hours-table tr:last-child td { border-bottom: none; }
+
+    /* FOOTER */
+    footer { background: var(--navy); border-top: 1px solid var(--border); padding: 52px 72px 36px; }
+    .footer__top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+    .footer__logo { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+    .footer__logo-icon { width: 32px; height: 32px; background: var(--teal); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .footer__links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer__links a { font-size: 12px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .footer__links a:hover { color: var(--teal); }
+    .footer__bottom { display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border); }
+    .footer__copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer__clun { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
+
+    @media (max-width: 900px) {
+      .nav { padding: 0 20px; } .nav__links { display: none; }
+      .hero { grid-template-columns: 1fr; } .hero__content { padding: 100px 24px 60px; } .hero__img { height: 320px; }
+      .trust-strip { grid-template-columns: 1fr 1fr; }
+      .trust-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .services { padding: 72px 24px; } .services__grid { grid-template-columns: 1fr; }
+      .tech { padding: 72px 24px; } .tech__inner { grid-template-columns: 1fr; gap: 36px; }
+      .team { padding: 72px 24px; } .team__grid { grid-template-columns: 1fr; }
+      .testimonials { padding: 72px 24px; } .testi-grid { grid-template-columns: 1fr; }
+      .booking-cta { padding: 60px 24px; flex-direction: column; }
+      .insurance { padding: 56px 24px; }
+      .location { padding: 72px 24px; } .location__grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 44px 24px 28px; } .footer__top { flex-direction: column; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav__logo">
+      <div class="nav__logo-icon">🦷</div>
+      <div class="nav__logo-text">SONRISA Dental<span>San Juan, Puerto Rico</span></div>
+    </div>
+    <ul class="nav__links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#team">El Equipo</a></li>
+      <li><a href="#location">Ubicación</a></li>
+    </ul>
+    <a href="https://wa.me/17870000000" target="_blank" class="nav__cta">Agendar Cita</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__content">
+      <div class="hero__badge">✦ Nuevos pacientes bienvenidos</div>
+      <h1 class="hero__title">Tu sonrisa,<br />nuestra <span class="accent">especialidad.</span></h1>
+      <p class="hero__sub">Odontología moderna, atención personalizada, y un equipo que entiende que ir al dentista no tiene que dar miedo.</p>
+      <div class="hero__cta">
+        <a href="https://wa.me/17870000000" target="_blank" class="btn-teal">Agendar Cita</a>
+        <a href="#services" class="btn-outline">Ver Servicios</a>
+      </div>
+    </div>
+    <div class="hero__img">
+      <div class="hero__img-overlay"></div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="trust-item"><div class="trust-item__icon">🏅</div><div><div class="trust-item__num">15+</div><div class="trust-item__label">Años de práctica</div></div></div>
+    <div class="trust-item"><div class="trust-item__icon">👩‍⚕️</div><div><div class="trust-item__num">3</div><div class="trust-item__label">Doctoras certificadas</div></div></div>
+    <div class="trust-item"><div class="trust-item__icon">🔬</div><div><div class="trust-item__num">100%</div><div class="trust-item__label">Tecnología digital</div></div></div>
+    <div class="trust-item"><div class="trust-item__icon">⭐</div><div><div class="trust-item__num">5.0</div><div class="trust-item__label">Google Reviews</div></div></div>
+  </div>
+
+  <section class="services" id="services">
+    <div class="services__header">
+      <p class="s-label">Nuestros servicios</p>
+      <h2 class="s-title">Tratamientos</h2>
+      <p class="s-sub">Desde tu limpieza anual hasta transformaciones completas. Todo bajo un mismo techo.</p>
+    </div>
+    <div class="services__grid">
+      <div class="service-item"><div class="service-item__icon">🪥</div><div class="service-item__name">Limpieza Dental</div><div class="service-item__desc">Profilaxis completa con remoción de sarro, pulido y fluoruro. La base de una buena salud bucal.</div><div class="service-item__price">$85 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__icon">✨</div><div class="service-item__name">Blanqueamiento</div><div class="service-item__desc">Blanqueamiento profesional con luz LED. Resultados visibles desde la primera sesión, hasta 8 tonos más blanco.</div><div class="service-item__price">$350 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__icon">😁</div><div class="service-item__name">Ortodoncia</div><div class="service-item__desc">Brackets tradicionales e Invisalign disponibles. Evaluación gratuita para determinar el mejor tratamiento.</div><div class="service-item__price">$2,500 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__icon">🔩</div><div class="service-item__name">Implantes Dentales</div><div class="service-item__desc">Solución permanente para dientes perdidos. Titanio de alta calidad con garantía de por vida.</div><div class="service-item__price">$1,800 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__icon">🚨</div><div class="service-item__name">Emergencias</div><div class="service-item__desc">Atendemos emergencias dentales el mismo día. Dolor de muelas, fractura dental, abscesos — te vemos hoy.</div><div class="service-item__price">Llama ahora</div></div>
+      <div class="service-item"><div class="service-item__icon">👶</div><div class="service-item__name">Odontología Infantil</div><div class="service-item__desc">Ambiente amigable diseñado para que los niños pierdan el miedo al dentista desde el primer día.</div><div class="service-item__price">$60 <span>/ desde</span></div></div>
+    </div>
+  </section>
+
+  <section class="tech">
+    <div class="tech__inner">
+      <div class="tech__img"><img src="https://images.unsplash.com/photo-1588776814546-1ffbb5c58ca3?w=700&q=80&fit=crop" alt="Dental office" loading="lazy" /></div>
+      <div>
+        <p class="s-label">Nuestra tecnología</p>
+        <h2 class="s-title">Equipados para<br />lo mejor</h2>
+        <div class="tech__list">
+          <div class="tech__item"><div class="tech__item-icon">📡</div><div><div class="tech__item-name">Radiografías Digitales</div><div class="tech__item-desc">90% menos radiación que los rayos X tradicionales. Imagen instantánea y de mayor precisión.</div></div></div>
+          <div class="tech__item"><div class="tech__item-icon">🖥️</div><div><div class="tech__item-name">Escáner 3D Intraoral</div><div class="tech__item-desc">Sin impresiones incómodas. Mapeamos tu boca en minutos con precisión milimétrica.</div></div></div>
+          <div class="tech__item"><div class="tech__item-icon">💡</div><div><div class="tech__item-name">Blanqueamiento LED</div><div class="tech__item-desc">Sistema Zoom de última generación. El mismo que usan los dentistas en TV — en tu boca hoy.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team" id="team">
+    <div class="team__header">
+      <p class="s-label">El equipo</p>
+      <h2 class="s-title">Nuestras Doctoras</h2>
+      <p class="s-sub">Certificadas, comprometidas, y con años de práctica en Puerto Rico.</p>
+    </div>
+    <div class="team__grid">
+      <div class="doctor-card">
+        <img class="doctor-card__img" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=500&q=80&fit=crop&crop=faces" alt="Dra. María Santos" loading="lazy" />
+        <div class="doctor-card__info">
+          <div class="doctor-card__name">Dra. María Santos</div>
+          <div class="doctor-card__title">Directora Clínica · Ortodoncia</div>
+          <div class="doctor-card__bio">15 años de experiencia. Especialista en Invisalign y ortodoncia estética. Formada en UPR y University of Florida.</div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <img class="doctor-card__img" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=500&q=80&fit=crop&crop=faces" alt="Dr. Carlos Vega" loading="lazy" />
+        <div class="doctor-card__info">
+          <div class="doctor-card__name">Dr. Carlos Vega</div>
+          <div class="doctor-card__title">Implantología & Cirugía</div>
+          <div class="doctor-card__bio">Especialista en implantes y cirugía oral. Más de 800 implantes colocados. Formado en NYU College of Dentistry.</div>
+        </div>
+      </div>
+      <div class="doctor-card">
+        <img class="doctor-card__img" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&q=80&fit=crop&crop=faces" alt="Dra. Ana Rosario" loading="lazy" />
+        <div class="doctor-card__info">
+          <div class="doctor-card__name">Dra. Ana Rosario</div>
+          <div class="doctor-card__title">Odontología General & Infantil</div>
+          <div class="doctor-card__bio">Especialista en pacientes pediátricos y adultos con ansiedad dental. Su enfoque es hacer que cada visita sea positiva.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="testimonials__header">
+      <p class="s-label">Pacientes satisfechos</p>
+      <h2 class="s-title">Reseñas</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Llevo 10 años sin ir al dentista por miedo. La Dra. Rosario me hizo sentir cómodo desde el primer minuto. Ahora voy cada 6 meses sin problema."</p><div class="testi-author">Roberto M.</div><div class="testi-detail">Paciente desde 2023</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"El blanqueamiento fue increíble — 8 tonos más blanco en una sola sesión. Mis compañeros de trabajo no paraban de preguntarme qué me había hecho."</p><div class="testi-author">Gabriela T.</div><div class="testi-detail">Caguas, PR</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Mis dos hijos vienen aquí y nunca hacen drama. La Dra. Rosario tiene un don especial con los niños. La clínica es moderna, limpia y el servicio es excepcional."</p><div class="testi-author">Patricia V.</div><div class="testi-detail">Bayamón, PR</div></div>
+    </div>
+  </section>
+
+  <section class="booking-cta">
+    <h2 class="booking-cta__title">¿Listo para transformar tu sonrisa?</h2>
+    <a href="https://wa.me/17870000000?text=Hola%2C%20quiero%20agendar%20una%20cita%20en%20SONRISA%20Dental." target="_blank" class="btn-dark">Agendar por WhatsApp</a>
+  </section>
+
+  <section class="insurance">
+    <p class="s-label">Planes y seguros</p>
+    <h2 class="s-title">Aceptamos tu seguro</h2>
+    <div class="insurance__grid">
+      <div class="insurance-tag">Triple-S</div>
+      <div class="insurance-tag">MCS</div>
+      <div class="insurance-tag">Plan de Salud del Gobierno</div>
+      <div class="insurance-tag">MAPFRE</div>
+      <div class="insurance-tag">MetLife</div>
+      <div class="insurance-tag">Humana</div>
+      <div class="insurance-tag">Planes de pago disponibles</div>
+      <div class="insurance-tag">CareCredit aceptado</div>
+    </div>
+  </section>
+
+  <section class="location" id="location">
+    <p class="s-label">Encuéntranos</p>
+    <h2 class="s-title">Ubicación & Horario</h2>
+    <div class="location__grid">
+      <div class="location__map">
+        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=60&fit=crop" alt="Map" />
+        <div class="location__map-pin">📍 SONRISA Dental</div>
+      </div>
+      <div>
+        <div class="info-row"><div class="info-row__icon">📍</div><div><div class="info-row__label">Dirección</div><div class="info-row__val">Ave. Ponce de León 1205, Suite 302<br />San Juan, PR 00907</div></div></div>
+        <div class="info-row"><div class="info-row__icon">📞</div><div><div class="info-row__label">Citas</div><div class="info-row__val">+1 (787) 000-0000<br />WhatsApp disponible</div></div></div>
+        <div class="info-row"><div class="info-row__icon">🚗</div><div><div class="info-row__label">Estacionamiento</div><div class="info-row__val">Parking gratis para pacientes<br />Acceso para sillas de ruedas</div></div></div>
+        <table class="hours-table">
+          <tr><td>Lunes – Viernes</td><td>8:00 AM – 5:00 PM</td></tr>
+          <tr><td>Sábado</td><td>8:00 AM – 1:00 PM</td></tr>
+          <tr><td>Domingo</td><td>Solo emergencias</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer__top">
+      <div class="footer__logo"><div class="footer__logo-icon">🦷</div> SONRISA Dental</div>
+      <div class="footer__links">
+        <a href="#services">Servicios</a>
+        <a href="#team">Equipo</a>
+        <a href="#location">Ubicación</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 SONRISA Dental. Todos los derechos reservados.</p>
+      <p class="footer__clun">Sitio por CLUN Management</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+  </script>
+</body>
+</html>

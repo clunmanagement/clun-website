@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProSolutions PR — Plomería Profesional 24/7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:    #09111f;
+      --dark:    #0d1829;
+      --card:    #111f38;
+      --accent:  #3D7EC9;
+      --accent-l:#5B98DE;
+      --silver:  #94A3B8;
+      --ice:     #CBD8EA;
+      --white:   #ffffff;
+      --cream:   #f0f4f8;
+      --muted:   rgba(255,255,255,0.45);
+      --border:  rgba(255,255,255,0.07);
+      --sans:    'Inter', system-ui, sans-serif;
+      --ease:    cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--navy); color: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+    @keyframes pulse    { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.5); opacity:.4; } }
+    @keyframes marquee  { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    @keyframes gradAnim { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+    @keyframes float    { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+    @keyframes slideUp  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes shake    { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-8deg)} 75%{transform:rotate(8deg)} }
+
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .65s var(--ease), transform .65s var(--ease); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+    .reveal-delay-3 { transition-delay:.3s; }
+    .reveal-delay-4 { transition-delay:.4s; }
+
+    /* ── EMERGENCY BAR ── */
+    .emergency-bar { background: var(--accent); padding: 10px 52px; display:flex; align-items:center; justify-content:space-between; position:relative; z-index:400; }
+    .emergency-bar__left { display:flex; align-items:center; gap:10px; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+    .pulse-dot { width:8px; height:8px; border-radius:50%; background:#fff; animation:pulse 1.4s ease-in-out infinite; flex-shrink:0; }
+    .emergency-bar__phone { font-size:15px; font-weight:800; display:flex; align-items:center; gap:8px; letter-spacing:.02em; transition:opacity .2s; }
+    .emergency-bar__phone:hover { opacity:.85; }
+    .emergency-bar__phone svg { animation:shake 2.5s ease-in-out infinite; }
+
+    /* ── NAV ── */
+    .nav { position:sticky; top:0; z-index:300; background:var(--dark); border-bottom:1px solid var(--border); height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 52px; transition:box-shadow .3s; }
+    .nav.shadow { box-shadow:0 4px 24px rgba(0,0,0,.4); }
+    .nav__brand { display:flex; align-items:center; gap:12px; }
+    .nav__icon { width:40px; height:40px; background:var(--accent); border-radius:10px; display:flex; align-items:center; justify-content:center; animation:float 3s ease-in-out infinite; }
+    .nav__name { font-size:18px; font-weight:800; letter-spacing:-.02em; }
+    .nav__name span { display:block; font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-top:1px; }
+    .nav__links { display:flex; gap:28px; list-style:none; }
+    .nav__links a { font-size:13px; font-weight:500; color:var(--muted); transition:color .2s; }
+    .nav__links a:hover { color:#fff; }
+    .nav__right { display:flex; align-items:center; gap:12px; }
+    .nav__phone { font-size:13px; font-weight:700; color:var(--accent); }
+    .nav__cta { background:var(--accent); color:#fff; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:11px 24px; border-radius:6px; transition:background .2s, transform .15s; }
+    .nav__cta:hover { background:var(--accent-l); transform:translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero { position:relative; min-height:92vh; display:flex; align-items:center; overflow:hidden; }
+    .hero__bg { position:absolute; inset:0; background: linear-gradient(135deg,#09111f 0%,#0d2044 40%,#0a1830 70%,#09111f 100%); background-size:400% 400%; animation:gradAnim 12s ease infinite; }
+    .hero__img { position:absolute; inset:0; background-image:url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1600&q=80&fit=crop'); background-size:cover; background-position:center right; opacity:.12; }
+    .hero__overlay { position:absolute; inset:0; background:linear-gradient(to right,rgba(9,17,31,.97) 55%,rgba(9,17,31,.4) 100%); }
+    .hero__content { position:relative; z-index:2; padding:80px 72px; max-width:700px; animation:fadeUp .9s var(--ease) both; }
+    .hero__badges { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px; }
+    .hero__badge { display:inline-flex; align-items:center; gap:7px; background:rgba(61,126,201,.12); border:1px solid rgba(61,126,201,.35); border-radius:999px; padding:6px 14px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+    .hero__title { font-size:clamp(48px,6.5vw,82px); font-weight:900; line-height:.97; letter-spacing:-.04em; margin-bottom:20px; }
+    .hero__title .accent { color:var(--accent); display:block; }
+    .hero__sub { font-size:18px; font-weight:300; color:rgba(255,255,255,.55); line-height:1.65; max-width:460px; margin-bottom:44px; }
+    .hero__cta { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
+    .btn-orange { background:var(--accent); color:#fff; font-size:14px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:18px 44px; border-radius:8px; display:inline-flex; align-items:center; gap:10px; transition:background .2s, transform .15s, box-shadow .2s; box-shadow:0 4px 20px rgba(61,126,201,.35); }
+    .btn-orange:hover { background:var(--accent-l); transform:translateY(-2px); box-shadow:0 8px 30px rgba(61,126,201,.45); }
+    .btn-ghost { border:1.5px solid rgba(255,255,255,.2); color:#fff; font-size:14px; font-weight:500; padding:18px 36px; border-radius:8px; display:inline-flex; align-items:center; gap:8px; transition:border-color .2s, background .2s; }
+    .btn-ghost:hover { border-color:rgba(255,255,255,.45); background:rgba(255,255,255,.05); }
+    .hero__stats { display:flex; gap:36px; flex-wrap:wrap; }
+    .hero__stat-num { font-size:36px; font-weight:900; color:#fff; line-height:1; }
+    .hero__stat-label { font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:3px; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { background:var(--accent); padding:13px 0; overflow:hidden; }
+    .marquee-track { display:flex; animation:marquee 28s linear infinite; white-space:nowrap; }
+    .marquee-item { font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#fff; padding:0 28px; display:flex; align-items:center; gap:28px; }
+    .marquee-item::after { content:'✦'; font-size:8px; opacity:.7; }
+
+    /* ── SECTION LABELS ── */
+    .s-label { font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+    .s-label::before { content:''; display:block; width:18px; height:2px; background:var(--accent); border-radius:2px; }
+    .s-title { font-size:clamp(32px,4vw,52px); font-weight:800; line-height:1.05; letter-spacing:-.035em; }
+    .s-sub { font-size:16px; font-weight:300; color:var(--muted); line-height:1.65; max-width:520px; margin-top:14px; }
+
+    /* ── SERVICES ── */
+    .services { padding:100px 72px; }
+    .services__header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:52px; }
+    .services__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .service-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; cursor:default; transition:transform .35s var(--ease), border-color .3s, box-shadow .35s; position:relative; }
+    .service-card:hover { transform:translateY(-6px); border-color:rgba(61,126,201,.4); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+    .service-card__img { height:200px; overflow:hidden; position:relative; }
+    .service-card__img img { width:100%; height:100%; object-fit:cover; filter:brightness(.7) saturate(.8); transition:transform .5s var(--ease), filter .4s; }
+    .service-card:hover .service-card__img img { transform:scale(1.08); filter:brightness(.85) saturate(1); }
+    .service-card__img-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(13,24,41,.9) 0%,transparent 60%); }
+    .service-card__badge { position:absolute; top:14px; left:14px; background:var(--accent); color:#fff; font-size:9px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; padding:5px 10px; border-radius:999px; }
+    .service-card__body { padding:24px 22px; }
+    .service-card__icon { font-size:24px; margin-bottom:10px; }
+    .service-card__name { font-size:17px; font-weight:700; letter-spacing:-.02em; margin-bottom:8px; }
+    .service-card__desc { font-size:13px; font-weight:300; color:var(--muted); line-height:1.6; margin-bottom:16px; }
+    .service-card__link { font-size:12px; font-weight:700; color:var(--accent); letter-spacing:.06em; text-transform:uppercase; display:flex; align-items:center; gap:6px; transition:gap .2s; }
+    .service-card:hover .service-card__link { gap:10px; }
+
+    /* ── WHY US ── */
+    .why { background:var(--dark); padding:100px 72px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .why__img { position:relative; }
+    .why__img-main { width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:16px; filter:brightness(.8); }
+    .why__img-badge { position:absolute; bottom:-20px; right:-20px; background:var(--accent); border-radius:14px; padding:20px 24px; text-align:center; box-shadow:0 10px 30px rgba(61,126,201,.4); }
+    .why__img-badge-num { font-size:36px; font-weight:900; line-height:1; }
+    .why__img-badge-label { font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; opacity:.85; margin-top:3px; }
+    .why__list { display:flex; flex-direction:column; gap:0; margin-top:36px; }
+    .why__item { display:flex; gap:18px; padding:20px 0; border-bottom:1px solid var(--border); align-items:flex-start; transition:background .2s; }
+    .why__item:first-child { border-top:1px solid var(--border); }
+    .why__item-icon { width:44px; height:44px; background:rgba(61,126,201,.1); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; transition:background .3s; }
+    .why__item:hover .why__item-icon { background:rgba(61,126,201,.2); }
+    .why__item-title { font-size:15px; font-weight:700; margin-bottom:4px; letter-spacing:-.01em; }
+    .why__item-body { font-size:13px; font-weight:300; color:var(--muted); line-height:1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .process { padding:100px 72px; }
+    .process__header { margin-bottom:60px; text-align:center; }
+    .process__header .s-label { justify-content:center; }
+    .process__grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+    .process__grid::before { content:''; position:absolute; top:48px; left:12.5%; right:12.5%; height:2px; background:linear-gradient(to right,var(--accent),rgba(61,126,201,.2)); z-index:0; }
+    .process-step { text-align:center; padding:0 20px; position:relative; z-index:1; }
+    .process-step__circle { width:96px; height:96px; background:var(--card); border:2px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 24px; transition:border-color .3s, background .3s, transform .35s; }
+    .process-step:hover .process-step__circle { border-color:var(--accent); background:rgba(61,126,201,.1); transform:scale(1.08); }
+    .process-step__num { position:absolute; top:0; right:calc(50% - 56px); width:24px; height:24px; background:var(--accent); border-radius:50%; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .process-step__title { font-size:16px; font-weight:700; margin-bottom:8px; letter-spacing:-.01em; }
+    .process-step__body { font-size:13px; font-weight:300; color:var(--muted); line-height:1.6; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background:var(--dark); padding:100px 72px; }
+    .testimonials__header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:52px; }
+    .testimonials__rating { text-align:right; }
+    .testimonials__rating-num { font-size:52px; font-weight:900; color:#fff; line-height:1; }
+    .testimonials__rating-stars { color:#FFC107; font-size:18px; letter-spacing:3px; }
+    .testimonials__rating-label { font-size:12px; color:var(--muted); margin-top:4px; }
+    .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .testi-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:32px 28px; transition:transform .3s, border-color .3s; }
+    .testi-card:hover { transform:translateY(-4px); border-color:rgba(61,126,201,.3); }
+    .testi-card__top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; }
+    .testi-card__avatar { width:44px; height:44px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; color:#fff; }
+    .testi-card__stars { color:#FFC107; font-size:13px; letter-spacing:2px; }
+    .testi-card__text { font-size:14px; font-weight:300; color:rgba(255,255,255,.78); line-height:1.7; margin-bottom:20px; }
+    .testi-card__author { font-size:13px; font-weight:700; }
+    .testi-card__detail { font-size:11px; color:var(--accent); margin-top:2px; }
+    .testi-card__google { font-size:10px; color:var(--muted); margin-top:2px; display:flex; align-items:center; gap:4px; }
+
+    /* ── EMERGENCY CTA ── */
+    .emergency-cta { background:var(--accent); padding:88px 72px; display:grid; grid-template-columns:1fr auto; gap:48px; align-items:center; }
+    .emergency-cta__label { font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.7); margin-bottom:12px; }
+    .emergency-cta__title { font-size:clamp(34px,5vw,60px); font-weight:900; line-height:.97; letter-spacing:-.04em; }
+    .emergency-cta__sub { font-size:17px; font-weight:300; color:rgba(255,255,255,.7); margin-top:14px; max-width:480px; line-height:1.6; }
+    .btn-white { background:#fff; color:var(--accent); font-size:14px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; padding:20px 56px; border-radius:8px; white-space:nowrap; transition:transform .15s, box-shadow .2s; display:inline-block; box-shadow:0 4px 20px rgba(0,0,0,.2); }
+    .btn-white:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,.3); }
+
+    /* ── SERVICE AREA ── */
+    .area { padding:100px 72px; background:var(--dark); }
+    .area__grid { display:grid; grid-template-columns:1fr 1fr; gap:72px; margin-top:56px; align-items:start; }
+    .area__map { aspect-ratio:4/3; background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; position:relative; }
+    .area__map img { width:100%; height:100%; object-fit:cover; filter:brightness(.35) saturate(.3) hue-rotate(180deg); }
+    .area__map-overlay { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+    .area__map-title { font-size:14px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+    .area__map-sub { font-size:12px; color:var(--muted); }
+    .zone-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .zone-tag { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:14px 18px; font-size:14px; font-weight:500; color:rgba(255,255,255,.75); display:flex; align-items:center; gap:10px; transition:border-color .2s, background .2s; cursor:default; }
+    .zone-tag:hover { border-color:rgba(61,126,201,.35); background:#132135; }
+    .zone-tag::before { content:'📍'; font-size:14px; }
+
+    /* ── FAQ ── */
+    .faq { padding:100px 72px; }
+    .faq__header { margin-bottom:52px; }
+    .faq__grid { max-width:780px; }
+    .faq-item { border-bottom:1px solid var(--border); }
+    .faq-item:first-child { border-top:1px solid var(--border); }
+    .faq-q { width:100%; text-align:left; background:none; border:none; padding:22px 0; font-family:var(--sans); font-size:16px; font-weight:600; color:#fff; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; transition:color .2s; letter-spacing:-.01em; }
+    .faq-q:hover { color:var(--accent); }
+    .faq-arrow { width:28px; height:28px; background:var(--card); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:transform .3s, background .2s; }
+    .faq-item.open .faq-arrow { transform:rotate(180deg); background:rgba(61,126,201,.15); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .4s var(--ease), padding .3s; }
+    .faq-item.open .faq-a { max-height:300px; }
+    .faq-a p { font-size:14px; font-weight:300; color:var(--muted); line-height:1.75; padding-bottom:22px; }
+
+    /* ── LOCATION ── */
+    .location { padding:100px 72px; background:var(--dark); }
+    .location__grid { display:grid; grid-template-columns:1fr 1fr; gap:72px; margin-top:52px; }
+    .location__map { aspect-ratio:4/3; background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; position:relative; }
+    .location__map img { width:100%; height:100%; object-fit:cover; filter:brightness(.35) saturate(.3); }
+    .location__map-pin { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--accent); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    .info-row { display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+    .info-row:first-of-type { border-top:1px solid var(--border); }
+    .info-icon { font-size:18px; flex-shrink:0; margin-top:2px; }
+    .info-label { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+    .info-val { font-size:14px; font-weight:400; color:#fff; line-height:1.55; }
+    .hours-table { width:100%; border-collapse:collapse; margin-top:24px; }
+    .hours-table td { padding:12px 0; font-size:14px; border-bottom:1px solid var(--border); }
+    .hours-table td:first-child { color:var(--muted); font-weight:400; }
+    .hours-table td:last-child { text-align:right; font-weight:500; }
+    .hours-table tr:last-child td { border-bottom:none; }
+    .badge-247 { display:inline-flex; align-items:center; gap:6px; background:rgba(61,126,201,.12); border:1px solid rgba(61,126,201,.3); color:var(--accent); font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:7px 14px; border-radius:999px; margin-top:16px; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--navy); border-top:1px solid var(--border); padding:60px 72px 36px; }
+    .footer__top { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:48px; margin-bottom:52px; }
+    .footer__brand { }
+    .footer__brand-logo { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .footer__brand-icon { width:36px; height:36px; background:var(--accent); border-radius:9px; display:flex; align-items:center; justify-content:center; }
+    .footer__brand-name { font-size:18px; font-weight:800; letter-spacing:-.02em; }
+    .footer__brand-desc { font-size:13px; font-weight:300; color:var(--muted); line-height:1.7; }
+    .footer__col h4 { font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:18px; }
+    .footer__col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer__col a { font-size:13px; font-weight:300; color:var(--muted); transition:color .2s; }
+    .footer__col a:hover { color:#fff; }
+    .footer__bottom { display:flex; justify-content:space-between; align-items:center; padding-top:24px; border-top:1px solid var(--border); }
+    .footer__copy { font-size:12px; color:rgba(255,255,255,.2); }
+    .footer__clun { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+
+    /* ── CHATBOT ── */
+    .chat-btn { position:fixed; bottom:28px; right:28px; z-index:500; width:62px; height:62px; background:var(--accent); border-radius:50%; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 6px 28px rgba(61,126,201,.55); transition:transform .3s, box-shadow .3s; animation:float 3.5s ease-in-out infinite; }
+    .chat-btn:hover { transform:scale(1.1); box-shadow:0 10px 36px rgba(61,126,201,.65); animation:none; }
+    .chat-btn .notif { position:absolute; top:4px; right:4px; width:16px; height:16px; background:#22c55e; border-radius:50%; border:2px solid var(--navy); font-size:9px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .chat-window { position:fixed; bottom:104px; right:28px; z-index:499; width:360px; height:520px; background:var(--dark); border:1px solid var(--border); border-radius:18px; box-shadow:0 24px 64px rgba(0,0,0,.6); display:flex; flex-direction:column; overflow:hidden; transform:scale(.9) translateY(20px); opacity:0; pointer-events:none; transition:transform .35s var(--ease), opacity .3s; transform-origin:bottom right; }
+    .chat-window.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
+    .chat-header { background:linear-gradient(135deg,#0d2044,#1a3a6e); padding:18px 20px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); }
+    .chat-avatar { width:40px; height:40px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .chat-header-info h4 { font-size:14px; font-weight:700; }
+    .chat-header-info p { font-size:11px; color:#22c55e; display:flex; align-items:center; gap:5px; }
+    .chat-header-info p::before { content:''; width:6px; height:6px; background:#22c55e; border-radius:50%; }
+    .chat-close { margin-left:auto; background:none; border:none; color:var(--muted); cursor:pointer; font-size:18px; padding:4px; transition:color .2s; }
+    .chat-close:hover { color:#fff; }
+    .chat-messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; scroll-behavior:smooth; }
+    .chat-messages::-webkit-scrollbar { width:4px; }
+    .chat-messages::-webkit-scrollbar-track { background:transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+    .msg { max-width:82%; animation:slideUp .3s var(--ease) both; }
+    .msg-bot { align-self:flex-start; }
+    .msg-user { align-self:flex-end; }
+    .msg-bot .bubble { background:var(--card); border:1px solid var(--border); border-radius:14px 14px 14px 4px; padding:12px 16px; font-size:13px; font-weight:300; color:rgba(255,255,255,.88); line-height:1.6; }
+    .msg-user .bubble { background:var(--accent); border-radius:14px 14px 4px 14px; padding:12px 16px; font-size:13px; font-weight:400; color:#fff; line-height:1.6; }
+    .msg-time { font-size:10px; color:var(--muted); margin-top:4px; padding:0 4px; }
+    .msg-bot .msg-time { text-align:left; }
+    .msg-user .msg-time { text-align:right; }
+    .quick-replies { display:flex; flex-wrap:wrap; gap:6px; padding:0 16px 10px; }
+    .quick-reply { background:rgba(61,126,201,.1); border:1px solid rgba(61,126,201,.3); color:var(--accent); font-family:var(--sans); font-size:11px; font-weight:600; padding:7px 13px; border-radius:999px; cursor:pointer; transition:background .2s, border-color .2s; }
+    .quick-reply:hover { background:rgba(61,126,201,.2); border-color:rgba(61,126,201,.5); }
+    .chat-input-wrap { padding:14px 16px; border-top:1px solid var(--border); display:flex; gap:8px; }
+    .chat-input { flex:1; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-family:var(--sans); font-size:13px; color:#fff; outline:none; transition:border-color .2s; }
+    .chat-input::placeholder { color:rgba(255,255,255,.3); }
+    .chat-input:focus { border-color:rgba(61,126,201,.5); }
+    .chat-send { width:40px; height:40px; background:var(--accent); border:none; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; flex-shrink:0; }
+    .chat-send:hover { background:var(--accent-l); }
+    .typing { display:flex; gap:4px; align-items:center; padding:12px 16px; }
+    .typing span { width:6px; height:6px; background:var(--muted); border-radius:50%; animation:pulse .9s ease-in-out infinite; }
+    .typing span:nth-child(2) { animation-delay:.15s; }
+    .typing span:nth-child(3) { animation-delay:.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) { .services__grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width: 900px) {
+      .emergency-bar { padding:10px 20px; flex-direction:column; gap:8px; text-align:center; }
+      .nav { padding:0 20px; } .nav__links,.nav__phone { display:none; }
+      .hero__content { padding:80px 24px 60px; }
+      .services { padding:72px 24px; } .services__grid { grid-template-columns:1fr 1fr; }
+      .why { padding:72px 24px; grid-template-columns:1fr; gap:40px; }
+      .why__img-badge { right:0; bottom:-10px; }
+      .process { padding:72px 24px; } .process__grid { grid-template-columns:1fr 1fr; gap:32px; } .process__grid::before { display:none; }
+      .testimonials { padding:72px 24px; } .testi-grid { grid-template-columns:1fr; }
+      .testimonials__header { flex-direction:column; align-items:flex-start; gap:20px; } .testimonials__rating { text-align:left; }
+      .emergency-cta { padding:64px 24px; grid-template-columns:1fr; }
+      .area { padding:72px 24px; } .area__grid { grid-template-columns:1fr; gap:36px; }
+      .faq { padding:72px 24px; }
+      .location { padding:72px 24px; } .location__grid { grid-template-columns:1fr; gap:40px; }
+      footer { padding:52px 24px 32px; } .footer__top { grid-template-columns:1fr 1fr; gap:32px; }
+      .chat-window { width:calc(100vw - 40px); right:20px; }
+    }
+    @media (max-width: 600px) {
+      .services__grid { grid-template-columns:1fr; }
+      .process__grid { grid-template-columns:1fr; }
+      .footer__top { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- EMERGENCY BAR -->
+  <div class="emergency-bar">
+    <div class="emergency-bar__left">
+      <div class="pulse-dot"></div>
+      Servicio de emergencia disponible 24/7 — Contáctanos ahora
+    </div>
+    <a href="tel:+17870000000" class="emergency-bar__phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+      +1 (787) 000-0000
+    </a>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__brand">
+      <div class="nav__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg></div>
+      <div class="nav__name">ProSolutions PR<span>Plomería Profesional</span></div>
+    </div>
+    <ul class="nav__links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#why">¿Por qué nosotros?</a></li>
+      <li><a href="#testimonials">Reseñas</a></li>
+      <li><a href="#area">Área</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav__right">
+      <span class="nav__phone">+1 (787) 000-0000</span>
+      <a href="https://wa.me/17870000000" target="_blank" class="nav__cta">Cotización Gratis</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__img"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <div class="hero__badges">
+        <div class="hero__badge"><div class="pulse-dot"></div> Emergencias 24/7</div>
+        <div class="hero__badge">✓ Licenciados & Asegurados</div>
+      </div>
+      <h1 class="hero__title">
+        Plomería que
+        <span class="accent">resuelve.</span>
+      </h1>
+      <p class="hero__sub">Servicio profesional de plomería para tu hogar o negocio en todo Puerto Rico. Atendemos emergencias 24/7. Contáctanos y con gusto te orientamos.</p>
+      <div class="hero__cta">
+        <a href="https://wa.me/17870000000?text=Necesito%20un%20plomero%20en%20ProSolutions%20PR" target="_blank" class="btn-orange">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+          Llamar Ahora
+        </a>
+        <a href="#services" class="btn-ghost">Ver Servicios →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">Emergencias 24/7</div><div class="marquee-item">Reparación de Tuberías</div><div class="marquee-item">Calentadores de Agua</div><div class="marquee-item">Destape de Drenajes</div><div class="marquee-item">Detección de Fugas</div><div class="marquee-item">Plomería Residencial y Comercial</div>
+      <div class="marquee-item">Emergencias 24/7</div><div class="marquee-item">Reparación de Tuberías</div><div class="marquee-item">Calentadores de Agua</div><div class="marquee-item">Destape de Drenajes</div><div class="marquee-item">Detección de Fugas</div><div class="marquee-item">Plomería Residencial y Comercial</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services__header reveal">
+      <div>
+        <p class="s-label">Lo que hacemos</p>
+        <h2 class="s-title">Servicios</h2>
+        <p class="s-sub">Servicios de plomería para tu hogar o negocio en Puerto Rico.</p>
+      </div>
+    </div>
+    <div class="services__grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-card__img">
+          <img src="https://images.unsplash.com/photo-1521207418485-99c705420785?w=600&q=80&fit=crop" alt="Emergencias" loading="lazy" />
+          <div class="service-card__img-overlay"></div>
+          <div class="service-card__badge">24/7</div>
+        </div>
+        <div class="service-card__body">
+          <div class="service-card__icon">🚨</div>
+          <div class="service-card__name">Emergencias</div>
+          <div class="service-card__desc">Tuberías rotas, inundaciones y fugas activas. Atendemos emergencias las 24 horas.</div>
+          <div class="service-card__link">Llamar ahora →</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-card__img">
+          <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=600&q=80&fit=crop" alt="Reparación de tuberías" loading="lazy" />
+          <div class="service-card__img-overlay"></div>
+        </div>
+        <div class="service-card__body">
+          <div class="service-card__icon">🔩</div>
+          <div class="service-card__name">Reparación de Tuberías</div>
+          <div class="service-card__desc">Detección y reparación de fugas, tuberías corroídas y problemas de presión de agua.</div>
+          <div class="service-card__link">Contáctanos →</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-card__img">
+          <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=600&q=80&fit=crop" alt="Calentadores de agua" loading="lazy" />
+          <div class="service-card__img-overlay"></div>
+        </div>
+        <div class="service-card__body">
+          <div class="service-card__icon">🔥</div>
+          <div class="service-card__name">Calentadores de Agua</div>
+          <div class="service-card__desc">Instalación, reemplazo y mantenimiento de calentadores tradicionales y tankless.</div>
+          <div class="service-card__link">Ver opciones →</div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-card__img">
+          <img src="https://images.unsplash.com/photo-1542013936693-884638332954?w=600&q=80&fit=crop" alt="Destape de drenajes" loading="lazy" />
+          <div class="service-card__img-overlay"></div>
+        </div>
+        <div class="service-card__body">
+          <div class="service-card__icon">🪠</div>
+          <div class="service-card__name">Destape de Drenajes</div>
+          <div class="service-card__desc">Fregaderos, bañeras, inodoros y drenajes obstruidos. Equipo adecuado para cada caso.</div>
+          <div class="service-card__link">Contáctanos →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="process">
+    <div class="process__header reveal">
+      <p class="s-label">Simple y transparente</p>
+      <h2 class="s-title">¿Cómo funciona?</h2>
+    </div>
+    <div class="process__grid">
+      <div class="process-step reveal reveal-delay-1">
+        <div class="process-step__circle">📞<div class="process-step__num">1</div></div>
+        <div class="process-step__title">Nos contactas</div>
+        <div class="process-step__body">Por WhatsApp, teléfono, o el formulario. Disponibles 24/7 para emergencias.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="process-step__circle">🔍<div class="process-step__num">2</div></div>
+        <div class="process-step__title">Evaluación</div>
+        <div class="process-step__body">El técnico evalúa el problema y te orienta sobre lo que necesita el trabajo.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="process-step__circle">💧<div class="process-step__num">3</div></div>
+        <div class="process-step__title">Resolvemos</div>
+        <div class="process-step__body">Trabajo profesional y limpio, con piezas de calidad.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-4">
+        <div class="process-step__circle">💬<div class="process-step__num">4</div></div>
+        <div class="process-step__title">Quedamos en contacto</div>
+        <div class="process-step__body">Estamos disponibles para cualquier pregunta sobre el servicio realizado.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="testimonials__header reveal">
+      <div>
+        <p class="s-label">Clientes verificados</p>
+        <h2 class="s-title">Lo que dicen</h2>
+      </div>
+      <div class="testimonials__rating">
+        <div class="testimonials__rating-num">5.0</div>
+        <div class="testimonials__rating-stars">★★★★★</div>
+        <div class="testimonials__rating-label">Basado en 200+ reseñas de Google</div>
+      </div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-card__top"><div class="testi-card__avatar">M</div><div class="testi-card__stars">★★★★★</div></div>
+        <p class="testi-card__text">"Tubería rota a las 11PM un domingo. ProSolutions vino esa misma noche y resolvió el problema. Trabajo limpio y profesional, me dejaron el baño impecable. Quedé muy satisfecha."</p>
+        <div class="testi-card__author">María González</div>
+        <div class="testi-card__detail">Emergencia nocturna · Santurce</div>
+        <div class="testi-card__google">🟢 Reseña de Google verificada</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-card__top"><div class="testi-card__avatar">R</div><div class="testi-card__stars">★★★★★</div></div>
+        <p class="testi-card__text">"Llevaba meses con presión baja en toda la casa. Dos plomeros anteriores no encontraban el problema. ProSolutions identificó la fuga y la reparó. Ojalá los hubiera llamado desde el principio."</p>
+        <div class="testi-card__author">Roberto Pérez</div>
+        <div class="testi-card__detail">Detección de fugas · Bayamón</div>
+        <div class="testi-card__google">🟢 Reseña de Google verificada</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-card__top"><div class="testi-card__avatar">A</div><div class="testi-card__stars">★★★★★</div></div>
+        <p class="testi-card__text">"Me instalaron un calentador de agua nuevo. Profesionales, ordenados y el trabajo quedó muy bien hecho. Los recomiendo y volveré a llamarlos."</p>
+        <div class="testi-card__author">Ana Ramos</div>
+        <div class="testi-card__detail">Calentador de agua · Caguas</div>
+        <div class="testi-card__google">🟢 Reseña de Google verificada</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMERGENCY CTA -->
+  <section class="emergency-cta">
+    <div class="reveal">
+      <div class="emergency-cta__label">¿Emergencia en este momento?</div>
+      <h2 class="emergency-cta__title">No esperes.<br/>Llámanos ahora.</h2>
+      <p class="emergency-cta__sub">Atendemos tu emergencia de plomería. Estamos disponibles las 24 horas, los 365 días del año.</p>
+    </div>
+    <a href="https://wa.me/17870000000?text=Tengo%20una%20emergencia%20de%20plomer%C3%ADa" target="_blank" class="btn-white reveal reveal-delay-2">WhatsApp Ahora →</a>
+  </section>
+
+  <!-- SERVICE AREA -->
+  <section class="area" id="area">
+    <p class="s-label reveal">Cobertura</p>
+    <h2 class="s-title reveal">¿Llegamos a tu zona?</h2>
+    <div class="area__grid">
+      <div class="area__map reveal reveal-delay-1">
+        <iframe
+          src="https://www.google.com/maps?q=San+Juan,+Puerto+Rico&z=9&output=embed"
+          title="Área de servicio de ProSolutions PR en Puerto Rico"
+          style="width:100%;height:100%;border:0;display:block;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="s-sub" style="margin-top:0;margin-bottom:24px;">Servimos a toda el área metropolitana de San Juan y municipios principales de la isla.</p>
+        <div class="zone-grid">
+          <div class="zone-tag">San Juan</div><div class="zone-tag">Bayamón</div>
+          <div class="zone-tag">Carolina</div><div class="zone-tag">Guaynabo</div>
+          <div class="zone-tag">Caguas</div><div class="zone-tag">Trujillo Alto</div>
+          <div class="zone-tag">Toa Baja</div><div class="zone-tag">Ponce</div>
+          <div class="zone-tag">Arecibo</div><div class="zone-tag">Mayagüez</div>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:20px;">¿No ves tu municipio? Llámanos — probablemente llegamos igual.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="faq__header reveal">
+      <p class="s-label">Tienes preguntas</p>
+      <h2 class="s-title">Preguntas frecuentes</h2>
+    </div>
+    <div class="faq__grid reveal reveal-delay-1">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Cómo manejan los precios?<span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><p>Cada situación de plomería es diferente, así que evaluamos el trabajo antes de proceder. Contáctanos por WhatsApp o teléfono y con gusto conversamos sobre tu caso.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Atienden emergencias los fines de semana y feriados?<span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><p>Sí. Operamos 24 horas al día, 7 días a la semana, 365 días al año, incluyendo todos los días feriados. Las emergencias de plomería no esperan y nosotros tampoco.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Están licenciados y asegurados en Puerto Rico?<span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><p>Sí. ProSolutions PR opera con licencia de plomería vigente en Puerto Rico y póliza de responsabilidad civil. Todos nuestros técnicos son certificados y cuentan con fondo de antecedentes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Aceptan tarjetas de crédito?<span class="faq-arrow"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><p>Aceptamos efectivo, tarjetas de crédito/débito (Visa, Mastercard, Amex), transferencia bancaria (ATH Móvil), y cheque certificado. Para proyectos mayores, pregunta por opciones de financiamiento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location" id="location">
+    <p class="s-label reveal">Contáctanos</p>
+    <h2 class="s-title reveal">Ubicación & Horario</h2>
+    <div class="location__grid">
+      <div class="location__map reveal reveal-delay-1">
+        <iframe
+          src="https://www.google.com/maps?q=Bayam%C3%B3n,+Puerto+Rico&z=12&output=embed"
+          title="Ubicación de ProSolutions PR en Bayamón, Puerto Rico"
+          style="width:100%;height:100%;border:0;display:block;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="info-row"><div class="info-icon">📍</div><div><div class="info-label">Oficina Principal</div><div class="info-val">Bayamón, Puerto Rico<br/>Servicio a toda la isla</div></div></div>
+        <div class="info-row"><div class="info-icon">📞</div><div><div class="info-label">Teléfono / Emergencias</div><div class="info-val">+1 (787) 000-0000</div></div></div>
+        <div class="info-row"><div class="info-icon">💬</div><div><div class="info-label">WhatsApp</div><div class="info-val">+1 (787) 000-0000</div></div></div>
+        <div class="info-row"><div class="info-icon">📧</div><div><div class="info-label">Email</div><div class="info-val">info@prosolutionspr.com</div></div></div>
+        <table class="hours-table">
+          <tr><td>Lunes – Viernes</td><td>7:00 AM – 6:00 PM</td></tr>
+          <tr><td>Sábado</td><td>8:00 AM – 4:00 PM</td></tr>
+          <tr><td>Domingo</td><td>Solo emergencias</td></tr>
+        </table>
+        <div class="badge-247"><div class="pulse-dot"></div> Emergencias disponibles 24/7</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div class="footer__brand-logo"><div class="footer__brand-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg></div><div class="footer__brand-name">ProSolutions PR</div></div>
+        <p class="footer__brand-desc">Plomería profesional para residencias y comercios en Puerto Rico. Licenciados, asegurados, y disponibles 24/7 para servirte.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#services">Emergencias 24/7</a></li>
+          <li><a href="#services">Reparación de Tuberías</a></li>
+          <li><a href="#services">Calentadores de Agua</a></li>
+          <li><a href="#services">Destape de Drenajes</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Compañía</h4>
+        <ul>
+          <li><a href="#testimonials">Reseñas</a></li>
+          <li><a href="#area">Área de servicio</a></li>
+          <li><a href="#faq">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="tel:+17870000000">+1 (787) 000-0000</a></li>
+          <li><a href="https://wa.me/17870000000" target="_blank">WhatsApp</a></li>
+          <li><a href="mailto:info@prosolutionspr.com">info@prosolutionspr.com</a></li>
+          <li><a href="#location">Bayamón, Puerto Rico</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 ProSolutions PR. Lic. Plomería #PR-00000. Todos los derechos reservados.</p>
+      <p class="footer__clun">Sitio por CLUN Management</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT BUTTON -->
+  <button class="chat-btn" id="chatBtn" aria-label="Abrir chat" aria-expanded="false">
+    💬
+    <div class="notif">1</div>
+  </button>
+
+  <!-- CHATBOT WINDOW -->
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg></div>
+      <div class="chat-header-info">
+        <h4>ProSolutions PR</h4>
+        <p>En línea ahora</p>
+      </div>
+      <button class="chat-close" id="chatClose">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="quick-replies" id="quickReplies"></div>
+    <div class="chat-input-wrap">
+      <input class="chat-input" id="chatInput" type="text" placeholder="Escribe tu pregunta..." autocomplete="off" />
+      <button class="chat-send" id="chatSend">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+  // ── SCROLL ANIMATIONS ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── COUNTER ANIMATION ──
+  const counters = document.querySelectorAll('[data-target]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = +el.dataset.target;
+        const suffix = target === 60 ? ' min' : target === 100 ? '%' : target >= 1000 ? '+' : '+';
+        let current = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = Math.floor(current).toLocaleString() + suffix;
+        }, 25);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
+
+  // ── NAV SHADOW ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('shadow', window.scrollY > 10), { passive: true });
+
+  // ── FAQ ACCORDION ──
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+    });
+  });
+
+  // ── CHATBOT ──
+  const chatBtn = document.getElementById('chatBtn');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatClose = document.getElementById('chatClose');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+  const quickReplies = document.getElementById('quickReplies');
+  let chatOpen = false;
+
+  const KB = [
+    { patterns: ['emergencia','emergencias','urgente','urgencia','rompio','roto','inund'], answer: '🚨 Para emergencias de plomería, contáctanos directamente y con gusto te atendemos. <a href="https://wa.me/17870000000" target="_blank" style="color:var(--accent);font-weight:600;">→ Escríbenos por WhatsApp</a> o llámanos al +1 (787) 000-0000.' },
+    { patterns: ['servicio','servicios','hacen','ofrecen','ofrecer'], answer: '🔧 Ofrecemos <strong>emergencias, reparación de tuberías, calentadores de agua y destape de drenajes</strong>. Para coordinar, escríbenos por WhatsApp o llámanos.' },
+    { patterns: ['tuberia','tuberías','tubería','tuberias','fuga','fugas','presion','presión'], answer: '🔩 Hacemos reparación de tuberías y detección de fugas. Contáctanos por WhatsApp o teléfono y coordinamos.' },
+    { patterns: ['calentador','agua caliente','tankless','water heater'], answer: '🔥 Trabajamos con calentadores de agua. Escríbenos por WhatsApp o llámanos para conversar sobre tu caso.' },
+    { patterns: ['drenaje','destape','tapón','tapon','obstruccion','obstrucción','fregadero','bañera','inodoro'], answer: '🪠 Hacemos destape de drenajes. Contáctanos directamente y coordinamos.' },
+    { patterns: ['hora','horario','abierto','cuando','atienden'], answer: '🕐 <strong>Horario:</strong><br/>Lun–Vie: 7AM–6PM<br/>Sábado: 8AM–4PM<br/>Domingo: solo emergencias.<br/><br/>Para emergencias estamos disponibles 24/7. Contáctanos por WhatsApp o teléfono.' },
+    { patterns: ['area','zona','municipio','llegan','donde','lugar','pueblo'], answer: '📍 Servimos el área metropolitana y municipios principales de la isla. Escríbenos con tu ubicación y la confirmamos.' },
+    { patterns: ['precio','costo','cuanto','cobran','tarifa','presupuesto','cotiz'], answer: '💬 Cada trabajo es diferente, así que lo evaluamos antes de proceder. Contáctanos por WhatsApp o teléfono y con gusto conversamos sobre tu situación.' },
+    { patterns: ['licencia','licenciado','asegurado','seguro','certificado'], answer: '✅ Somos plomeros profesionales. Para más información, contáctanos directamente por WhatsApp o teléfono.' },
+    { patterns: ['pago','tarjeta','credito','débito','debito','efectivo','ath','transferencia'], answer: '💳 Para opciones de pago, contáctanos directamente por WhatsApp o llámanos.' },
+    { patterns: ['hola','buenos','buenas','hi','hey','saludos'], answer: '👋 ¡Hola! Soy el asistente de <strong>ProSolutions PR</strong>. Puedo orientarte sobre nuestros servicios y ponerte en contacto con nosotros. ¿En qué puedo ayudarte?' },
+    { patterns: ['gracias','thank','perfecto','excelente','ok','okay'], answer: '😊 ¡Con gusto! Para atenderte, contáctanos por WhatsApp al +1 (787) 000-0000 o llámanos.' },
+    { patterns: ['whatsapp','escribir','mensaje','contactar','contacto','telefono','teléfono','llamar','llamen'], answer: '💬 Contáctanos por WhatsApp al +1 (787) 000-0000 o llámanos. <a href="https://wa.me/17870000000" target="_blank" style="color:var(--accent);font-weight:600;">→ Abrir WhatsApp</a>' },
+  ];
+
+  const defaultReply = '🤔 Para ayudarte mejor con eso, contáctanos directamente:<br/>📞 <strong>+1 (787) 000-0000</strong><br/>💬 <a href="https://wa.me/17870000000" target="_blank" style="color:var(--accent);font-weight:600;">WhatsApp aquí</a>';
+
+  const initialQuickReplies = [
+    '🚨 Tengo una emergencia',
+    '🔧 ¿Qué servicios dan?',
+    '🕐 ¿Cuál es el horario?',
+    '📍 ¿A mi área llegan?',
+    '💬 Contactar por WhatsApp',
+  ];
+
+  function getTime() {
+    return new Date().toLocaleTimeString('es-PR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function addMsg(text, isBot = true, delay = 0) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const div = document.createElement('div');
+        div.className = `msg ${isBot ? 'msg-bot' : 'msg-user'}`;
+        div.innerHTML = `<div class="bubble">${text}</div><div class="msg-time">${getTime()}</div>`;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        resolve();
+      }, delay);
+    });
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg msg-bot';
+    div.id = 'typing-indicator';
+    div.innerHTML = '<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function hideTyping() {
+    const t = document.getElementById('typing-indicator');
+    if (t) t.remove();
+  }
+
+  function setQuickReplies(replies) {
+    quickReplies.innerHTML = '';
+    replies.forEach(r => {
+      const btn = document.createElement('button');
+      btn.className = 'quick-reply';
+      btn.textContent = r;
+      btn.onclick = () => handleUserMessage(r);
+      quickReplies.appendChild(btn);
+    });
+  }
+
+  function getBotResponse(input) {
+    const lower = input.toLowerCase();
+    for (const item of KB) {
+      if (item.patterns.some(p => lower.includes(p))) return item.answer;
+    }
+    return defaultReply;
+  }
+
+  async function handleUserMessage(text) {
+    quickReplies.innerHTML = '';
+    await addMsg(text, false);
+    showTyping();
+    await new Promise(r => setTimeout(r, 900 + Math.random() * 600));
+    hideTyping();
+    const response = getBotResponse(text);
+    await addMsg(response, true);
+    setQuickReplies(['🚨 Emergencia', '🔧 Servicios', '📍 Mi área', '💬 WhatsApp']);
+  }
+
+  function initChat() {
+    chatMessages.innerHTML = '';
+    addMsg('¡Hola! 👋 Soy el asistente de <strong>ProSolutions PR</strong>. ¿En qué puedo ayudarte hoy?', true, 0).then(() => {
+      addMsg('Puedo orientarte sobre nuestros servicios y ponerte en contacto con nosotros. Para emergencias, te recomiendo escribirnos por WhatsApp o llamarnos directamente.', true, 600).then(() => {
+        setQuickReplies(initialQuickReplies);
+      });
+    });
+  }
+
+  chatBtn.addEventListener('click', () => {
+    chatOpen = !chatOpen;
+    chatWindow.classList.toggle('open', chatOpen);
+    chatBtn.setAttribute('aria-expanded', chatOpen);
+    chatBtn.querySelector('.notif').style.display = 'none';
+    if (chatOpen && chatMessages.children.length === 0) initChat();
+  });
+
+  chatClose.addEventListener('click', () => {
+    chatOpen = false;
+    chatWindow.classList.remove('open');
+    chatBtn.setAttribute('aria-expanded', 'false');
+  });
+
+  chatSend.addEventListener('click', () => {
+    const val = chatInput.value.trim();
+    if (val) { chatInput.value = ''; handleUserMessage(val); }
+  });
+
+  chatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { const val = chatInput.value.trim(); if (val) { chatInput.value = ''; handleUserMessage(val); } }
+  });
+  </script>
+</body>
+</html>

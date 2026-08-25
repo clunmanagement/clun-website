@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURA Spa & Wellness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:  #0c0a09;
+      --dark:   #141210;
+      --card:   #1c1815;
+      --rose:   #C4956A;
+      --rose-l: #d9ad85;
+      --cream:  #F5EDE3;
+      --muted:  rgba(245,237,227,0.42);
+      --border: rgba(245,237,227,0.07);
+      --serif:  'Cormorant Garamond', Georgia, serif;
+      --sans:   'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--black); color: var(--cream); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 300; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; transition: background 0.4s, backdrop-filter 0.4s; }
+    .nav.scrolled { background: rgba(12,10,9,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav__logo { font-family: var(--serif); font-size: 24px; font-weight: 600; letter-spacing: 0.1em; }
+    .nav__logo span { display: block; font-family: var(--sans); font-size: 8px; font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; color: var(--rose); margin-top: 3px; }
+    .nav__links { display: flex; gap: 36px; list-style: none; }
+    .nav__links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav__links a:hover { color: var(--cream); }
+    .nav__cta { border: 1px solid var(--rose); color: var(--rose); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 28px; transition: background 0.2s, color 0.2s; }
+    .nav__cta:hover { background: var(--rose); color: var(--black); }
+
+    /* HERO */
+    .hero { position: relative; height: 100vh; min-height: 680px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .hero__bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&q=80&fit=crop'); background-size: cover; background-position: center; filter: brightness(0.28) saturate(0.6); }
+    .hero__overlay { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(12,10,9,0.3) 0%, rgba(12,10,9,0.7) 100%); }
+    .hero__content { position: relative; z-index: 2; max-width: 700px; padding: 0 24px; }
+    .hero__label { font-size: 10px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rose); margin-bottom: 28px; display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .hero__label::before, .hero__label::after { content: ''; display: block; width: 32px; height: 1px; background: var(--rose); }
+    .hero__title { font-family: var(--serif); font-size: clamp(56px, 8vw, 100px); font-weight: 700; line-height: 0.92; letter-spacing: -0.01em; margin-bottom: 24px; }
+    .hero__title em { font-style: italic; color: var(--rose); }
+    .hero__sub { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 440px; margin: 0 auto 48px; }
+    .hero__cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-rose { background: var(--rose); color: var(--black); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 44px; display: inline-block; transition: background 0.2s, transform 0.15s; }
+    .btn-rose:hover { background: var(--rose-l); transform: translateY(-2px); }
+    .btn-ghost { border: 1px solid rgba(245,237,227,0.2); color: var(--cream); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; padding: 16px 36px; display: inline-block; transition: border-color 0.2s; }
+    .btn-ghost:hover { border-color: rgba(245,237,227,0.45); }
+
+    /* PHILOSOPHY STRIP */
+    .philosophy { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 56px 72px; text-align: center; }
+    .philosophy__quote { font-family: var(--serif); font-size: clamp(22px, 3vw, 36px); font-weight: 600; font-style: italic; line-height: 1.4; color: var(--cream); max-width: 640px; margin: 0 auto; }
+    .philosophy__quote em { color: var(--rose); font-style: normal; }
+    .philosophy__attr { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 20px; }
+
+    /* SECTION LABELS */
+    .s-label { font-size: 10px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+    .s-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--rose); }
+    .s-title { font-family: var(--serif); font-size: clamp(36px, 4.5vw, 58px); font-weight: 700; line-height: 1.0; letter-spacing: -0.01em; }
+    .s-sub { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 480px; margin-top: 14px; }
+
+    /* SERVICES */
+    .services { padding: 100px 72px; }
+    .services__header { margin-bottom: 52px; }
+    .services__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .service-item { background: var(--dark); padding: 40px 32px; transition: background 0.3s; }
+    .service-item:hover { background: #1c1815; }
+    .service-item__duration { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rose); margin-bottom: 16px; }
+    .service-item__name { font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+    .service-item__desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+    .service-item__price { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--rose); }
+    .service-item__price span { font-family: var(--sans); font-size: 12px; font-weight: 300; color: var(--muted); }
+
+    /* ABOUT */
+    .about { display: grid; grid-template-columns: 1fr 1fr; }
+    .about__content { background: var(--card); padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
+    .about__quote { font-family: var(--serif); font-size: clamp(22px, 2.5vw, 30px); font-weight: 600; font-style: italic; line-height: 1.35; color: var(--cream); margin: 24px 0 20px; }
+    .about__quote em { color: var(--rose); font-style: normal; }
+    .about__body { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 36px; }
+    .about__img { background-image: url('https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=900&q=80&fit=crop'); background-size: cover; background-position: center; min-height: 560px; }
+    .stat-row { display: flex; gap: 36px; }
+    .stat__num { font-family: var(--serif); font-size: 40px; font-weight: 700; color: var(--rose); line-height: 1; }
+    .stat__label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* GALLERY */
+    .gallery { padding: 100px 72px; background: var(--dark); }
+    .gallery__header { margin-bottom: 44px; }
+    .gallery__grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 260px 260px; gap: 6px; }
+    .gallery__item { overflow: hidden; background: var(--card); }
+    .gallery__item:first-child { grid-column: span 2; grid-row: span 2; }
+    .gallery__item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82) saturate(0.75); transition: transform 0.6s, filter 0.4s; }
+    .gallery__item:hover img { transform: scale(1.04); filter: brightness(0.95) saturate(1); }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: 100px 72px; }
+    .testimonials__header { margin-bottom: 48px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .testi-card { background: var(--card); border: 1px solid var(--border); padding: 36px 28px; }
+    .testi-ornament { font-family: var(--serif); font-size: 48px; color: var(--rose); line-height: 1; margin-bottom: 12px; opacity: 0.6; }
+    .testi-text { font-family: var(--serif); font-size: 17px; font-style: italic; line-height: 1.65; color: rgba(245,237,227,0.82); margin-bottom: 24px; }
+    .testi-author { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); }
+    .testi-detail { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    /* BOOKING CTA */
+    .booking-cta { background: var(--rose); padding: 80px 72px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .booking-cta__title { font-family: var(--serif); font-size: clamp(30px, 4vw, 52px); font-weight: 700; font-style: italic; color: var(--black); max-width: 480px; line-height: 1.1; }
+    .btn-dark { background: var(--black); color: var(--cream); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 18px 48px; white-space: nowrap; transition: background 0.2s, transform 0.15s; display: inline-block; }
+    .btn-dark:hover { background: #1a1410; transform: translateY(-2px); }
+
+    /* LOCATION */
+    .location { padding: 100px 72px; background: var(--dark); }
+    .location__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 52px; align-items: start; }
+    .location__map { aspect-ratio: 4/3; background: var(--card); border: 1px solid var(--border); overflow: hidden; position: relative; }
+    .location__map img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) saturate(0.3); }
+    .location__map-pin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); }
+    .info-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .info-row:first-of-type { border-top: 1px solid var(--border); }
+    .info-row__icon { color: var(--rose); flex-shrink: 0; font-size: 16px; margin-top: 2px; }
+    .info-row__label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .info-row__val { font-size: 14px; font-weight: 300; color: var(--cream); line-height: 1.5; }
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    .hours-table td { padding: 11px 0; font-size: 14px; font-weight: 300; border-bottom: 1px solid var(--border); }
+    .hours-table td:first-child { color: var(--muted); }
+    .hours-table td:last-child { text-align: right; }
+    .hours-table tr:last-child td { border-bottom: none; }
+
+    /* FOOTER */
+    footer { background: var(--black); border-top: 1px solid var(--border); padding: 52px 72px 36px; }
+    .footer__top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+    .footer__logo { font-family: var(--serif); font-size: 24px; font-weight: 600; letter-spacing: 0.08em; }
+    .footer__logo span { display: block; font-family: var(--sans); font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rose); margin-top: 4px; }
+    .footer__links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer__links a { font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .footer__links a:hover { color: var(--rose); }
+    .footer__bottom { display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border); }
+    .footer__copy { font-size: 12px; color: rgba(245,237,227,0.2); }
+    .footer__clun { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); }
+
+    @media (max-width: 900px) {
+      .nav { padding: 0 20px; } .nav__links { display: none; }
+      .hero__title { font-size: 52px; }
+      .philosophy { padding: 44px 24px; }
+      .services { padding: 72px 24px; } .services__grid { grid-template-columns: 1fr; }
+      .about { grid-template-columns: 1fr; } .about__img { min-height: 300px; } .about__content { padding: 48px 28px; }
+      .gallery { padding: 72px 24px; } .gallery__grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; } .gallery__item:first-child { grid-column: span 2; }
+      .testimonials { padding: 72px 24px; } .testi-grid { grid-template-columns: 1fr; }
+      .booking-cta { padding: 60px 24px; flex-direction: column; }
+      .location { padding: 72px 24px; } .location__grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 44px 24px 28px; } .footer__top { flex-direction: column; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav__logo">AURA<span>Spa & Wellness · San Juan</span></div>
+    <ul class="nav__links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#gallery">Galería</a></li>
+      <li><a href="#location">Ubicación</a></li>
+    </ul>
+    <a href="https://wa.me/17870000000" target="_blank" class="nav__cta">Reservar</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="hero__label">Spa & Wellness</p>
+      <h1 class="hero__title">Donde el<br />descanso se<br />vuelve <em>ritual.</em></h1>
+      <p class="hero__sub">Un espacio diseñado para que el mundo exterior desaparezca. Cada tratamiento, una experiencia que llevas contigo.</p>
+      <div class="hero__cta">
+        <a href="https://wa.me/17870000000" target="_blank" class="btn-rose">Reservar Cita</a>
+        <a href="#services" class="btn-ghost">Ver Tratamientos</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="philosophy">
+    <p class="philosophy__quote">"El verdadero lujo no es lo que ves. Es lo que <em>sientes</em> cuando te permites parar."</p>
+    <p class="philosophy__attr">— Filosofía AURA</p>
+  </div>
+
+  <section class="services" id="services">
+    <div class="services__header">
+      <p class="s-label">Nuestros tratamientos</p>
+      <h2 class="s-title">Servicios</h2>
+      <p class="s-sub">Cada ritual diseñado para restaurar el equilibrio entre cuerpo y mente.</p>
+    </div>
+    <div class="services__grid">
+      <div class="service-item"><div class="service-item__duration">60 — 90 min</div><div class="service-item__name">Masaje Sueco</div><div class="service-item__desc">Técnica clásica de relajación profunda. Libera tensión muscular y activa la circulación. El punto de partida perfecto.</div><div class="service-item__price">$95 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__duration">75 min</div><div class="service-item__name">Masaje de Piedras Calientes</div><div class="service-item__desc">Piedras de basalto volcánico combinadas con técnica sueca. Calor que penetra hasta el músculo profundo.</div><div class="service-item__price">$120 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__duration">60 min</div><div class="service-item__name">Facial Signature AURA</div><div class="service-item__desc">Limpieza profunda, hidratación intensiva y masaje facial. Piel restaurada y luminosa desde la primera sesión.</div><div class="service-item__price">$110 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__duration">45 min</div><div class="service-item__name">Exfoliación Corporal</div><div class="service-item__desc">Renueva tu piel con sales minerales del Mar Muerto y aceites esenciales. Piel nueva de pies a cabeza.</div><div class="service-item__price">$80 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__duration">60 min</div><div class="service-item__name">Aromaterapia</div><div class="service-item__desc">Aceites esenciales puros combinados con masaje relajante. Cada aroma trabaja sobre el sistema nervioso.</div><div class="service-item__price">$100 <span>/ desde</span></div></div>
+      <div class="service-item"><div class="service-item__duration">120 min</div><div class="service-item__name">Ritual Completo AURA</div><div class="service-item__desc">La experiencia total: exfoliación, masaje de piedras calientes, facial y aromaterapia. Una tarde para ti.</div><div class="service-item__price">$280 <span>/ desde</span></div></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about__content">
+      <p class="s-label">Nuestra historia</p>
+      <blockquote class="about__quote">"Creamos AURA para que cada mujer tenga un lugar donde ser, sin <em>hacer.</em>"</blockquote>
+      <p class="about__body">Fundado por terapeutas certificadas con más de una década de experiencia, AURA nació de la convicción de que el cuidado personal no es un lujo — es una necesidad. Cada detalle del espacio, cada producto, cada técnica, está elegido con una sola pregunta: ¿esto transforma la experiencia de quien lo recibe?</p>
+      <div class="stat-row">
+        <div><div class="stat__num">8+</div><div class="stat__label">Años</div></div>
+        <div><div class="stat__num">500+</div><div class="stat__label">Clientas</div></div>
+        <div><div class="stat__num">5★</div><div class="stat__label">Google</div></div>
+      </div>
+    </div>
+    <div class="about__img"></div>
+  </section>
+
+  <section class="gallery" id="gallery">
+    <div class="gallery__header">
+      <p class="s-label">El espacio</p>
+      <h2 class="s-title">Galería</h2>
+    </div>
+    <div class="gallery__grid">
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=800&q=80&fit=crop" alt="Spa room" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=500&q=80&fit=crop" alt="Treatment" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=500&q=80&fit=crop" alt="Wellness" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=500&q=80&fit=crop" alt="Massage" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=500&q=80&fit=crop" alt="Spa ambiance" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="testimonials__header">
+      <p class="s-label">Experiencias</p>
+      <h2 class="s-title">Lo que dicen</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-ornament">"</div><p class="testi-text">Vine por primera vez por mi cumpleaños. Salí completamente diferente — no solo físicamente, sino en mi estado mental. Ahora vengo cada mes como parte de mi rutina.</p><div class="testi-author">Valeria M.</div><div class="testi-detail">Clienta desde 2022</div></div>
+      <div class="testi-card"><div class="testi-ornament">"</div><p class="testi-text">El Ritual Completo AURA fue la mejor inversión que he hecho en mí misma en años. Dos horas donde literalmente no existió el estrés. Lo recomiendo a todas mis amigas.</p><div class="testi-author">Daniela R.</div><div class="testi-detail">San Juan, PR</div></div>
+      <div class="testi-card"><div class="testi-ornament">"</div><p class="testi-text">El masaje de piedras calientes con Sofía es otro nivel. Sabe exactamente dónde estás cargando tensión antes de que digas una palabra. Un talento genuino.</p><div class="testi-author">Camila T.</div><div class="testi-detail">Clienta frecuente</div></div>
+    </div>
+  </section>
+
+  <section class="booking-cta">
+    <h2 class="booking-cta__title">Regálate el descanso que mereces.</h2>
+    <a href="https://wa.me/17870000000?text=Hola%2C%20quiero%20reservar%20un%20tratamiento%20en%20AURA." target="_blank" class="btn-dark">Reservar por WhatsApp</a>
+  </section>
+
+  <section class="location" id="location">
+    <p class="s-label">Encuéntranos</p>
+    <h2 class="s-title">Ubicación & Horario</h2>
+    <div class="location__grid">
+      <div class="location__map">
+        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=60&fit=crop" alt="Map" />
+        <div class="location__map-pin">📍 AURA Spa & Wellness</div>
+      </div>
+      <div>
+        <div class="info-row"><div class="info-row__icon">📍</div><div><div class="info-row__label">Dirección</div><div class="info-row__val">Calle Duffaut 1508, Miramar<br />San Juan, PR 00907</div></div></div>
+        <div class="info-row"><div class="info-row__icon">📞</div><div><div class="info-row__label">Reservas</div><div class="info-row__val">+1 (787) 000-0000<br />WhatsApp disponible</div></div></div>
+        <div class="info-row"><div class="info-row__icon">📸</div><div><div class="info-row__label">Instagram</div><div class="info-row__val">@aura.spa.pr</div></div></div>
+        <table class="hours-table">
+          <tr><td>Martes – Viernes</td><td>10:00 AM – 7:00 PM</td></tr>
+          <tr><td>Sábado</td><td>9:00 AM – 6:00 PM</td></tr>
+          <tr><td>Domingo – Lunes</td><td>Cerrado</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer__top">
+      <div class="footer__logo">AURA<span>Spa & Wellness · San Juan, PR</span></div>
+      <div class="footer__links">
+        <a href="#services">Tratamientos</a>
+        <a href="#gallery">Espacio</a>
+        <a href="#location">Ubicación</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 AURA Spa & Wellness. Todos los derechos reservados.</p>
+      <p class="footer__clun">Sitio por CLUN Management</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+  </script>
+</body>
+</html>

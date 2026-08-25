@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAÍZ Cocina & Bar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:  #0c0905;
+      --dark:   #110e08;
+      --card:   #1a1509;
+      --amber:  #D4722A;
+      --amber-l:#e88a46;
+      --cream:  #F5EBD8;
+      --muted:  rgba(245,235,216,0.42);
+      --border: rgba(245,235,216,0.07);
+      --serif:  'Playfair Display', Georgia, serif;
+      --sans:   'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--black); color: var(--cream); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 300; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 56px; transition: background 0.4s, backdrop-filter 0.4s; }
+    .nav.scrolled { background: rgba(12,9,5,0.93); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav__logo { font-family: var(--serif); font-size: 26px; font-weight: 900; letter-spacing: 0.06em; }
+    .nav__logo span { display: block; font-family: var(--sans); font-size: 8px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--amber); margin-top: 2px; }
+    .nav__links { display: flex; gap: 32px; list-style: none; }
+    .nav__links a { font-size: 12px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav__links a:hover { color: var(--cream); }
+    .nav__cta { background: var(--amber); color: var(--black); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 28px; transition: background 0.2s; }
+    .nav__cta:hover { background: var(--amber-l); }
+
+    /* HERO */
+    .hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: flex-end; padding: 0 72px 96px; overflow: hidden; }
+    .hero__bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80&fit=crop'); background-size: cover; background-position: center 40%; filter: brightness(0.24) saturate(0.7); }
+    .hero__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,9,5,0.98) 0%, rgba(12,9,5,0.25) 60%, transparent 100%); }
+    .hero__content { position: relative; z-index: 2; max-width: 680px; }
+    .hero__eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+    .hero__eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--amber); }
+    .hero__title { font-family: var(--serif); font-size: clamp(56px, 8vw, 100px); font-weight: 900; line-height: 0.93; letter-spacing: -0.02em; margin-bottom: 24px; }
+    .hero__title em { font-style: italic; color: var(--amber); }
+    .hero__sub { font-size: 17px; font-weight: 300; color: rgba(245,235,216,0.52); line-height: 1.65; max-width: 420px; margin-bottom: 44px; }
+    .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-amber { background: var(--amber); color: var(--black); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 18px 44px; display: inline-block; transition: background 0.2s, transform 0.15s; }
+    .btn-amber:hover { background: var(--amber-l); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid rgba(245,235,216,0.2); color: var(--cream); font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; padding: 18px 36px; display: inline-block; transition: border-color 0.2s; }
+    .btn-outline:hover { border-color: rgba(245,235,216,0.45); }
+
+    /* MARQUEE */
+    .marquee-wrap { background: var(--amber); padding: 14px 0; overflow: hidden; }
+    .marquee-track { display: flex; animation: marquee 26s linear infinite; white-space: nowrap; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-item { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--black); padding: 0 28px; display: flex; align-items: center; gap: 28px; }
+    .marquee-item::after { content: '✦'; font-size: 8px; }
+
+    /* SECTION LABELS */
+    .s-label { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .s-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--amber); }
+    .s-title { font-family: var(--serif); font-size: clamp(34px, 4.5vw, 58px); font-weight: 900; line-height: 1.02; letter-spacing: -0.02em; }
+    .s-sub { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 480px; margin-top: 14px; }
+
+    /* ABOUT */
+    .about { display: grid; grid-template-columns: 1fr 1fr; }
+    .about__img { min-height: 560px; background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80&fit=crop'); background-size: cover; background-position: center; }
+    .about__content { background: var(--card); padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
+    .about__quote { font-family: var(--serif); font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; line-height: 1.3; color: var(--cream); margin: 24px 0 20px; }
+    .about__quote em { color: var(--amber); font-style: italic; }
+    .about__body { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 36px; }
+    .stat-row { display: flex; gap: 36px; }
+    .stat__num { font-family: var(--serif); font-size: 40px; font-weight: 900; color: var(--amber); line-height: 1; }
+    .stat__label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* MENU */
+    .menu { padding: 100px 72px; }
+    .menu__header { margin-bottom: 52px; }
+    .menu__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border: 1px solid var(--border); }
+    .menu-item { background: var(--dark); padding: 36px 28px; transition: background 0.3s; }
+    .menu-item:hover { background: #1c1810; }
+    .menu-item__category { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); margin-bottom: 14px; }
+    .menu-item__name { font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+    .menu-item__desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; margin-bottom: 22px; }
+    .menu-item__price { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--amber); }
+
+    /* GALLERY */
+    .gallery { padding: 100px 72px; background: var(--dark); }
+    .gallery__header { margin-bottom: 44px; }
+    .gallery__grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 260px 260px; gap: 6px; }
+    .gallery__item { overflow: hidden; background: var(--card); }
+    .gallery__item:first-child { grid-column: span 2; grid-row: span 2; }
+    .gallery__item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) saturate(0.8); transition: transform 0.5s, filter 0.4s; }
+    .gallery__item:hover img { transform: scale(1.05); filter: brightness(0.95) saturate(1.1); }
+
+    /* CHEF */
+    .chef { background: var(--card); padding: 100px 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .chef__img { aspect-ratio: 4/5; overflow: hidden; }
+    .chef__img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%); }
+    .chef__name { font-family: var(--serif); font-size: clamp(32px, 4vw, 52px); font-weight: 900; line-height: 1.0; margin: 20px 0 8px; }
+    .chef__title { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 24px; }
+    .chef__bio { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.8; }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: 100px 72px; }
+    .testimonials__header { margin-bottom: 48px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .testi-card { background: var(--card); border: 1px solid var(--border); padding: 32px 28px; }
+    .testi-stars { color: var(--amber); font-size: 13px; letter-spacing: 2px; margin-bottom: 14px; }
+    .testi-text { font-family: var(--serif); font-size: 17px; font-style: italic; line-height: 1.65; color: rgba(245,235,216,0.82); margin-bottom: 22px; }
+    .testi-author { font-size: 12px; font-weight: 700; color: var(--cream); }
+    .testi-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* RESERVATION CTA */
+    .reservation-cta { background: var(--amber); padding: 80px 72px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .reservation-cta__title { font-family: var(--serif); font-size: clamp(30px, 4vw, 52px); font-weight: 900; color: var(--black); max-width: 460px; line-height: 1.05; }
+    .btn-dark { background: var(--black); color: var(--cream); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 20px 52px; white-space: nowrap; transition: background 0.2s, transform 0.15s; display: inline-block; }
+    .btn-dark:hover { background: #1a1409; transform: translateY(-2px); }
+
+    /* LOCATION */
+    .location { padding: 100px 72px; background: var(--dark); }
+    .location__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 52px; align-items: start; }
+    .location__map { aspect-ratio: 4/3; overflow: hidden; position: relative; background: var(--card); border: 1px solid var(--border); }
+    .location__map img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) saturate(0.3); }
+    .location__map-pin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); }
+    .info-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .info-row:first-of-type { border-top: 1px solid var(--border); }
+    .info-row__icon { color: var(--amber); flex-shrink: 0; font-size: 16px; margin-top: 2px; }
+    .info-row__label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .info-row__val { font-size: 14px; font-weight: 300; color: var(--cream); line-height: 1.5; }
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    .hours-table td { padding: 11px 0; font-size: 14px; font-weight: 300; border-bottom: 1px solid var(--border); }
+    .hours-table td:first-child { color: var(--muted); }
+    .hours-table td:last-child { text-align: right; }
+    .hours-table tr:last-child td { border-bottom: none; }
+
+    /* FOOTER */
+    footer { background: var(--black); border-top: 1px solid var(--border); padding: 52px 72px 36px; }
+    .footer__top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+    .footer__logo { font-family: var(--serif); font-size: 26px; font-weight: 900; }
+    .footer__logo span { display: block; font-family: var(--sans); font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber); margin-top: 4px; }
+    .footer__links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer__links a { font-size: 11px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .footer__links a:hover { color: var(--amber); }
+    .footer__bottom { display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border); }
+    .footer__copy { font-size: 12px; color: rgba(245,235,216,0.2); }
+    .footer__clun { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); }
+
+    @media (max-width: 900px) {
+      .nav { padding: 0 20px; } .nav__links { display: none; }
+      .hero { padding: 0 24px 72px; }
+      .about { grid-template-columns: 1fr; } .about__img { min-height: 300px; } .about__content { padding: 48px 28px; }
+      .menu { padding: 72px 24px; } .menu__grid { grid-template-columns: 1fr; }
+      .gallery { padding: 72px 24px; } .gallery__grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; } .gallery__item:first-child { grid-column: span 2; }
+      .chef { padding: 72px 24px; grid-template-columns: 1fr; gap: 36px; }
+      .testimonials { padding: 72px 24px; } .testi-grid { grid-template-columns: 1fr; }
+      .reservation-cta { padding: 60px 24px; flex-direction: column; }
+      .location { padding: 72px 24px; } .location__grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 44px 24px 28px; } .footer__top { flex-direction: column; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav__logo">RAÍZ<span>Cocina & Bar · San Juan</span></div>
+    <ul class="nav__links">
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#gallery">Galería</a></li>
+      <li><a href="#chef">El Chef</a></li>
+      <li><a href="#location">Ubicación</a></li>
+    </ul>
+    <a href="https://wa.me/17870000000" target="_blank" class="nav__cta">Reservar Mesa</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Cocina de autor · San Juan, PR</p>
+      <h1 class="hero__title">Sabor con<br /><em>raíces.</em></h1>
+      <p class="hero__sub">Cocina boricua de autor. Ingredientes locales, técnica de clase mundial, y el alma de Puerto Rico en cada plato.</p>
+      <div class="hero__cta">
+        <a href="https://wa.me/17870000000" target="_blank" class="btn-amber">Reservar Mesa</a>
+        <a href="#menu" class="btn-outline">Ver Menú</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">Mofongo de Mar</div><div class="marquee-item">Tostones al Ajillo</div><div class="marquee-item">Lechón Confitado</div><div class="marquee-item">Ceviche Boricua</div><div class="marquee-item">Arroz con Gandules</div><div class="marquee-item">Tembleque de Coco</div>
+      <div class="marquee-item">Mofongo de Mar</div><div class="marquee-item">Tostones al Ajillo</div><div class="marquee-item">Lechón Confitado</div><div class="marquee-item">Ceviche Boricua</div><div class="marquee-item">Arroz con Gandules</div><div class="marquee-item">Tembleque de Coco</div>
+    </div>
+  </div>
+
+  <section class="about">
+    <div class="about__img"></div>
+    <div class="about__content">
+      <p class="s-label">Nuestra filosofía</p>
+      <blockquote class="about__quote">"De la tierra puertorriqueña al plato. Cada ingrediente tiene una <em>historia.</em>"</blockquote>
+      <p class="about__body">RAÍZ nació de la convicción de que la cocina boricua merece estar en la misma conversación que las grandes cocinas del mundo. Trabajamos con agricultores locales, productores de la isla, y una brigada de cocineros que entiende que el respeto por el ingrediente es el primer paso hacia algo memorable.</p>
+      <div class="stat-row">
+        <div><div class="stat__num">6+</div><div class="stat__label">Años</div></div>
+        <div><div class="stat__num">48</div><div class="stat__label">Platos en menú</div></div>
+        <div><div class="stat__num">5★</div><div class="stat__label">Google</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="menu__header">
+      <p class="s-label">Lo que servimos</p>
+      <h2 class="s-title">Menú Destacado</h2>
+      <p class="s-sub">Una muestra de lo que nos define. El menú completo en mesa.</p>
+    </div>
+    <div class="menu__grid">
+      <div class="menu-item"><div class="menu-item__category">🥣 Entradas</div><div class="menu-item__name">Ceviche Boricua</div><div class="menu-item__desc">Chillo fresco marinado en limón criollo, ají caballero, cilantro, y coco tostado. Servido con tostones finos.</div><div class="menu-item__price">$18</div></div>
+      <div class="menu-item"><div class="menu-item__category">🦐 Mariscos</div><div class="menu-item__name">Mofongo de Mar</div><div class="menu-item__desc">Mofongo artesanal de plátano verde con langostinos al ajillo, caldo de mariscos reducido y aceite de culantro.</div><div class="menu-item__price">$34</div></div>
+      <div class="menu-item"><div class="menu-item__category">🥩 Carnes</div><div class="menu-item__name">Lechón Confitado</div><div class="menu-item__desc">Pernil confitado 12 horas, chicharrón crujiente, pique casero, y arroz con gandules negros de Utuado.</div><div class="menu-item__price">$38</div></div>
+      <div class="menu-item"><div class="menu-item__category">🌱 Vegetariano</div><div class="menu-item__name">Alcapurrias de Yuca</div><div class="menu-item__desc">Alcapurrias rellenas de gandures guisados, queso de mano criollo, y sofrito de abuelas. Fritas al momento.</div><div class="menu-item__price">$16</div></div>
+      <div class="menu-item"><div class="menu-item__category">🍹 Cócteles</div><div class="menu-item__name">Ron Viejo Sour</div><div class="menu-item__desc">Ron añejo de hacienda local, limón criollo, tamarindo casero, y espuma de clara. Equilibrio perfecto.</div><div class="menu-item__price">$14</div></div>
+      <div class="menu-item"><div class="menu-item__category">🍮 Postres</div><div class="menu-item__name">Tembleque Signature</div><div class="menu-item__desc">Tembleque de coco con sal de flor de Guánica, mango flambeado, y granizado de guanábana. El final que se recuerda.</div><div class="menu-item__price">$12</div></div>
+    </div>
+  </section>
+
+  <section class="gallery" id="gallery">
+    <div class="gallery__header">
+      <p class="s-label">El ambiente</p>
+      <h2 class="s-title">Galería</h2>
+    </div>
+    <div class="gallery__grid">
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80&fit=crop" alt="Restaurant" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&q=80&fit=crop" alt="Food" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=500&q=80&fit=crop" alt="Plated dish" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65ce?w=500&q=80&fit=crop" alt="Bar" loading="lazy" /></div>
+      <div class="gallery__item"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80&fit=crop" alt="Atmosphere" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <section class="chef" id="chef">
+    <div class="chef__img"><img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=700&q=80&fit=crop&crop=faces" alt="Chef" loading="lazy" /></div>
+    <div>
+      <p class="s-label">Detrás de los fogones</p>
+      <div class="chef__name">Chef Roberto Pagán</div>
+      <div class="chef__title">Chef Ejecutivo & Co-fundador</div>
+      <p class="chef__bio">Formado en el Culinary Institute of America y con etapas en cocinas de España y México, Roberto regresó a Puerto Rico con una misión clara: elevar la cocina de su tierra sin perder su alma. Su técnica es precisa, pero su filosofía es simple — el mejor ingrediente es el que creció cerca.</p>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="testimonials__header">
+      <p class="s-label">Lo que dicen</p>
+      <h2 class="s-title">Reseñas</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"El mofongo de mar de RAÍZ es literalmente el mejor que he probado en mi vida. Y soy puertorriqueño — eso dice todo."</p><div class="testi-author">Miguel A.</div><div class="testi-detail">San Juan, PR</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Vine de NY a visitar familia y terminé cenando aquí dos veces. El ambiente, el servicio y la comida están a un nivel que no esperaba encontrar. Extraordinario."</p><div class="testi-author">Ana García</div><div class="testi-detail">Nueva York, NY</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Llevé a mis clientes a cenar aquí y quedaron impresionados. El Ron Viejo Sour es adictivo y el lechón confitado se deshace. Nuestro spot favorito para reuniones de trabajo."</p><div class="testi-author">Carlos R.</div><div class="testi-detail">Guaynabo, PR</div></div>
+    </div>
+  </section>
+
+  <section class="reservation-cta">
+    <h2 class="reservation-cta__title">Haz tu reservación esta semana.</h2>
+    <a href="https://wa.me/17870000000?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Ra%C3%ADz." target="_blank" class="btn-dark">Reservar por WhatsApp</a>
+  </section>
+
+  <section class="location" id="location">
+    <p class="s-label">Dónde estamos</p>
+    <h2 class="s-title">Ubicación & Horario</h2>
+    <div class="location__grid">
+      <div class="location__map">
+        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=60&fit=crop" alt="Map" />
+        <div class="location__map-pin">📍 RAÍZ Cocina & Bar</div>
+      </div>
+      <div>
+        <div class="info-row"><div class="info-row__icon">📍</div><div><div class="info-row__label">Dirección</div><div class="info-row__val">Calle Fortaleza 305, Viejo San Juan<br />San Juan, PR 00901</div></div></div>
+        <div class="info-row"><div class="info-row__icon">📞</div><div><div class="info-row__label">Reservaciones</div><div class="info-row__val">+1 (787) 000-0000<br />WhatsApp disponible</div></div></div>
+        <div class="info-row"><div class="info-row__icon">🅿️</div><div><div class="info-row__label">Estacionamiento</div><div class="info-row__val">Parking disponible en Calle San José<br />Valet disponible viernes y sábados</div></div></div>
+        <table class="hours-table">
+          <tr><td>Martes – Jueves</td><td>12:00 PM – 10:00 PM</td></tr>
+          <tr><td>Viernes – Sábado</td><td>12:00 PM – 12:00 AM</td></tr>
+          <tr><td>Domingo</td><td>11:00 AM – 8:00 PM</td></tr>
+          <tr><td>Lunes</td><td>Cerrado</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer__top">
+      <div class="footer__logo">RAÍZ<span>Cocina & Bar · Viejo San Juan, PR</span></div>
+      <div class="footer__links">
+        <a href="#menu">Menú</a>
+        <a href="#gallery">Galería</a>
+        <a href="#chef">El Chef</a>
+        <a href="#location">Ubicación</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 RAÍZ Cocina & Bar. Todos los derechos reservados.</p>
+      <p class="footer__clun">Sitio por CLUN Management</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+  </script>
+</body>
+</html>

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FERRO Plomería — Servicio 24/7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:    #080f1e;
+      --dark:    #0d1628;
+      --card:    #111d32;
+      --orange:  #FF5C00;
+      --orange-l:#ff7a2a;
+      --blue:    #1A56DB;
+      --white:   #ffffff;
+      --off:     #f0f4ff;
+      --muted:   rgba(255,255,255,0.42);
+      --border:  rgba(255,255,255,0.07);
+      --condensed: 'Barlow Condensed', Impact, sans-serif;
+      --sans:     'Inter', -apple-system, system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--navy);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── EMERGENCY BAR ── */
+    .emergency-bar {
+      background: var(--orange);
+      padding: 10px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .emergency-bar__text {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: white;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(1.4); }
+    }
+    .emergency-bar__phone {
+      font-size: 15px; font-weight: 700;
+      letter-spacing: 0.04em; color: var(--white);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 300;
+      height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__logo {
+      font-family: var(--condensed);
+      font-size: 26px; font-weight: 900;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav__logo-icon {
+      width: 36px; height: 36px;
+      background: var(--orange);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .nav__logo span {
+      font-family: var(--sans);
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      display: block; margin-top: 1px;
+    }
+    .nav__links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav__links a {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .nav__links a:hover { color: var(--white); }
+    .nav__cta {
+      background: var(--orange); color: var(--white);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 12px 28px; border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .nav__cta:hover { background: var(--orange-l); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex; align-items: center;
+      padding: 80px 72px;
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1600&q=80&fit=crop');
+      background-size: cover; background-position: center;
+      filter: brightness(0.22) saturate(0.6);
+    }
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(8,15,30,0.97) 45%, rgba(8,15,30,0.5) 100%);
+    }
+    .hero__content { position: relative; z-index: 2; max-width: 680px; }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,92,0,0.15);
+      border: 1px solid rgba(255,92,0,0.4);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 28px;
+    }
+    .hero__title {
+      font-family: var(--condensed);
+      font-size: clamp(64px, 9vw, 110px);
+      font-weight: 900; line-height: 0.9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero__title .accent { color: var(--orange); }
+    .hero__sub {
+      font-size: 18px; font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6; max-width: 480px;
+      margin-bottom: 48px;
+    }
+    .hero__cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .btn-orange {
+      background: var(--orange); color: var(--white);
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 18px 44px; border-radius: 4px;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-orange:hover { background: var(--orange-l); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 14px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 18px 36px; border-radius: 4px;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+    /* ── TRUST STRIP ── */
+    .trust-strip {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0 72px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .trust-item {
+      padding: 32px 24px;
+      display: flex; align-items: center; gap: 16px;
+      border-right: 1px solid var(--border);
+    }
+    .trust-item:last-child { border-right: none; }
+    .trust-item__icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(255,92,0,0.12);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .trust-item__num {
+      font-family: var(--condensed);
+      font-size: 28px; font-weight: 900;
+      line-height: 1; color: var(--white);
+    }
+    .trust-item__label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-top: 2px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .s-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .s-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--orange); }
+    .s-title {
+      font-family: var(--condensed);
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 900; line-height: 0.95;
+      letter-spacing: -0.01em; text-transform: uppercase;
+    }
+    .s-sub {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6; max-width: 500px;
+      margin-top: 14px;
+    }
+
+    /* ── SERVICES ── */
+    .services { padding: 100px 72px; background: var(--navy); }
+    .services__header { margin-bottom: 56px; }
+    .services__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .service-item {
+      background: var(--dark);
+      padding: 40px 32px;
+      transition: background 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .service-item::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--orange);
+      transition: height 0.3s ease;
+    }
+    .service-item:hover { background: #111d32; }
+    .service-item:hover::before { height: 100%; }
+    .service-item__icon { font-size: 32px; margin-bottom: 20px; }
+    .service-item__name {
+      font-family: var(--condensed);
+      font-size: 24px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      margin-bottom: 10px; line-height: 1.1;
+    }
+    .service-item__desc {
+      font-size: 13px; font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6; margin-bottom: 24px;
+    }
+    .service-item__tag {
+      display: inline-block;
+      background: rgba(255,92,0,0.12);
+      border: 1px solid rgba(255,92,0,0.25);
+      color: var(--orange);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+    }
+
+    /* ── WHY US ── */
+    .why {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .why__img {
+      background-image: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80&fit=crop');
+      background-size: cover; background-position: center;
+      position: relative;
+    }
+    .why__img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--card) 100%);
+    }
+    .why__content {
+      background: var(--card);
+      padding: 80px 64px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .why__list { list-style: none; margin-top: 36px; display: flex; flex-direction: column; gap: 0; }
+    .why__item {
+      display: flex; gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .why__item:first-child { border-top: 1px solid var(--border); }
+    .why__item-num {
+      font-family: var(--condensed);
+      font-size: 13px; font-weight: 800;
+      color: var(--orange); letter-spacing: 0.1em;
+      flex-shrink: 0; margin-top: 2px; width: 28px;
+    }
+    .why__item-title {
+      font-size: 15px; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .why__item-body {
+      font-size: 13px; font-weight: 300;
+      color: rgba(255,255,255,0.45); line-height: 1.6;
+    }
+
+    /* ── GALLERY ── */
+    .gallery { padding: 100px 72px; background: var(--navy); }
+    .gallery__header { margin-bottom: 48px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 240px 240px;
+      gap: 6px;
+    }
+    .gallery__item { overflow: hidden; background: var(--card); }
+    .gallery__item:first-child { grid-column: span 2; grid-row: span 2; }
+    .gallery__item:nth-child(4) { grid-column: span 2; }
+    .gallery__item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease, filter 0.4s;
+      filter: brightness(0.75) saturate(0.7);
+    }
+    .gallery__item:hover img { transform: scale(1.05); filter: brightness(0.9) saturate(1); }
+    .gallery__label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { padding: 100px 72px; background: var(--card); }
+    .testimonials__header { margin-bottom: 52px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .testi-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      padding: 36px 28px;
+      position: relative;
+    }
+    .testi-card::before {
+      content: '"';
+      position: absolute; top: 16px; right: 24px;
+      font-size: 80px; font-weight: 900;
+      color: rgba(255,92,0,0.08);
+      line-height: 1; font-family: Georgia, serif;
+    }
+    .testi-stars { color: var(--orange); font-size: 13px; letter-spacing: 2px; margin-bottom: 16px; }
+    .testi-text {
+      font-size: 15px; line-height: 1.7;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 24px;
+    }
+    .testi-author { font-size: 13px; font-weight: 700; color: var(--white); }
+    .testi-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* ── EMERGENCY CTA ── */
+    .emergency-cta {
+      background: var(--orange);
+      padding: 80px 72px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 40px; align-items: center;
+    }
+    .emergency-cta__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7); margin-bottom: 12px;
+    }
+    .emergency-cta__title {
+      font-family: var(--condensed);
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900; text-transform: uppercase;
+      line-height: 0.95; color: var(--white);
+    }
+    .emergency-cta__subtitle {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      margin-top: 12px; max-width: 440px;
+    }
+    .btn-white {
+      background: var(--white); color: var(--orange);
+      font-size: 13px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 20px 52px; border-radius: 4px;
+      white-space: nowrap;
+      transition: transform 0.15s;
+      display: inline-block;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* ── LOCATION ── */
+    .location { padding: 100px 72px; background: var(--navy); }
+    .location__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 56px; align-items: start; }
+    .location__map {
+      aspect-ratio: 4/3; background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden; position: relative;
+    }
+    .location__map img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5) saturate(0.4); }
+    .location__map-label {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--orange);
+    }
+    .zone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+    .zone-tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px; padding: 12px 16px;
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .zone-tag::before { content: '✓'; color: var(--orange); font-weight: 700; font-size: 12px; }
+    .hours-wrap { margin-top: 36px; }
+    .hours-wrap h4 {
+      font-family: var(--condensed); font-size: 20px;
+      font-weight: 800; text-transform: uppercase;
+      margin-bottom: 16px; letter-spacing: 0.04em;
+    }
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table td { padding: 12px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+    .hours-table td:first-child { color: var(--muted); }
+    .hours-table td:last-child { text-align: right; }
+    .hours-table tr:last-child td { border-bottom: none; }
+    .badge-247 {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,92,0,0.15);
+      border: 1px solid rgba(255,92,0,0.3);
+      color: var(--orange);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 999px;
+      margin-top: 16px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 52px 72px 36px;
+    }
+    .footer__top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 44px;
+      gap: 40px;
+    }
+    .footer__logo {
+      font-family: var(--condensed);
+      font-size: 28px; font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .footer__logo-icon {
+      width: 36px; height: 36px; background: var(--orange);
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; font-size: 18px;
+    }
+    .footer__desc {
+      font-size: 13px; font-weight: 300;
+      color: var(--muted); line-height: 1.7;
+      max-width: 280px; margin-top: 12px;
+    }
+    .footer__links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer__links a {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .footer__links a:hover { color: var(--orange); }
+    .footer__bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .footer__copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer__clun {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .emergency-bar { padding: 10px 20px; }
+      .nav { padding: 0 20px; }
+      .nav__links { display: none; }
+      .hero { padding: 60px 24px 72px; }
+      .trust-strip { padding: 0 20px; grid-template-columns: 1fr 1fr; }
+      .trust-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .services { padding: 72px 24px; }
+      .services__grid { grid-template-columns: 1fr; }
+      .why { grid-template-columns: 1fr; }
+      .why__img { height: 300px; }
+      .why__content { padding: 48px 28px; }
+      .gallery { padding: 72px 24px; }
+      .gallery__grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery__item:first-child { grid-column: span 2; }
+      .gallery__item:nth-child(4) { grid-column: span 1; }
+      .testimonials { padding: 72px 24px; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .emergency-cta { padding: 64px 24px; grid-template-columns: 1fr; }
+      .location { padding: 72px 24px; }
+      .location__grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 48px 24px 32px; }
+      .footer__top { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- EMERGENCY BAR -->
+  <div class="emergency-bar">
+    <div class="emergency-bar__text">
+      <div class="pulse"></div>
+      Servicio de Emergencia 24/7 — Respondemos en menos de 60 minutos
+    </div>
+    <a href="tel:+17870000000" class="emergency-bar__phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+      +1 (787) 000-0000
+    </a>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__logo">
+      <div class="nav__logo-icon">🔧</div>
+      <div>
+        FERRO
+        <span>Plomería Profesional</span>
+      </div>
+    </div>
+    <ul class="nav__links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#gallery">Trabajos</a></li>
+      <li><a href="#location">Área</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <a href="https://wa.me/17870000000" target="_blank" class="nav__cta">Cotización Gratis</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <div class="hero__badge">
+        <div class="pulse"></div>
+        Disponible ahora mismo
+      </div>
+      <h1 class="hero__title">
+        Plomería<br />que <span class="accent">resuelve.</span>
+      </h1>
+      <p class="hero__sub">Licenciados, asegurados, y en tu puerta cuando más lo necesitas. Emergencias, instalaciones, y todo lo que va en el medio.</p>
+      <div class="hero__cta">
+        <a href="https://wa.me/17870000000?text=Hola%2C%20necesito%20un%20plomero." target="_blank" class="btn-orange">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+          Llamar Ahora
+        </a>
+        <a href="#services" class="btn-outline">Ver Servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-item">
+      <div class="trust-item__icon">🏅</div>
+      <div>
+        <div class="trust-item__num">15+</div>
+        <div class="trust-item__label">Años de experiencia</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item__icon">⚡</div>
+      <div>
+        <div class="trust-item__num">&lt;60</div>
+        <div class="trust-item__label">Min. respuesta</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item__icon">✅</div>
+      <div>
+        <div class="trust-item__num">100%</div>
+        <div class="trust-item__label">Licenciados & asegurados</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item__icon">⭐</div>
+      <div>
+        <div class="trust-item__num">5.0</div>
+        <div class="trust-item__label">Google Reviews</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services__header">
+      <p class="s-label">Lo que hacemos</p>
+      <h2 class="s-title">Servicios</h2>
+      <p class="s-sub">Desde una emergencia a las 3AM hasta una remodelación completa. Lo manejamos todo.</p>
+    </div>
+    <div class="services__grid">
+      <div class="service-item">
+        <div class="service-item__icon">🚨</div>
+        <div class="service-item__name">Emergencias 24/7</div>
+        <div class="service-item__desc">Tuberías rotas, inundaciones, fugas activas. Respondemos cualquier hora, cualquier día del año.</div>
+        <span class="service-item__tag">Respuesta inmediata</span>
+      </div>
+      <div class="service-item">
+        <div class="service-item__icon">🚿</div>
+        <div class="service-item__name">Reparación de Tuberías</div>
+        <div class="service-item__desc">Detección y reparación de fugas, tuberías corroídas, y presión de agua deficiente.</div>
+        <span class="service-item__tag">Diagnóstico gratis</span>
+      </div>
+      <div class="service-item">
+        <div class="service-item__icon">🔥</div>
+        <div class="service-item__name">Calentadores de Agua</div>
+        <div class="service-item__desc">Instalación, reemplazo y mantenimiento de calentadores tradicionales y tankless.</div>
+        <span class="service-item__tag">Instalación el mismo día</span>
+      </div>
+      <div class="service-item">
+        <div class="service-item__icon">🪠</div>
+        <div class="service-item__name">Destape de Drenajes</div>
+        <div class="service-item__desc">Fregaderos, bañeras, inodoros y sistemas de alcantarillado. Equipo de hidro-jet disponible.</div>
+        <span class="service-item__tag">Garantía 30 días</span>
+      </div>
+      <div class="service-item">
+        <div class="service-item__icon">🏗️</div>
+        <div class="service-item__name">Remodelación & Instalación</div>
+        <div class="service-item__desc">Baños completos, cocinas, sistemas nuevos. Plomería para construcción y remodelación.</div>
+        <span class="service-item__tag">Cotización gratis</span>
+      </div>
+      <div class="service-item">
+        <div class="service-item__icon">🔍</div>
+        <div class="service-item__name">Inspección de Sistemas</div>
+        <div class="service-item__desc">Cámara de inspección subterránea, detección de fugas sin demoler, diagnóstico completo.</div>
+        <span class="service-item__tag">Tecnología de punta</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why">
+    <div class="why__img">
+      <div class="why__img-overlay"></div>
+    </div>
+    <div class="why__content">
+      <p class="s-label">Por qué elegimos</p>
+      <h2 class="s-title">La diferencia<br />FERRO</h2>
+      <ul class="why__list">
+        <li class="why__item">
+          <div class="why__item-num">01</div>
+          <div>
+            <div class="why__item-title">Precio fijo, sin sorpresas</div>
+            <div class="why__item-body">Te damos el precio antes de empezar. No hay cargos ocultos ni sorpresas en la factura final.</div>
+          </div>
+        </li>
+        <li class="why__item">
+          <div class="why__item-num">02</div>
+          <div>
+            <div class="why__item-title">Garantía escrita en cada trabajo</div>
+            <div class="why__item-body">Todos nuestros trabajos tienen garantía. Si algo falla dentro del período, volvemos sin costo adicional.</div>
+          </div>
+        </li>
+        <li class="why__item">
+          <div class="why__item-num">03</div>
+          <div>
+            <div class="why__item-title">Dejamos tu casa como la encontramos</div>
+            <div class="why__item-body">Protegemos tus pisos y superficies. Limpiamos completamente antes de irnos. Sin excepciones.</div>
+          </div>
+        </li>
+        <li class="why__item">
+          <div class="why__item-num">04</div>
+          <div>
+            <div class="why__item-title">Técnicos certificados, siempre uniformados</div>
+            <div class="why__item-body">Sabes quién entra a tu casa. Nuestros técnicos están identificados, certificados y con fondo de antecedentes.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="gallery__header">
+      <div>
+        <p class="s-label">Resultados reales</p>
+        <h2 class="s-title">Trabajos Recientes</h2>
+      </div>
+      <span class="gallery__label">Antes & Después</span>
+    </div>
+    <div class="gallery__grid">
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80&fit=crop" alt="Plumbing work" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=500&q=80&fit=crop" alt="Repair" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80&fit=crop" alt="Installation" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80&fit=crop" alt="Pipe work" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1542621334-a254cf47733d?w=500&q=80&fit=crop" alt="Water heater" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testimonials__header">
+      <p class="s-label">Lo que dicen nuestros clientes</p>
+      <h2 class="s-title">Reseñas</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Tubería rota a las 2AM. Llamé a FERRO y en 45 minutos tenía a un técnico en mi casa. Resolvieron todo esa misma noche. Profesionalismo total."</p>
+        <div class="testi-author">María González</div>
+        <div class="testi-detail">Santurce, PR · Emergencia nocturna</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Llevaba meses con presión baja en toda la casa. Otros plomeros no encontraban el problema. FERRO lo diagnosticó en una hora y lo reparó ese mismo día."</p>
+        <div class="testi-author">Carlos Méndez</div>
+        <div class="testi-detail">Bayamón, PR · Reparación de tubería</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Remodelé el baño completo con ellos. Precio justo, trabajo limpio, y terminaron antes de lo prometido. Ya los recomendé a tres vecinos."</p>
+        <div class="testi-author">Ana Rosario</div>
+        <div class="testi-detail">Ponce, PR · Remodelación de baño</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMERGENCY CTA -->
+  <section class="emergency-cta" id="contact">
+    <div>
+      <div class="emergency-cta__label">¿Emergencia ahora?</div>
+      <h2 class="emergency-cta__title">No esperes.<br />Llámanos.</h2>
+      <p class="emergency-cta__subtitle">Un técnico certificado puede estar en tu propiedad en menos de 60 minutos. Disponibles 24 horas, 7 días a la semana.</p>
+    </div>
+    <a href="https://wa.me/17870000000?text=Tengo%20una%20emergencia%20de%20plomer%C3%ADa." target="_blank" class="btn-white">WhatsApp Ahora</a>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location" id="location">
+    <p class="s-label">Área de servicio</p>
+    <h2 class="s-title">¿Llegamos<br />a tu zona?</h2>
+    <div class="location__grid">
+      <div>
+        <div class="location__map">
+          <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=60&fit=crop" alt="Map" />
+          <div class="location__map-label">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Puerto Rico
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family: var(--condensed); font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 20px;">Municipios que servimos</h3>
+        <div class="zone-grid">
+          <div class="zone-tag">San Juan</div>
+          <div class="zone-tag">Bayamón</div>
+          <div class="zone-tag">Carolina</div>
+          <div class="zone-tag">Guaynabo</div>
+          <div class="zone-tag">Caguas</div>
+          <div class="zone-tag">Ponce</div>
+          <div class="zone-tag">Mayagüez</div>
+          <div class="zone-tag">Arecibo</div>
+        </div>
+        <div class="hours-wrap">
+          <h4>Horario de operaciones</h4>
+          <table class="hours-table">
+            <tr><td>Lunes – Viernes</td><td>7:00 AM – 6:00 PM</td></tr>
+            <tr><td>Sábado</td><td>8:00 AM – 4:00 PM</td></tr>
+            <tr><td>Domingo</td><td>Solo emergencias</td></tr>
+          </table>
+          <div class="badge-247">
+            <div class="pulse"></div>
+            Emergencias 24/7 disponibles
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer__top">
+      <div>
+        <div class="footer__logo">
+          <div class="footer__logo-icon">🔧</div>
+          FERRO
+        </div>
+        <p class="footer__desc">Plomería profesional para residencias y comercios en Puerto Rico. Licenciados, asegurados, y disponibles 24/7.</p>
+      </div>
+      <div class="footer__links">
+        <a href="#services">Servicios</a>
+        <a href="#gallery">Trabajos</a>
+        <a href="#location">Área</a>
+        <a href="#contact">Emergencias</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 FERRO Plomería. Licencia #PR-00000. Todos los derechos reservados.</p>
+      <p class="footer__clun">Sitio por CLUN Management</p>
+    </div>
+  </footer>
+
+</body>
+</html>

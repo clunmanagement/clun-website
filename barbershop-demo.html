@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crown & Blade Barbershop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:   #0a0a0a;
+      --dark:    #111111;
+      --card:    #181818;
+      --gold:    #B8962E;
+      --gold-l:  #d4b04a;
+      --white:   #ffffff;
+      --off:     #F5F2ED;
+      --muted:   rgba(255,255,255,0.45);
+      --border:  rgba(255,255,255,0.08);
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Inter', -apple-system, system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--black);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 300;
+      height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    .nav.scrolled {
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__logo {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .nav__logo span {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+    .nav__links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav__links a {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav__links a:hover { color: var(--white); }
+    .nav__book {
+      background: var(--gold);
+      color: var(--black);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav__book:hover { background: var(--gold-l); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh; min-height: 700px;
+      display: flex; align-items: flex-end;
+      padding: 0 72px 96px;
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=80&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.38);
+    }
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.2) 60%, transparent 100%);
+    }
+    .hero__content { position: relative; z-index: 2; max-width: 720px; }
+    .hero__eyebrow {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero__eyebrow::before {
+      content: ''; display: block;
+      width: 32px; height: 1px; background: var(--gold);
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+    .hero__title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero__sub {
+      font-size: 17px; font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      max-width: 460px; line-height: 1.6;
+      margin-bottom: 44px;
+    }
+    .hero__cta {
+      display: flex; align-items: center; gap: 20px;
+    }
+    .btn-gold {
+      background: var(--gold); color: var(--black);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 18px 44px; border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-gold:hover { background: var(--gold-l); transform: translateY(-2px); }
+    .btn-ghost {
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; gap: 10px;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--white); }
+    .btn-ghost svg { transition: transform 0.2s; }
+    .btn-ghost:hover svg { transform: translateX(4px); }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--gold);
+      overflow: hidden; padding: 14px 0;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--black);
+      padding: 0 32px;
+      display: flex; align-items: center; gap: 32px;
+    }
+    .marquee-item::after {
+      content: '✦'; font-size: 8px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .s-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .s-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+    .s-title {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4vw, 56px);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .s-sub {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6; max-width: 520px;
+      margin-top: 14px;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; min-height: 600px;
+    }
+    .about__img {
+      background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=900&q=80&fit=crop');
+      background-size: cover; background-position: center;
+    }
+    .about__content {
+      background: var(--dark);
+      padding: 80px 72px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about__quote {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 28px 0 24px;
+      color: var(--white);
+    }
+    .about__quote em { color: var(--gold); font-style: italic; }
+    .about__body {
+      font-size: 15px; font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8; margin-bottom: 40px;
+    }
+    .stat-row { display: flex; gap: 40px; }
+    .stat__num {
+      font-family: var(--serif);
+      font-size: 44px; font-weight: 700;
+      color: var(--gold); line-height: 1;
+    }
+    .stat__label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-top: 4px;
+    }
+
+    /* ── SERVICES ── */
+    .services { padding: 112px 72px; background: var(--black); }
+    .services__header { margin-bottom: 64px; }
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .service-item {
+      background: var(--dark);
+      padding: 40px 36px;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .service-item:hover { background: #1e1e1e; }
+    .service-item__num {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.16em; color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .service-item__name {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 700;
+      margin-bottom: 10px; line-height: 1.2;
+    }
+    .service-item__desc {
+      font-size: 13px; font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6; margin-bottom: 28px;
+    }
+    .service-item__price {
+      font-size: 26px; font-weight: 700;
+      color: var(--gold);
+    }
+    .service-item__price span {
+      font-size: 13px; font-weight: 400;
+      color: rgba(255,255,255,0.3);
+      margin-left: 4px;
+    }
+
+    /* ── GALLERY ── */
+    .gallery { padding: 112px 72px; background: var(--dark); }
+    .gallery__header { margin-bottom: 48px; }
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 8px;
+    }
+    .gallery__item {
+      overflow: hidden; aspect-ratio: 3/4;
+      background: #1a1a1a;
+    }
+    .gallery__item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+      aspect-ratio: auto;
+    }
+    .gallery__item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s ease;
+      filter: brightness(0.9) saturate(0.8);
+    }
+    .gallery__item:hover img {
+      transform: scale(1.04);
+      filter: brightness(1) saturate(1);
+    }
+
+    /* ── TEAM ── */
+    .team { padding: 112px 72px; background: var(--black); }
+    .team__header { margin-bottom: 64px; }
+    .team__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .barber-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .barber-card:hover { border-color: var(--gold); }
+    .barber-card__img {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: filter 0.4s;
+    }
+    .barber-card:hover .barber-card__img { filter: grayscale(0%); }
+    .barber-card__info { padding: 24px 24px 28px; }
+    .barber-card__name {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .barber-card__title {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .barber-card__bio {
+      font-size: 13px; font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 112px 72px;
+      background: var(--dark);
+    }
+    .testimonials__header { margin-bottom: 56px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 36px 32px;
+    }
+    .testi-stars {
+      color: var(--gold); font-size: 14px;
+      letter-spacing: 3px; margin-bottom: 20px;
+    }
+    .testi-text {
+      font-family: var(--serif);
+      font-size: 17px; line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+    .testi-author { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+    .testi-since  { font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+
+    /* ── BOOKING CTA ── */
+    .booking-cta {
+      background: var(--gold);
+      padding: 88px 72px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 40px;
+    }
+    .booking-cta__title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      max-width: 480px;
+    }
+    .btn-dark {
+      background: var(--black); color: var(--white);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 20px 52px; border-radius: 2px;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); }
+
+    /* ── LOCATION ── */
+    .location { padding: 112px 72px; background: var(--black); }
+    .location__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 64px; }
+    .location__map {
+      aspect-ratio: 4/3;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .location__map img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(0.6) saturate(0.5);
+    }
+    .location__map-pin {
+      position: absolute;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .location__map-pin svg { width: 32px; height: 32px; }
+    .location__info h3 {
+      font-family: var(--serif); font-size: 28px;
+      font-weight: 700; margin-bottom: 24px;
+    }
+    .info-row {
+      display: flex; gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .info-row:first-of-type { border-top: 1px solid var(--border); }
+    .info-row__icon { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .info-row__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 4px;
+    }
+    .info-row__val { font-size: 15px; font-weight: 400; color: var(--white); line-height: 1.5; }
+    .hours-table { width: 100%; margin-top: 28px; border-collapse: collapse; }
+    .hours-table td { padding: 10px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+    .hours-table td:first-child { color: var(--muted); font-weight: 500; }
+    .hours-table td:last-child { text-align: right; color: var(--white); }
+    .hours-table tr:last-child td { border-bottom: none; }
+    .closed { color: rgba(255,255,255,0.25) !important; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 56px 72px 40px;
+    }
+    .footer__top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 48px;
+    }
+    .footer__logo {
+      font-family: var(--serif); font-size: 24px; font-weight: 700;
+    }
+    .footer__logo span {
+      display: block; font-family: var(--sans);
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-top: 4px;
+    }
+    .footer__links { display: flex; gap: 28px; }
+    .footer__links a {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .footer__links a:hover { color: var(--gold); }
+    .footer__bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .footer__copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+    .footer__clun {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav { padding: 0 24px; }
+      .nav__links { display: none; }
+      .hero { padding: 0 28px 72px; }
+      .about { grid-template-columns: 1fr; }
+      .about__img { height: 360px; }
+      .about__content { padding: 52px 32px; }
+      .services { padding: 72px 28px; }
+      .services__grid { grid-template-columns: 1fr; }
+      .gallery { padding: 72px 28px; }
+      .gallery__grid { grid-template-columns: 1fr 1fr; }
+      .gallery__item:first-child { grid-column: span 2; }
+      .team { padding: 72px 28px; }
+      .team__grid { grid-template-columns: 1fr; }
+      .testimonials { padding: 72px 28px; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .booking-cta { padding: 64px 28px; flex-direction: column; }
+      .location { padding: 72px 28px; }
+      .location__grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer { padding: 48px 28px 32px; }
+      .footer__top { flex-direction: column; gap: 32px; }
+      .footer__links { flex-wrap: wrap; }
+      .stat-row { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav__logo">
+      Crown & Blade
+      <span>Barbershop · Est. 2018</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#team">El Equipo</a></li>
+      <li><a href="#gallery">Galería</a></li>
+      <li><a href="#location">Ubicación</a></li>
+    </ul>
+    <a href="#booking" class="nav__book">Reservar Cita</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">San Juan, Puerto Rico</p>
+      <h1 class="hero__title">El arte<br />del <em>corte</em><br />perfecto.</h1>
+      <p class="hero__sub">Tradición barbera de primer nivel. Cada visita, una experiencia. Cada corte, una declaración.</p>
+      <div class="hero__cta">
+        <a href="#booking" class="btn-gold">Reservar Cita</a>
+        <a href="#services" class="btn-ghost">
+          Ver servicios
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">Fade Clásico</div>
+      <div class="marquee-item">Beard Trim</div>
+      <div class="marquee-item">Hot Towel Shave</div>
+      <div class="marquee-item">Skin Fade</div>
+      <div class="marquee-item">Lineup</div>
+      <div class="marquee-item">Cabello & Barba</div>
+      <div class="marquee-item">Fade Clásico</div>
+      <div class="marquee-item">Beard Trim</div>
+      <div class="marquee-item">Hot Towel Shave</div>
+      <div class="marquee-item">Skin Fade</div>
+      <div class="marquee-item">Lineup</div>
+      <div class="marquee-item">Cabello & Barba</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="about__img"></div>
+    <div class="about__content">
+      <p class="s-label">Nuestra historia</p>
+      <blockquote class="about__quote">
+        "Un corte no es solo estética.<br />Es <em>confianza</em> que llevas contigo."
+      </blockquote>
+      <p class="about__body">
+        Crown & Blade nació de una sola convicción: que el hombre moderno merece una barbería que lo trate como lo que es. Aquí no hay prisas, no hay números. Solo artesanía, atención, y el respeto que cada cliente se merece.
+      </p>
+      <div class="stat-row">
+        <div>
+          <div class="stat__num">8+</div>
+          <div class="stat__label">Años de experiencia</div>
+        </div>
+        <div>
+          <div class="stat__num">4K</div>
+          <div class="stat__label">Clientes satisfechos</div>
+        </div>
+        <div>
+          <div class="stat__num">5★</div>
+          <div class="stat__label">Google Reviews</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services__header">
+      <p class="s-label">Lo que ofrecemos</p>
+      <h2 class="s-title">Servicios<br />&amp; Precios</h2>
+      <p class="s-sub">Cada servicio ejecutado con precisión y los mejores productos del mercado.</p>
+    </div>
+
+    <div class="services__grid">
+      <div class="service-item">
+        <div class="service-item__num">01</div>
+        <div class="service-item__name">Corte Clásico</div>
+        <div class="service-item__desc">Tijera y máquina. Adaptado a tu estructura facial y estilo de vida.</div>
+        <div class="service-item__price">$25 <span>/ desde</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item__num">02</div>
+        <div class="service-item__name">Skin Fade</div>
+        <div class="service-item__desc">De piel a largo. Degradado perfecto con acabado impecable en el contorno.</div>
+        <div class="service-item__price">$35 <span>/ desde</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item__num">03</div>
+        <div class="service-item__name">Beard Trim</div>
+        <div class="service-item__desc">Definición, control y forma. Barba limpia que enmarca tu rostro.</div>
+        <div class="service-item__price">$20 <span>/ desde</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item__num">04</div>
+        <div class="service-item__name">Corte + Barba</div>
+        <div class="service-item__desc">La combinación completa. El look total desde el primer encuentro.</div>
+        <div class="service-item__price">$50 <span>/ desde</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item__num">05</div>
+        <div class="service-item__name">Hot Towel Shave</div>
+        <div class="service-item__desc">Afeitado clásico con toalla caliente. Ritual barbero de la vieja escuela.</div>
+        <div class="service-item__price">$40 <span>/ desde</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item__num">06</div>
+        <div class="service-item__name">Lineup</div>
+        <div class="service-item__desc">Contorno y definición de entradas, nuca y sienes. Precisión al milímetro.</div>
+        <div class="service-item__price">$15 <span>/ desde</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="gallery__header">
+      <p class="s-label">Nuestro trabajo</p>
+      <h2 class="s-title">Galería</h2>
+    </div>
+    <div class="gallery__grid">
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=80&fit=crop" alt="Fade cut" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80&fit=crop" alt="Barber at work" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80&fit=crop" alt="Classic cut" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=80&fit=crop" alt="Beard trim" loading="lazy" />
+      </div>
+      <div class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80&fit=crop" alt="Hot towel" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team" id="team">
+    <div class="team__header">
+      <p class="s-label">Los artesanos</p>
+      <h2 class="s-title">El Equipo</h2>
+      <p class="s-sub">Barberos con años de oficio. Cada uno con su firma, cada uno con su precisión.</p>
+    </div>
+    <div class="team__grid">
+      <div class="barber-card">
+        <img class="barber-card__img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&fit=crop&crop=faces" alt="Miguel Torres" loading="lazy" />
+        <div class="barber-card__info">
+          <div class="barber-card__name">Miguel Torres</div>
+          <div class="barber-card__title">Master Barber · Fundador</div>
+          <div class="barber-card__bio">12 años de experiencia. Especialista en fades y cortes clásicos. Formado en Nueva York, regresó a PR para establecer el estándar.</div>
+        </div>
+      </div>
+      <div class="barber-card">
+        <img class="barber-card__img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&fit=crop&crop=faces" alt="Carlos Reyes" loading="lazy" />
+        <div class="barber-card__info">
+          <div class="barber-card__name">Carlos Reyes</div>
+          <div class="barber-card__title">Senior Barber</div>
+          <div class="barber-card__bio">8 años en el oficio. Su especialidad es el diseño de barba y los skin fades. Ganador del PR Barber Battle 2023.</div>
+        </div>
+      </div>
+      <div class="barber-card">
+        <img class="barber-card__img" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80&fit=crop&crop=faces" alt="Javier Ortiz" loading="lazy" />
+        <div class="barber-card__info">
+          <div class="barber-card__name">Javier Ortiz</div>
+          <div class="barber-card__title">Barber</div>
+          <div class="barber-card__bio">5 años dominando el degradado y los cortes texturizados. Favorito entre los clientes jóvenes por su ojo para las tendencias.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="testimonials__header">
+      <p class="s-label">Lo que dicen</p>
+      <h2 class="s-title">Clientes</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Vine de visita a San Juan y un amigo me trajo aquí. El mejor corte que me han dado en años. Miguel sabe exactamente lo que haces antes de que termines de explicarlo."</p>
+        <div class="testi-author">Andrés M.</div>
+        <div class="testi-since">Miami, FL</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Llevo 4 años viniendo cada dos semanas. Nunca me han decepcionado. El ambiente, la música, el servicio — todo es exactamente lo que un hombre necesita."</p>
+        <div class="testi-author">Roberto V.</div>
+        <div class="testi-since">Cliente desde 2020</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"El hot towel shave de Carlos es una experiencia aparte. Llegué estresado de una semana de trabajo y salí completamente renovado. Vale cada centavo."</p>
+        <div class="testi-author">Luis F.</div>
+        <div class="testi-since">Cliente desde 2022</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING CTA -->
+  <section class="booking-cta" id="booking">
+    <h2 class="booking-cta__title">¿Listo para tu próximo corte?</h2>
+    <a href="https://wa.me/17875994838?text=Hola%2C%20quiero%20reservar%20una%20cita%20en%20Crown%20%26%20Blade." target="_blank" class="btn-dark">Reservar por WhatsApp</a>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location" id="location">
+    <p class="s-label">Encuéntranos</p>
+    <h2 class="s-title">Ubicación<br />&amp; Horario</h2>
+    <div class="location__grid">
+      <div class="location__map">
+        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=60&fit=crop" alt="Map" />
+        <div class="location__map-pin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          Crown & Blade
+        </div>
+      </div>
+      <div class="location__info">
+        <h3>Ven a vernos</h3>
+        <div class="info-row">
+          <div class="info-row__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="info-row__label">Dirección</div>
+            <div class="info-row__val">Calle Loíza 204, Santurce<br />San Juan, PR 00911</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+          </div>
+          <div>
+            <div class="info-row__label">Teléfono</div>
+            <div class="info-row__val">+1 (787) 000-0000</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="info-row__label">Reservas</div>
+            <div class="info-row__val">@crownblade.pr<br />WhatsApp disponible</div>
+          </div>
+        </div>
+        <table class="hours-table">
+          <tr><td>Lunes – Viernes</td><td>9:00 AM – 8:00 PM</td></tr>
+          <tr><td>Sábado</td><td>8:00 AM – 7:00 PM</td></tr>
+          <tr><td>Domingo</td><td>10:00 AM – 4:00 PM</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer__top">
+      <div class="footer__logo">
+        Crown & Blade
+        <span>Barbershop · San Juan, PR</span>
+      </div>
+      <div class="footer__links">
+        <a href="#services">Servicios</a>
+        <a href="#team">Equipo</a>
+        <a href="#gallery">Galería</a>
+        <a href="#booking">Reservar</a>
+        <a href="#location">Ubicación</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2026 Crown & Blade Barbershop. Todos los derechos reservados.</p>
+      <p class="footer__clun">Sitio por CLUN Management</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>

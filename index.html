@@ -392,16 +392,12 @@
     <p class="hero__sub">We'll get back to you directly — no runaround, no delays.</p>
 
     <div class="cta-row">
-      <a
-        href="https://wa.me/17875994838?text=Hi%2C%20I%27m%20interested%20in%20building%20my%20digital%20presence%20with%20CLUN%20Management."
+      <button
+        type="button"
         class="btn btn--primary"
-        target="_blank"
-        rel="noopener"
-      >Message Us</a>
-      <a
-        href="mailto:clunmanagement@gmail.com?subject=Digital%20Presence%20Inquiry"
-        class="btn btn--secondary"
-      >Send an Email</a>
+        data-cal-link="clun-management-ecx9up"
+        data-cal-config='{"layout":"month_view"}'
+      >Start your project</button>
     </div>
 
     <div class="sep" aria-hidden="true"><span>or leave your details</span></div>
@@ -525,6 +521,40 @@
       form.style.display = 'none';
       success.classList.add('visible');
       success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  </script>
+
+  <!-- Cal.com embed: opens the booking popup from the hero's "Start your project" button -->
+  <script type="text/javascript">
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal; let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {}; cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          typeof namespace === "string"
+            ? (cal.ns[namespace] = api) && p(api, ar)
+            : p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", { origin: "https://cal.com" });
+
+    Cal("ui", {
+      styles: { branding: { brandColor: "#A8844A" } },
+      hideEventTypeDetails: false,
+      layout: "month_view"
     });
   </script>
 </body>
