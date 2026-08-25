@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Apex Corp · Energía Renovable en Puerto Rico</title>
-<meta name="description" content="Sistemas solares con baterías de respaldo en Puerto Rico. Tu casa sigue encendida cuando el barrio se apaga. Evaluación de techo gratis." />
+<meta name="description" content="Diseño e instalación de sistemas solares con respaldo de batería en Puerto Rico. Continuidad de servicio durante interrupciones de la red. Evaluación sin costo." />
 
 <!--
   ════════════════════════════════════════════════════════════════
@@ -17,7 +17,14 @@
   5. PUEBLO/ZONA   buscar  DIRECCIÓN
   6. TESTIMONIOS   buscar  TESTIMONIO       (son de ejemplo)
   7. PROYECTOS     buscar  unsplash.com     (fotos reales de instalaciones)
-  8. MÉTRICAS      buscar  MÉTRICA          (confirmar cifras con el cliente)
+
+  RETIRADO A PROPÓSITO — no reactivar sin datos validados por Apex Corp:
+  · Calculadora de ahorro. Se eliminó por completo (HTML, CSS y JS).
+    Sus supuestos de cobertura no estaban confirmados por el cliente.
+  · Métricas del hero. El bloque .trust quedó comentado en el HTML;
+    buscar "MÉTRICAS DEL HERO". El CSS sigue disponible.
+
+  Registro del texto: usted, formal. Mantenerlo si se añade contenido.
   ════════════════════════════════════════════════════════════════
 -->
 
@@ -56,7 +63,10 @@ img{display:block;max-width:100%}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 :focus-visible{outline:2px solid var(--oro);outline-offset:3px;border-radius:2px}
 
-.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:32px}
+/* width:100% es necesario porque .hero es flex y un flex item se ajusta
+   a su contenido: sin esto el wrap del hero no alcanza los 1160px y queda
+   desalineado respecto al nav. En contexto de bloque no cambia nada. */
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:32px}
 
 /* Lettering metálico del logo */
 .cromado{
@@ -124,13 +134,14 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   background:radial-gradient(circle,rgba(255,192,30,.16),transparent 62%);
   pointer-events:none;transition:opacity .9s ease;
 }
-.hero__grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.hero__grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
 /* los hijos de grid traen min-width:auto, y el SVG del barrio mide 460px
    intrínsecos: sin esto la columna estira el layout y desborda en móvil */
 .hero__grid>*,.calc>*{min-width:0}
 .hero__title{
   font-family:var(--disp);font-weight:700;
-  font-size:clamp(42px,6.6vw,86px);line-height:.97;letter-spacing:-.025em;
+  font-size:clamp(33px,4.9vw,56px);line-height:1.03;letter-spacing:-.02em;
+  text-wrap:balance;
   margin:22px 0 20px;
 }
 .hero__title em{font-style:normal;color:var(--oro);display:block}
@@ -192,28 +203,6 @@ body.apagon .sw__msg{opacity:1;transform:none}
 .sec{padding:112px 0;border-top:1px solid var(--linea)}
 .sec__head{margin-bottom:52px}
 .sec__head .h2{margin:16px 0 14px}
-
-/* Factura / calculadora */
-.calc{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:start}
-.calc__box{background:var(--carbon);border:1px solid var(--linea);border-radius:3px;padding:32px}
-.calc__lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cromo-4);display:block;margin-bottom:12px}
-.calc__field{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--cromo-2);padding-bottom:10px}
-.calc__field span{font-family:var(--mono);font-size:28px;color:var(--cromo-4)}
-.calc__field input{
-  font-family:var(--mono);font-size:30px;font-weight:600;color:var(--cromo);
-  background:none;border:none;width:100%;padding:0;
-}
-.calc__field input:focus{outline:none}
-.calc__hint{font-size:12.5px;color:var(--cromo-4);margin-top:14px}
-.calc__slider{width:100%;margin-top:22px;accent-color:var(--oro)}
-
-.out{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);border-radius:3px;overflow:hidden}
-.out__row{background:var(--carbon);padding:22px 26px;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
-.out__row dt{font-size:14px;color:var(--cromo-6);font-weight:300}
-.out__row dd{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--cromo)}
-.out__row--alza{background:var(--carbon-2)}
-.out__row--alza dd{color:var(--oro);font-size:30px}
-.out__nota{font-size:12px;color:var(--cromo-4);margin-top:16px;line-height:1.6}
 
 /* Servicios */
 .serv{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--linea);border:1px solid var(--linea)}
@@ -340,13 +329,12 @@ body.apagon .sw__msg{opacity:1;transform:none}
     </a>
     <nav>
       <ul class="nav__links">
-        <li><a href="#ahorro">Tu factura</a></li>
         <li><a href="#servicios">Servicios</a></li>
         <li><a href="#proceso">Proceso</a></li>
         <li><a href="#preguntas">Preguntas</a></li>
       </ul>
     </nav>
-    <a href="#agendar" class="nav__cta">Agendar evaluación</a>
+    <a href="#agendar" class="nav__cta">Solicitar evaluación</a>
   </div>
 </header>
 
@@ -358,24 +346,35 @@ body.apagon .sw__msg{opacity:1;transform:none}
 
     <div>
       <span class="eyebrow">Energía solar · Puerto Rico</span>
-      <h1 class="hero__title"><span class="cromado">Cuando el barrio</span><em>se apaga,</em><span class="cromado">tu casa no.</span></h1>
-      <p class="hero__sub">Instalamos paneles con baterías de respaldo. Tu nevera, tus abanicos y tu internet siguen andando — y tu factura de LUMA baja desde el primer ciclo.</p>
+      <h1 class="hero__title"><span class="cromado">Cuando la red falla,</span><em>su energía continúa.</em></h1>
+      <p class="hero__sub">Diseñamos e instalamos sistemas solares con respaldo de batería para residencias y comercios en Puerto Rico. Su servicio no se interrumpe y su consumo de la red se reduce desde el primer ciclo de facturación.</p>
       <div class="hero__acts">
-        <a href="#agendar" class="btn-oro">Agenda tu evaluación gratis</a>
-        <a href="#ahorro" class="btn-linea">Calcula tu ahorro</a>
+        <a href="#agendar" class="btn-oro">Solicitar evaluación</a>
+        <a href="#proceso" class="btn-linea">Cómo funciona</a>
       </div>
 
-      <div class="trust">
-        <div><b><em>+</em>450</b><span>Techos instalados<!-- MÉTRICA --></span></div>
-        <div><b>25 <em>años</em></b><span>Garantía de paneles</span></div>
-        <div><b><em>0</em></b><span>Apagones desde entonces</span></div>
-      </div>
+      <!--
+        MÉTRICAS DEL HERO — retiradas a propósito.
+        Aquí iba una fila de cifras (instalaciones completadas, años de
+        garantía, interrupciones). Se quitaron porque no estaban validadas
+        por el cliente, y publicar cifras que Apex Corp no pueda sustentar
+        es un riesgo para ellos.
+
+        Para reactivarla: descomentar y sustituir por datos verificados.
+        El CSS de .trust sigue en la hoja de estilo, listo para usarse.
+
+        <div class="trust">
+          <div><b><em>+</em>000</b><span>Instalaciones completadas</span></div>
+          <div><b>00 <em>años</em></b><span>Garantía del fabricante</span></div>
+          <div><b><em>0</em></b><span>Interrupciones reportadas</span></div>
+        </div>
+      -->
     </div>
 
     <!-- FIRMA: simulador de apagón -->
     <div class="barrio">
-      <span class="barrio__cap">Tu cuadra, esta noche</span>
-      <svg viewBox="0 0 460 210" role="img" aria-label="Ilustración de una cuadra: al simular un apagón todas las casas quedan a oscuras menos la que tiene Apex.">
+      <span class="barrio__cap">Simulación · interrupción del servicio</span>
+      <svg viewBox="0 0 460 210" role="img" aria-label="Ilustración de un sector residencial: al simular una interrupción del servicio, todas las viviendas quedan sin energía excepto la que cuenta con sistema Apex.">
         <defs>
           <radialGradient id="halo">
             <stop offset="0%" stop-color="#FFC01E" stop-opacity=".42"/>
@@ -421,44 +420,12 @@ body.apagon .sw__msg{opacity:1;transform:none}
       </svg>
 
       <div class="sw">
-        <button class="sw__btn" id="swApagon" role="switch" aria-checked="false" aria-label="Simular un apagón en la cuadra"></button>
-        <span class="sw__label" id="swLabel">Simula un apagón</span>
+        <button class="sw__btn" id="swApagon" role="switch" aria-checked="false" aria-label="Simular una interrupción del servicio eléctrico"></button>
+        <span class="sw__label" id="swLabel">Simular interrupción</span>
       </div>
-      <p class="sw__msg" id="swMsg">Tu vecindario se fue. Tu casa no.</p>
+      <p class="sw__msg" id="swMsg">El sector quedó sin servicio. Su sistema continúa operando.</p>
     </div>
 
-  </div>
-</section>
-
-<!-- CALCULADORA -->
-<section class="sec" id="ahorro">
-  <div class="wrap">
-    <div class="sec__head rev">
-      <span class="eyebrow">Tu factura</span>
-      <h2 class="h2 cromado">Lo que pagas hoy,<br>y lo que dejarías de pagar.</h2>
-      <p class="lead">Mueve tu factura promedio de LUMA. El cálculo asume que un sistema bien dimensionado cubre cerca del 90 % de tu consumo.</p>
-    </div>
-
-    <div class="calc rev">
-      <div class="calc__box">
-        <label class="calc__lab" for="factura">Tu factura mensual promedio</label>
-        <div class="calc__field">
-          <span>$</span>
-          <input type="number" id="factura" value="245" min="40" max="1200" step="5" inputmode="numeric" />
-        </div>
-        <input type="range" class="calc__slider" id="rango" value="245" min="40" max="1200" step="5" aria-label="Ajustar factura mensual" />
-        <p class="calc__hint">La factura promedio residencial en Puerto Rico ronda los $180–$280 mensuales.</p>
-      </div>
-
-      <div>
-        <dl class="out">
-          <div class="out__row"><dt>Ahorro estimado al mes</dt><dd id="oMes">$221</dd></div>
-          <div class="out__row"><dt>Ahorro al año</dt><dd id="oAno">$2,646</dd></div>
-          <div class="out__row out__row--alza"><dt>En 25 años, la vida útil del sistema</dt><dd id="oVida">$66,150</dd></div>
-        </dl>
-        <p class="out__nota">Estimado, no cotización. La cifra real depende de tu consumo en kWh, la orientación y sombra de tu techo, y el equipo que se instale. No incluye el aumento anual de tarifa, que empujaría el ahorro hacia arriba, ni el crédito contributivo federal. En la evaluación te damos el número exacto de tu techo.</p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -467,40 +434,40 @@ body.apagon .sw__msg{opacity:1;transform:none}
   <div class="wrap">
     <div class="sec__head rev">
       <span class="eyebrow">Qué instalamos</span>
-      <h2 class="h2 cromado">Un sistema, no una<br>caja de paneles.</h2>
-      <p class="lead">Dimensionamos según tu consumo real, no según lo que sobra en almacén.</p>
+      <h2 class="h2 cromado">Un sistema diseñado,<br>no un paquete de paneles.</h2>
+      <p class="lead">Cada sistema se dimensiona a partir del consumo real registrado en sus facturas.</p>
     </div>
 
     <div class="serv rev">
       <div class="serv__it">
         <span class="serv__n">01</span>
         <h3 class="serv__t">Paneles residenciales</h3>
-        <p class="serv__d">Sistemas para casa dimensionados a tu consumo en kWh, con garantía de producción a 25 años.</p>
+        <p class="serv__d">Sistemas para vivienda dimensionados al consumo registrado en kWh, con garantía de producción del fabricante.</p>
       </div>
       <div class="serv__it">
         <span class="serv__n">02</span>
         <h3 class="serv__t">Baterías de respaldo</h3>
-        <p class="serv__d">Almacenamiento que sostiene lo esencial durante un apagón: nevera, abanicos, internet, luces y equipo médico.</p>
+        <p class="serv__d">Almacenamiento que sostiene las cargas esenciales durante una interrupción: refrigeración, climatización, comunicaciones y equipo médico.</p>
       </div>
       <div class="serv__it">
         <span class="serv__n">03</span>
         <h3 class="serv__t">Comercial e industrial</h3>
-        <p class="serv__d">Techos de negocio, almacén y nave. Reduce el renglón de luz, que en Puerto Rico suele ser el segundo gasto más alto.</p>
+        <p class="serv__d">Techos de comercio, almacén y nave industrial. El consumo eléctrico es uno de los renglones operativos más altos en Puerto Rico.</p>
       </div>
       <div class="serv__it">
         <span class="serv__n">04</span>
         <h3 class="serv__t">Mantenimiento</h3>
-        <p class="serv__d">Limpieza, revisión de inversores y monitoreo de producción. Un panel sucio produce menos y nadie te avisa.</p>
+        <p class="serv__d">Limpieza, inspección de inversores y monitoreo de producción. La acumulación de residuo reduce el rendimiento sin generar aviso.</p>
       </div>
       <div class="serv__it">
         <span class="serv__n">05</span>
         <h3 class="serv__t">Financiamiento</h3>
-        <p class="serv__d">Opciones sin pronto, con pago mensual comparable a lo que ya pagas de luz. Te explicamos los números sin letra chiquita.</p>
+        <p class="serv__d">Alternativas de financiamiento con y sin pago inicial. Le presentamos el desglose completo de costos antes de la firma.</p>
       </div>
       <div class="serv__it">
         <span class="serv__n">06</span>
         <h3 class="serv__t">Permisos y medición neta</h3>
-        <p class="serv__d">Tramitamos con LUMA y el municipio. Tú no haces filas ni persigues documentos.</p>
+        <p class="serv__d">Gestionamos la radicación ante LUMA Energy y el municipio, con seguimiento hasta la aprobación.</p>
       </div>
     </div>
   </div>
@@ -511,35 +478,35 @@ body.apagon .sw__msg{opacity:1;transform:none}
   <div class="wrap">
     <div class="sec__head rev">
       <span class="eyebrow">El proceso</span>
-      <h2 class="h2 cromado">De la primera visita<br>a la primera factura en cero.</h2>
-      <p class="lead">Cinco pasos. Tú solo estás presente en el primero y el último.</p>
+      <h2 class="h2 cromado">De la evaluación inicial<br>a la energización del sistema.</h2>
+      <p class="lead">Cinco etapas. Su participación se concentra en la primera y en la última.</p>
     </div>
 
     <ol class="asc rev">
       <li class="asc__it">
         <span class="asc__n">01</span>
         <h3 class="asc__t">Evaluación</h3>
-        <p class="asc__d">Subimos a tu techo y leemos tus últimas facturas. Gratis y sin compromiso.</p>
+        <p class="asc__d">Inspeccionamos el techo y analizamos el historial de consumo. Sin costo.</p>
       </li>
       <li class="asc__it">
         <span class="asc__n">02</span>
         <h3 class="asc__t">Diseño</h3>
-        <p class="asc__d">Te entregamos la propuesta con producción estimada y el número de paneles.</p>
+        <p class="asc__d">Le entregamos la propuesta con la producción estimada y la configuración.</p>
       </li>
       <li class="asc__it">
         <span class="asc__n">03</span>
         <h3 class="asc__t">Permisos</h3>
-        <p class="asc__d">Radicamos con LUMA y el municipio y damos seguimiento hasta la aprobación.</p>
+        <p class="asc__d">Radicamos ante LUMA Energy y el municipio, con seguimiento hasta la aprobación.</p>
       </li>
       <li class="asc__it">
         <span class="asc__n">04</span>
         <h3 class="asc__t">Instalación</h3>
-        <p class="asc__d">Entre uno y tres días en tu techo, con nuestra propia brigada.</p>
+        <p class="asc__d">Entre uno y tres días de trabajo en el techo, con brigada propia.</p>
       </li>
       <li class="asc__it">
         <span class="asc__n">05</span>
         <h3 class="asc__t">Energización</h3>
-        <p class="asc__d">Se activa la medición neta y empieza a correr el ahorro.</p>
+        <p class="asc__d">Se activa la medición neta y el sistema entra en operación.</p>
       </li>
     </ol>
   </div>
@@ -550,7 +517,7 @@ body.apagon .sw__msg{opacity:1;transform:none}
   <div class="wrap">
     <div class="sec__head rev">
       <span class="eyebrow">Instalaciones</span>
-      <h2 class="h2 cromado">Techos que ya<br>no dependen de la red.</h2>
+      <h2 class="h2 cromado">Sistemas<br>en operación.</h2>
     </div>
     <!-- Sustituir por fotos reales de instalaciones de Apex -->
     <div class="proy rev">
@@ -575,20 +542,20 @@ body.apagon .sw__msg{opacity:1;transform:none}
   <div class="wrap">
     <div class="sec__head rev">
       <span class="eyebrow">Clientes</span>
-      <h2 class="h2 cromado">Lo que dicen<br>después del primer apagón.</h2>
+      <h2 class="h2 cromado">Referencias<br>de clientes.</h2>
     </div>
     <!-- TESTIMONIO: sustituir por reseñas reales con permiso del cliente -->
     <div class="test rev">
       <div class="test__it">
-        <p class="test__q">"Se fue la luz en toda la calle y nosotros ni cuenta nos dimos. Mi mamá usa máquina de oxígeno, así que para nosotros eso no tiene precio."</p>
+        <p class="test__q">"Durante la última interrupción en el sector, el sistema asumió la carga sin intervención de nuestra parte. Mi madre depende de un concentrador de oxígeno, así que la continuidad no es un lujo."</p>
         <p class="test__a">— Nombre Apellido · Pueblo</p>
       </div>
       <div class="test__it">
-        <p class="test__q">"Pasé de pagar sobre $300 a pagar el cargo mínimo. La instalación fue en dos días y ellos hicieron todo el papeleo con LUMA."</p>
+        <p class="test__q">"El consumo facturado se redujo al cargo mínimo. La instalación tomó dos días y ellos gestionaron toda la tramitación ante LUMA."</p>
         <p class="test__a">— Nombre Apellido · Pueblo</p>
       </div>
       <div class="test__it">
-        <p class="test__q">"Pedí tres cotizaciones. Apex fue la única que me explicó de dónde salía cada número en vez de darme un precio y ya."</p>
+        <p class="test__q">"Solicité tres propuestas. Apex fue la única que explicó el origen de cada partida, en lugar de entregar únicamente un precio final."</p>
         <p class="test__a">— Nombre Apellido · Pueblo</p>
       </div>
     </div>
@@ -600,8 +567,8 @@ body.apagon .sw__msg{opacity:1;transform:none}
   <div class="wrap">
     <div class="sec__head rev">
       <span class="eyebrow">Agenda</span>
-      <h2 class="h2 cromado">Escoge tu día.<br>Nosotros subimos al techo.</h2>
-      <p class="lead">La evaluación es gratis y toma cerca de 45 minutos. Salimos con un número real, no con un estimado de teléfono.</p>
+      <h2 class="h2 cromado">Seleccione la fecha<br>de su evaluación.</h2>
+      <p class="lead">La evaluación no tiene costo y toma aproximadamente 45 minutos. Concluye con una propuesta basada en mediciones del inmueble, no en estimados telefónicos.</p>
     </div>
     <div class="agenda rev">
       <div id="cal-apex"></div>
@@ -614,28 +581,28 @@ body.apagon .sw__msg{opacity:1;transform:none}
   <div class="wrap">
     <div class="sec__head rev">
       <span class="eyebrow">Preguntas</span>
-      <h2 class="h2 cromado">Lo que todo el mundo<br>pregunta primero.</h2>
+      <h2 class="h2 cromado">Preguntas<br>frecuentes.</h2>
     </div>
     <div class="faq rev">
       <div class="faq__it">
-        <button class="faq__q">¿Sirve mi techo? <i>+</i></button>
-        <div class="faq__a"><p>La mayoría de los techos de cemento en Puerto Rico sirven. Lo que decide es la orientación, la sombra de árboles o edificios cercanos y el espacio disponible. Eso se confirma en la evaluación, subiendo al techo — no por teléfono.</p></div>
+        <button class="faq__q">¿Es mi techo apto para un sistema solar? <i>+</i></button>
+        <div class="faq__a"><p>La mayoría de los techos de hormigón en Puerto Rico lo son. Los factores determinantes son la orientación, el sombreado de árboles o estructuras contiguas y el área disponible. Esto se confirma durante la evaluación presencial, no por vía telefónica.</p></div>
       </div>
       <div class="faq__it">
-        <button class="faq__q">¿Qué pasa si hay un apagón? <i>+</i></button>
-        <div class="faq__a"><p>Depende de si tienes batería. Un sistema solo de paneles se apaga junto con la red, por seguridad de los técnicos de línea. Con batería de respaldo, la casa cambia sola a la batería y sigue andando. Por eso en Puerto Rico recomendamos batería casi siempre.</p></div>
+        <button class="faq__q">¿Qué ocurre durante una interrupción del servicio? <i>+</i></button>
+        <div class="faq__a"><p>Depende de si el sistema incluye almacenamiento. Un sistema sin batería se desconecta junto con la red, por seguridad del personal de línea. Con respaldo de batería, el inmueble transfiere la carga automáticamente y mantiene operación. Por las condiciones de la red en Puerto Rico, recomendamos almacenamiento en prácticamente todos los casos.</p></div>
       </div>
       <div class="faq__it">
-        <button class="faq__q">¿Cuánto cuesta y hay que dar pronto? <i>+</i></button>
-        <div class="faq__a"><p>El precio depende del tamaño del sistema, que depende de tu consumo. Hay opciones de financiamiento sin pronto donde el pago mensual queda parecido a lo que ya pagas de luz. En la propuesta te damos el desglose completo, sin cargos escondidos.</p></div>
+        <button class="faq__q">¿Cuál es la inversión y qué alternativas de pago existen? <i>+</i></button>
+        <div class="faq__a"><p>La inversión depende de la capacidad del sistema, que a su vez responde a su consumo. Existen alternativas de financiamiento con y sin pago inicial. La propuesta incluye el desglose completo de partidas, sin cargos no divulgados.</p></div>
       </div>
       <div class="faq__it">
-        <button class="faq__q">¿Qué es la medición neta? <i>+</i></button>
-        <div class="faq__a"><p>Es el acuerdo que permite que la energía que produces de más se acredite a tu cuenta. Cuando tu sistema produce más de lo que consumes, ese excedente entra a la red y se descuenta de tu factura. Nosotros radicamos ese trámite con LUMA por ti.</p></div>
+        <button class="faq__q">¿En qué consiste la medición neta? <i>+</i></button>
+        <div class="faq__a"><p>Es el acuerdo que permite acreditar a su cuenta la energía excedente. Cuando el sistema genera por encima de su consumo, ese excedente se inyecta a la red y se acredita contra su facturación. Apex Corp radica esa gestión ante LUMA Energy en su representación.</p></div>
       </div>
       <div class="faq__it">
-        <button class="faq__q">¿Cuánto tarda todo el proceso? <i>+</i></button>
-        <div class="faq__a"><p>La instalación en sí toma de uno a tres días. Lo que manda el calendario son los permisos y la energización, que dependen de LUMA y del municipio. Te damos una fecha estimada al firmar y te mantenemos al tanto en cada etapa.</p></div>
+        <button class="faq__q">¿Cuál es el tiempo total del proceso? <i>+</i></button>
+        <div class="faq__a"><p>La instalación toma de uno a tres días. El factor determinante del calendario es la permisología y la energización, que dependen de LUMA Energy y del municipio. Al momento de la firma le entregamos una fecha estimada y le informamos el estado en cada etapa.</p></div>
       </div>
     </div>
   </div>
@@ -644,10 +611,10 @@ body.apagon .sw__msg{opacity:1;transform:none}
 <!-- CIERRE -->
 <section class="cierre">
   <div class="wrap">
-    <span class="eyebrow">Evaluación gratis</span>
-    <h2 class="h2 cromado">El próximo apagón<br>ya viene de camino.</h2>
-    <p class="lead">Toma 45 minutos averiguar cuánto costaría que no te afecte.</p>
-    <a href="#agendar" class="btn-oro">Agenda tu evaluación</a>
+    <span class="eyebrow">Evaluación sin costo</span>
+    <h2 class="h2 cromado">La continuidad se planifica<br>antes de la interrupción.</h2>
+    <p class="lead">Determinar la capacidad que su inmueble requiere toma 45 minutos y no tiene costo.</p>
+    <a href="#agendar" class="btn-oro">Solicitar evaluación</a>
   </div>
 </section>
 </main>
@@ -664,7 +631,7 @@ body.apagon .sw__msg{opacity:1;transform:none}
             <span class="nav__tag">Energía Renovable</span>
           </span>
         </div>
-        <p style="max-width:34ch">Sistemas solares con respaldo de batería en Puerto Rico.</p>
+        <p style="max-width:34ch">Diseño, instalación y mantenimiento de sistemas solares con respaldo de batería en Puerto Rico.</p>
       </div>
 
       <div class="pie__col">
@@ -682,10 +649,9 @@ body.apagon .sw__msg{opacity:1;transform:none}
 
       <div class="pie__col">
         <h4>Secciones</h4>
-        <a href="#ahorro">Tu factura</a>
         <a href="#servicios">Servicios</a>
         <a href="#proceso">Proceso</a>
-        <a href="#agendar">Agendar</a>
+        <a href="#agendar">Solicitar evaluación</a>
       </div>
     </div>
 
@@ -696,7 +662,7 @@ body.apagon .sw__msg{opacity:1;transform:none}
   </div>
 </footer>
 
-<a class="wa" href="https://wa.me/17870000000" aria-label="Escríbenos por WhatsApp">
+<a class="wa" href="https://wa.me/17870000000" aria-label="Comuníquese con nosotros por WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15s-.77.96-.94 1.16c-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2"/></svg>
 </a>
 
@@ -712,28 +678,8 @@ const swLabel = document.getElementById('swLabel');
 sw.addEventListener('click', () => {
   const on = document.body.classList.toggle('apagon');
   sw.setAttribute('aria-checked', String(on));
-  swLabel.textContent = on ? 'Se fue la luz' : 'Simula un apagón';
+  swLabel.textContent = on ? 'Servicio interrumpido' : 'Simular interrupción';
 });
-
-/* Calculadora */
-const factura = document.getElementById('factura');
-const rango   = document.getElementById('rango');
-const oMes = document.getElementById('oMes'),
-      oAno = document.getElementById('oAno'),
-      oVida= document.getElementById('oVida');
-const money = n => '$' + Math.round(n).toLocaleString('en-US');
-const COBERTURA = 0.90;
-
-function calcular(v){
-  const bill = Math.min(1200, Math.max(40, Number(v) || 0));
-  const mes = bill * COBERTURA;
-  oMes.textContent  = money(mes);
-  oAno.textContent  = money(mes * 12);
-  oVida.textContent = money(mes * 12 * 25);
-}
-factura.addEventListener('input', e => { rango.value = e.target.value; calcular(e.target.value); });
-rango.addEventListener('input',   e => { factura.value = e.target.value; calcular(e.target.value); });
-calcular(factura.value);
 
 /* FAQ */
 document.querySelectorAll('.faq__q').forEach(q => {
