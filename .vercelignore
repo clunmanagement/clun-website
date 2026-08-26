@@ -1,0 +1,6 @@
+.vercel
+node_modules
+
+# Nunca subir al sitio público: manual de ventas interno.
+sales-guide.html
+*INTERNA*
