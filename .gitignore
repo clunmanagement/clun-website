@@ -2,3 +2,7 @@
 .DS_Store
 *.bak
 ~$*
+
+# Manual de ventas interno: precios por nicho, pitch y objeciones.
+# No debe versionarse ni publicarse.
+sales-guide.html
